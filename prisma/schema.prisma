@@ -1,0 +1,186 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+enum ImageType {
+  THUMBNAIL
+  MAIN
+  GALLERY
+  // add more as needed
+}
+
+enum ImageQuality {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+enum UserRole {
+  TENANT
+  OWNER
+  ADMIN
+}
+
+enum PermitType {
+  BIR // Bureau of Internal Revenue
+  FIRE_CERTIFICATE // Fire Certificate
+  MAYORS_PERMIT // Mayor's Permit
+  DTI // Department of Trade and Industry
+  BUSINESS_PERMIT // Business Permit
+}
+
+enum AuditAction {
+  CREATE
+  UPDATE
+  DELETE
+  LOGIN
+  LOGOUT
+  VERIFY
+}
+
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../generated/prisma" // need more research on this 
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Tenant {
+  id           Int       @id @default(autoincrement())
+  username     String    @unique
+  firstname    String
+  lastname     String
+  email        String
+  password     String
+  role         UserRole  @default(TENANT) // changed
+  isActive     Boolean   @default(true)
+  isVerified   Boolean   @default(false)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  age          Int       @default(0)
+  guardian     String?
+  address      String
+  phone_number String
+  bookings     Booking[]
+}
+
+model Owner {
+  id             Int             @id @default(autoincrement())
+  username       String          @unique
+  firstname      String
+  lastname       String
+  email          String          @unique
+  password       String
+  role           UserRole        @default(OWNER)
+  isActive       Boolean         @default(true)
+  isVerified     Boolean         @default(false)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  age            Int             @default(0)
+  address        String
+  phone_number   String
+  boardingHouses BoardingHouse[]
+  permits        Permit[] // permit relation
+}
+
+model Admin {
+  id             Int             @id @default(autoincrement())
+  username       String          @unique
+  firstname      String
+  lastname       String
+  email          String          @unique
+  password       String
+  role           UserRole        @default(OWNER)
+  isActive       Boolean         @default(true)
+  isVerified     Boolean         @default(false)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  age            Int             @default(0)
+  address        String
+  phone_number   String
+}
+
+model Permit {
+  id        Int        @id @default(autoincrement())
+  ownerId   Int
+  type      PermitType
+  fileUrl   String // Link to file or pathnp
+  expiresAt DateTime
+  owner     Owner      @relation(fields: [ownerId], references: [id])
+}
+
+model BoardingHouse {
+  id                 Int                  @id @default(autoincrement())
+  ownerId            Int
+  owner              Owner                @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  name               String
+  address            String?
+  description        String?
+  price              Decimal?             @db.Decimal(10, 2)
+  amenities          Json? // Typo fixed from 'ameneties'
+  availabilityStatus Boolean              @default(true) // Consider using an Enum later if you want more states
+  locationId         Int
+  location           Location             @relation(fields: [locationId], references: [id])
+  properties         Json
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  bookings           Booking[]
+  BoardingHouseImage BoardingHouseImage[]
+}
+
+model Location {
+  id             Int             @id @default(autoincrement())
+  latitude       Float
+  longitude      Float
+  city           String?
+  province       String?
+  country        String? // optional
+  boardingHouses BoardingHouse[]
+}
+
+model Booking {
+  id              Int           @id @default(autoincrement())
+  tenantId        Int
+  boardingHouseId Int
+  tenant          Tenant        @relation(fields: [tenantId], references: [id], onDelete: Restrict)
+  boardingHouse   BoardingHouse @relation(fields: [boardingHouseId], references: [id], onDelete: Restrict)
+  dateBooked      DateTime
+  checkInDate     DateTime
+  checkOutDate    DateTime
+  status          BookingStatus @default(PENDING)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+model BoardingHouseImage {
+  id              Int           @id @default(autoincrement())
+  boardingHouse   BoardingHouse @relation(fields: [boardingHouseId], references: [id])
+  boardingHouseId Int
+  url             String
+  type            ImageType     @default(MAIN)
+  quality         ImageQuality  @default(MEDIUM)
+  createdAt       DateTime      @default(now())
+}
+
+model AuditLog {
+  id         Int      @id @default(autoincrement())
+  userId     Int?
+  user       Json
+  action     AuditAction   // e.g. "CREATE", "UPDATE", "DELETE", "LOGIN", etc.
+  tableName  String   // e.g. "Tenant", "Booking"
+  recordId   Int?     // The ID of the record affected, nullable in case not applicable
+  meta       Json?    // Optional: store extra info (diff, payload, IP, etc.)
+  createdAt  DateTime @default(now())
+}

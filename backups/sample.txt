@@ -1,0 +1,57 @@
+import { Controller, Post, Get, Body, Param } from '@nestjs/common';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBody,
+  ApiParam,
+} from '@nestjs/swagger';
+
+@Controller('resource') // e.g. /resource
+@ApiTags('Resource')    // Swagger UI tag
+export class ResourceController {
+  
+  @Post()
+  @ApiOperation({ summary: 'Create a new resource' })
+  @ApiBody({
+    schema: {
+      example: {
+        name: 'Sample Name',
+        value: 123,
+      },
+    },
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'The resource has been successfully created.',
+  })
+  create(@Body() body: any) {
+    return {
+      message: 'Resource created',
+      ...body,
+    };
+  }
+
+  @Get(':id')
+  @ApiOperation({ summary: 'Get resource by ID' })
+  @ApiParam({
+    name: 'id',
+    description: 'Unique identifier of the resource',
+    example: 'abc123',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Found the resource',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Resource not found',
+  })
+  findOne(@Param('id') id: string) {
+    return {
+      id,
+      name: 'Example',
+      value: 999,
+    };
+  }
+}

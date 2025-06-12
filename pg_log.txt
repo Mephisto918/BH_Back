@@ -1,182 +1,55 @@
-2025-06-09 00:52:13.808 UTC [274613] LOG:  starting PostgreSQL 17.4 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 15.1.1 20250425, 64-bit
-2025-06-09 00:52:13.810 UTC [274613] LOG:  listening on IPv6 address "::1", port 5432
-2025-06-09 00:52:13.810 UTC [274613] LOG:  listening on IPv4 address "127.0.0.1", port 5432
-2025-06-09 00:52:13.812 UTC [274613] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
-2025-06-09 00:52:13.821 UTC [274619] LOG:  database system was shut down at 2025-06-08 00:25:27 UTC
-2025-06-09 00:52:13.829 UTC [274613] LOG:  database system is ready to accept connections
-2025-06-09 00:57:13.920 UTC [274617] LOG:  checkpoint starting: time
-2025-06-09 00:57:14.558 UTC [274617] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.608 s, sync=0.008 s, total=0.639 s; sync files=7, longest=0.005 s, average=0.002 s; distance=5 kB, estimate=5 kB; lsn=0/1BEEA48, redo lsn=0/1BEE9F0
-2025-06-09 03:35:25.626 UTC [274613] LOG:  received fast shutdown request
-2025-06-09 03:35:25.631 UTC [274613] LOG:  aborting any active transactions
-2025-06-09 03:35:25.633 UTC [305721] FATAL:  terminating connection due to administrator command
-2025-06-09 03:35:25.633 UTC [305712] FATAL:  terminating connection due to administrator command
-2025-06-09 03:35:25.633 UTC [305719] FATAL:  terminating connection due to administrator command
-2025-06-09 03:35:25.636 UTC [274613] LOG:  background worker "logical replication launcher" (PID 274622) exited with exit code 1
-2025-06-09 03:35:25.636 UTC [274617] LOG:  shutting down
-2025-06-09 03:35:25.639 UTC [274617] LOG:  checkpoint starting: shutdown immediate
-2025-06-09 03:35:25.664 UTC [274617] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.006 s, sync=0.002 s, total=0.028 s; sync files=1, longest=0.002 s, average=0.002 s; distance=0 kB, estimate=5 kB; lsn=0/1BEEAF8, redo lsn=0/1BEEAF8
-2025-06-09 03:35:25.670 UTC [274613] LOG:  database system is shut down
-2025-06-09 04:08:46.318 UTC [326535] LOG:  starting PostgreSQL 17.4 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 15.1.1 20250425, 64-bit
-2025-06-09 04:08:46.322 UTC [326535] LOG:  listening on IPv6 address "::1", port 5432
-2025-06-09 04:08:46.322 UTC [326535] LOG:  listening on IPv4 address "127.0.0.1", port 5432
-2025-06-09 04:08:46.324 UTC [326535] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
-2025-06-09 04:08:46.335 UTC [326538] LOG:  database system was shut down at 2025-06-09 03:35:25 UTC
-2025-06-09 04:08:46.347 UTC [326535] LOG:  database system is ready to accept connections
-2025-06-09 04:08:51.076 UTC [326614] ERROR:  function postgis_version() does not exist at character 8
-2025-06-09 04:08:51.076 UTC [326614] HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-2025-06-09 04:08:51.076 UTC [326614] STATEMENT:  SELECT PostGIS_Version()
-2025-06-09 04:09:02.564 UTC [326614] ERROR:  function postgis_version() does not exist at character 8
-2025-06-09 04:09:02.564 UTC [326614] HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-2025-06-09 04:09:02.564 UTC [326614] STATEMENT:  SELECT PostGIS_Version()
-2025-06-09 04:09:12.085 UTC [326614] ERROR:  extension "postgis" is not available
-2025-06-09 04:09:12.085 UTC [326614] DETAIL:  Could not open extension control file "/home/mephiscus/Desktop/Projects/BH/BH_DB/pgsql/share/extension/postgis.control": No such file or directory.
-2025-06-09 04:09:12.085 UTC [326614] HINT:  The extension must first be installed on the system where PostgreSQL is running.
-2025-06-09 04:09:12.085 UTC [326614] STATEMENT:  CREATE EXTENSION postgis
-2025-06-09 04:13:46.416 UTC [326536] LOG:  checkpoint starting: time
-2025-06-09 04:13:46.443 UTC [326536] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.009 s, sync=0.002 s, total=0.028 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/1BEEC00, redo lsn=0/1BEEBA8
-2025-06-09 04:16:30.352 UTC [326614] ERROR:  function postgis_full_version() does not exist at character 8
-2025-06-09 04:16:30.352 UTC [326614] HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-2025-06-09 04:16:30.352 UTC [326614] STATEMENT:  SELECT PostGIS_Full_Version()
-2025-06-09 04:16:35.403 UTC [326614] ERROR:  extension "postgis" is not available
-2025-06-09 04:16:35.403 UTC [326614] DETAIL:  Could not open extension control file "/home/mephiscus/Desktop/Projects/BH/BH_DB/pgsql/share/extension/postgis.control": No such file or directory.
-2025-06-09 04:16:35.403 UTC [326614] HINT:  The extension must first be installed on the system where PostgreSQL is running.
-2025-06-09 04:16:35.403 UTC [326614] STATEMENT:  CREATE EXTENSION postgis
-2025-06-09 04:17:28.817 UTC [338979] FATAL:  database "mephiscus" does not exist
-2025-06-09 04:17:39.785 UTC [339058] FATAL:  database "mephiscus" does not exist
-2025-06-09 04:18:57.764 UTC [326614] ERROR:  function postgis_full_version() does not exist at character 8
-2025-06-09 04:18:57.764 UTC [326614] HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-2025-06-09 04:18:57.764 UTC [326614] STATEMENT:  SELECT PostGIS_Full_Version()
-2025-06-09 04:19:13.905 UTC [326614] ERROR:  extension "postgis" is not available
-2025-06-09 04:19:13.905 UTC [326614] DETAIL:  Could not open extension control file "/home/mephiscus/Desktop/Projects/BH/BH_DB/pgsql/share/extension/postgis.control": No such file or directory.
-2025-06-09 04:19:13.905 UTC [326614] HINT:  The extension must first be installed on the system where PostgreSQL is running.
-2025-06-09 04:19:13.905 UTC [326614] STATEMENT:  CREATE EXTENSION postgis
-2025-06-09 04:28:48.110 UTC [326614] ERROR:  extension "postgis" is not available
-2025-06-09 04:28:48.110 UTC [326614] DETAIL:  Could not open extension control file "/home/mephiscus/Desktop/Projects/BH/BH_DB/pgsql/share/extension/postgis.control": No such file or directory.
-2025-06-09 04:28:48.110 UTC [326614] HINT:  The extension must first be installed on the system where PostgreSQL is running.
-2025-06-09 04:28:48.110 UTC [326614] STATEMENT:  CREATE EXTENSION postgis
-2025-06-09 04:28:49.064 UTC [326614] ERROR:  extension "postgis" is not available
-2025-06-09 04:28:49.064 UTC [326614] DETAIL:  Could not open extension control file "/home/mephiscus/Desktop/Projects/BH/BH_DB/pgsql/share/extension/postgis.control": No such file or directory.
-2025-06-09 04:28:49.064 UTC [326614] HINT:  The extension must first be installed on the system where PostgreSQL is running.
-2025-06-09 04:28:49.064 UTC [326614] STATEMENT:  CREATE EXTENSION postgis
-2025-06-09 04:28:49.841 UTC [326614] ERROR:  extension "postgis" is not available
-2025-06-09 04:28:49.841 UTC [326614] DETAIL:  Could not open extension control file "/home/mephiscus/Desktop/Projects/BH/BH_DB/pgsql/share/extension/postgis.control": No such file or directory.
-2025-06-09 04:28:49.841 UTC [326614] HINT:  The extension must first be installed on the system where PostgreSQL is running.
-2025-06-09 04:28:49.841 UTC [326614] STATEMENT:  CREATE EXTENSION postgis
-2025-06-09 04:47:43.435 UTC [326535] LOG:  received fast shutdown request
-2025-06-09 04:47:43.438 UTC [326535] LOG:  aborting any active transactions
-2025-06-09 04:47:43.440 UTC [326612] FATAL:  terminating connection due to administrator command
-2025-06-09 04:47:43.440 UTC [326607] FATAL:  terminating connection due to administrator command
-2025-06-09 04:47:43.442 UTC [326535] LOG:  background worker "logical replication launcher" (PID 326541) exited with exit code 1
-2025-06-09 04:47:43.445 UTC [326614] FATAL:  terminating connection due to administrator command
-2025-06-09 04:47:43.447 UTC [326536] LOG:  shutting down
-2025-06-09 04:47:43.451 UTC [326536] LOG:  checkpoint starting: shutdown immediate
-2025-06-09 04:47:43.465 UTC [326536] LOG:  checkpoint complete: wrote 0 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.019 s; sync files=0, longest=0.000 s, average=0.000 s; distance=0 kB, estimate=0 kB; lsn=0/1BEECB0, redo lsn=0/1BEECB0
-2025-06-09 04:47:43.470 UTC [326535] LOG:  database system is shut down
-2025-06-09 06:05:52.394 UTC [39473] LOG:  starting PostgreSQL 17.4 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 15.1.1 20250425, 64-bit
-2025-06-09 06:05:52.395 UTC [39473] LOG:  listening on IPv6 address "::1", port 5432
-2025-06-09 06:05:52.395 UTC [39473] LOG:  listening on IPv4 address "127.0.0.1", port 5432
-2025-06-09 06:05:52.397 UTC [39473] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
-2025-06-09 06:05:52.404 UTC [39476] LOG:  database system was shut down at 2025-06-09 04:47:43 UTC
-2025-06-09 06:05:52.412 UTC [39473] LOG:  database system is ready to accept connections
-2025-06-09 06:10:52.501 UTC [39474] LOG:  checkpoint starting: time
-2025-06-09 06:10:52.523 UTC [39474] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.002 s, total=0.022 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/1BEEDB8, redo lsn=0/1BEED60
-2025-06-09 06:40:53.121 UTC [39474] LOG:  checkpoint starting: time
-2025-06-09 06:42:50.165 UTC [39474] LOG:  checkpoint complete: wrote 1168 buffers (7.1%); 0 WAL file(s) added, 0 removed, 1 recycled; write=117.013 s, sync=0.019 s, total=117.044 s; sync files=99, longest=0.005 s, average=0.001 s; distance=10132 kB, estimate=10132 kB; lsn=0/2643460, redo lsn=0/25D3DD0
-2025-06-09 07:35:54.244 UTC [39474] LOG:  checkpoint starting: time
-2025-06-09 07:35:59.382 UTC [39474] LOG:  checkpoint complete: wrote 52 buffers (0.3%); 0 WAL file(s) added, 0 removed, 0 recycled; write=5.120 s, sync=0.007 s, total=5.138 s; sync files=17, longest=0.005 s, average=0.001 s; distance=463 kB, estimate=9165 kB; lsn=0/2647E48, redo lsn=0/2647DB8
-2025-06-09 07:44:53.203 UTC [85120] LOG:  could not receive data from client: Connection reset by peer
-2025-06-09 07:45:37.773 UTC [65745] ERROR:  relation "audit_logs" does not exist at character 15
-2025-06-09 07:45:37.773 UTC [65745] STATEMENT:  select * from audit_logs
-2025-06-09 07:45:54.581 UTC [39474] LOG:  checkpoint starting: time
-2025-06-09 07:45:55.796 UTC [65745] ERROR:  relation "admins" does not exist at character 15
-2025-06-09 07:45:55.796 UTC [65745] STATEMENT:  select * from admins
-2025-06-09 07:46:07.058 UTC [39474] LOG:  checkpoint complete: wrote 125 buffers (0.8%); 0 WAL file(s) added, 0 removed, 0 recycled; write=12.437 s, sync=0.023 s, total=12.477 s; sync files=91, longest=0.007 s, average=0.001 s; distance=666 kB, estimate=8315 kB; lsn=0/270C360, redo lsn=0/26EE7F8
-2025-06-09 07:46:21.546 UTC [85666] ERROR:  relation "admins" does not exist at character 15
-2025-06-09 07:46:21.546 UTC [85666] STATEMENT:  select * from admins
-2025-06-09 07:47:25.410 UTC [86125] ERROR:  table "_prisma_migrations" does not exist
-2025-06-09 07:47:25.410 UTC [86125] STATEMENT:  DROP TABLE _prisma_migrations
-2025-06-09 07:47:30.965 UTC [85666] ERROR:  relation "admins" does not exist at character 15
-2025-06-09 07:47:30.965 UTC [85666] STATEMENT:  select * from admins
-2025-06-09 07:50:26.923 UTC [87237] ERROR:  table "_prisma_migrations" does not exist
-2025-06-09 07:50:26.923 UTC [87237] STATEMENT:  DROP TABLE _prisma_migrations
-2025-06-09 07:50:44.003 UTC [87458] ERROR:  table "_prisma_migrations" does not exist
-2025-06-09 07:50:44.003 UTC [87458] STATEMENT:  DROP TABLE _prisma_migrations
-2025-06-09 07:50:47.670 UTC [65734] ERROR:  relation "public._prisma_migrations" does not exist at character 18
-2025-06-09 07:50:47.670 UTC [65734] STATEMENT:  SELECT pm.* FROM public."_prisma_migrations" AS pm
-2025-06-09 07:50:54.116 UTC [39474] LOG:  checkpoint starting: time
-2025-06-09 07:51:01.630 UTC [85666] ERROR:  relation "admin" does not exist at character 15
-2025-06-09 07:51:01.630 UTC [85666] STATEMENT:  select * from admin
-2025-06-09 07:51:05.617 UTC [85666] ERROR:  relation "admin" does not exist at character 15
-2025-06-09 07:51:05.617 UTC [85666] STATEMENT:  select * from Admin
-2025-06-09 07:51:26.345 UTC [39474] LOG:  checkpoint complete: wrote 322 buffers (2.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=32.185 s, sync=0.030 s, total=32.230 s; sync files=177, longest=0.003 s, average=0.001 s; distance=2821 kB, estimate=7766 kB; lsn=0/29E53B0, redo lsn=0/29AFDB0
-2025-06-09 07:52:10.121 UTC [87939] ERROR:  relation "owners" does not exist at character 15
-2025-06-09 07:52:10.121 UTC [87939] STATEMENT:  select * from Owners
-2025-06-09 07:52:14.821 UTC [87939] ERROR:  relation "owners" does not exist at character 15
-2025-06-09 07:52:14.821 UTC [87939] STATEMENT:  select * from Owners
-2025-06-09 07:52:20.519 UTC [87939] ERROR:  relation "owner" does not exist at character 15
-2025-06-09 07:52:20.519 UTC [87939] STATEMENT:  select * from Owner
-2025-06-09 07:55:54.444 UTC [39474] LOG:  checkpoint starting: time
-2025-06-09 07:55:57.479 UTC [39474] LOG:  checkpoint complete: wrote 31 buffers (0.2%); 0 WAL file(s) added, 0 removed, 0 recycled; write=3.011 s, sync=0.007 s, total=3.036 s; sync files=11, longest=0.006 s, average=0.001 s; distance=228 kB, estimate=7012 kB; lsn=0/29E9180, redo lsn=0/29E9128
-2025-06-09 08:04:08.896 UTC [39473] LOG:  received fast shutdown request
-2025-06-09 08:04:08.899 UTC [39473] LOG:  aborting any active transactions
-2025-06-09 08:04:08.900 UTC [65742] FATAL:  terminating connection due to administrator command
-2025-06-09 08:04:08.901 UTC [87939] FATAL:  terminating connection due to administrator command
-2025-06-09 08:04:08.902 UTC [39473] LOG:  background worker "logical replication launcher" (PID 39479) exited with exit code 1
-2025-06-09 08:04:08.902 UTC [65734] FATAL:  terminating connection due to administrator command
-2025-06-09 08:04:08.907 UTC [39474] LOG:  shutting down
-2025-06-09 08:04:08.909 UTC [39474] LOG:  checkpoint starting: shutdown immediate
-2025-06-09 08:04:08.925 UTC [39474] LOG:  checkpoint complete: wrote 0 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.019 s; sync files=0, longest=0.000 s, average=0.000 s; distance=0 kB, estimate=6311 kB; lsn=0/29E9230, redo lsn=0/29E9230
-2025-06-09 08:04:08.933 UTC [39473] LOG:  database system is shut down
-2025-06-09 12:41:11.598 UTC [92248] LOG:  starting PostgreSQL 17.4 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 15.1.1 20250425, 64-bit
-2025-06-09 12:41:11.600 UTC [92248] LOG:  listening on IPv6 address "::1", port 5432
-2025-06-09 12:41:11.600 UTC [92248] LOG:  listening on IPv4 address "127.0.0.1", port 5432
-2025-06-09 12:41:11.602 UTC [92248] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
-2025-06-09 12:41:11.611 UTC [92251] LOG:  database system was shut down at 2025-06-09 08:04:08 UTC
-2025-06-09 12:41:11.621 UTC [92248] LOG:  database system is ready to accept connections
-2025-06-09 12:46:11.720 UTC [92249] LOG:  checkpoint starting: time
-2025-06-09 12:46:11.758 UTC [92249] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.006 s, sync=0.004 s, total=0.038 s; sync files=2, longest=0.003 s, average=0.002 s; distance=0 kB, estimate=0 kB; lsn=0/29E9338, redo lsn=0/29E92E0
-2025-06-09 13:12:47.841 UTC [104082] ERROR:  table "_prisma_migrations" does not exist
-2025-06-09 13:12:47.841 UTC [104082] STATEMENT:  DROP TABLE _prisma_migrations
-2025-06-09 13:16:12.355 UTC [92249] LOG:  checkpoint starting: time
-2025-06-09 13:16:20.837 UTC [92249] LOG:  checkpoint complete: wrote 85 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=8.437 s, sync=0.025 s, total=8.483 s; sync files=52, longest=0.005 s, average=0.001 s; distance=458 kB, estimate=458 kB; lsn=0/2A5BD90, redo lsn=0/2A5BD00
-2025-06-09 14:33:28.554 UTC [130673] ERROR:  relation "public.Tenant" does not exist at character 458
-2025-06-09 14:33:28.554 UTC [130673] STATEMENT:  SELECT "public"."Tenant"."id", "public"."Tenant"."username", "public"."Tenant"."firstname", "public"."Tenant"."lastname", "public"."Tenant"."email", "public"."Tenant"."password", "public"."Tenant"."role"::text, "public"."Tenant"."isActive", "public"."Tenant"."isVerified", "public"."Tenant"."createdAt", "public"."Tenant"."updatedAt", "public"."Tenant"."age", "public"."Tenant"."guardian", "public"."Tenant"."address", "public"."Tenant"."phone_number" FROM "public"."Tenant" WHERE 1=1 OFFSET $1
-2025-06-09 14:35:21.791 UTC [131252] ERROR:  relation "Tenantr" does not exist at character 15
-2025-06-09 14:35:21.791 UTC [131252] STATEMENT:  select * from "Tenantr"
-2025-06-09 14:35:25.229 UTC [131252] ERROR:  relation "Tenant" does not exist at character 15
-2025-06-09 14:35:25.229 UTC [131252] STATEMENT:  select * from "Tenant"
-2025-06-09 14:36:14.414 UTC [92249] LOG:  checkpoint starting: time
-2025-06-09 14:36:16.350 UTC [92249] LOG:  checkpoint complete: wrote 19 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=1.915 s, sync=0.006 s, total=1.937 s; sync files=9, longest=0.005 s, average=0.001 s; distance=33 kB, estimate=416 kB; lsn=0/2A64440, redo lsn=0/2A643E8
-2025-06-09 14:37:10.218 UTC [92249] LOG:  checkpoint starting: immediate force wait
-2025-06-09 14:37:10.244 UTC [92249] LOG:  checkpoint complete: wrote 4 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.003 s, sync=0.008 s, total=0.027 s; sync files=4, longest=0.007 s, average=0.002 s; distance=4267 kB, estimate=4267 kB; lsn=0/2E8F2F0, redo lsn=0/2E8F260
-2025-06-09 14:37:10.387 UTC [92249] LOG:  checkpoint starting: immediate force wait
-2025-06-09 14:37:10.404 UTC [92249] LOG:  checkpoint complete: wrote 14 buffers (0.1%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.003 s, sync=0.004 s, total=0.018 s; sync files=8, longest=0.002 s, average=0.001 s; distance=4269 kB, estimate=4269 kB; lsn=0/32BA948, redo lsn=0/32BA8F0
-2025-06-09 14:37:10.509 UTC [131991] FATAL:  terminating connection due to administrator command
-2025-06-09 14:37:10.610 UTC [92249] LOG:  checkpoint starting: immediate force wait
-2025-06-09 14:37:10.625 UTC [92249] LOG:  checkpoint complete: wrote 4 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.003 s, sync=0.003 s, total=0.016 s; sync files=4, longest=0.002 s, average=0.001 s; distance=4268 kB, estimate=4269 kB; lsn=0/36E5A20, redo lsn=0/36E59C8
-2025-06-09 14:37:10.735 UTC [92249] LOG:  checkpoint starting: immediate force wait
-2025-06-09 14:37:10.753 UTC [92249] LOG:  checkpoint complete: wrote 4 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.004 s, total=0.019 s; sync files=4, longest=0.003 s, average=0.001 s; distance=4268 kB, estimate=4269 kB; lsn=0/3B10C08, redo lsn=0/3B10BB0
-2025-06-09 14:42:10.853 UTC [92249] LOG:  checkpoint starting: time
-2025-06-09 14:42:23.334 UTC [92249] LOG:  checkpoint complete: wrote 125 buffers (0.8%); 0 WAL file(s) added, 0 removed, 0 recycled; write=12.446 s, sync=0.021 s, total=12.481 s; sync files=104, longest=0.004 s, average=0.001 s; distance=689 kB, estimate=3911 kB; lsn=0/3BBD1D0, redo lsn=0/3BBD140
-2025-06-09 15:41:12.437 UTC [92248] LOG:  received fast shutdown request
-2025-06-09 15:41:12.439 UTC [92248] LOG:  aborting any active transactions
-2025-06-09 15:41:12.440 UTC [131252] FATAL:  terminating connection due to administrator command
-2025-06-09 15:41:12.444 UTC [131247] FATAL:  terminating connection due to administrator command
-2025-06-09 15:41:12.448 UTC [131250] FATAL:  terminating connection due to administrator command
-2025-06-09 15:41:12.451 UTC [92248] LOG:  background worker "logical replication launcher" (PID 92254) exited with exit code 1
-2025-06-09 15:41:12.452 UTC [92249] LOG:  shutting down
-2025-06-09 15:41:12.455 UTC [92249] LOG:  checkpoint starting: shutdown immediate
-2025-06-09 15:41:12.465 UTC [92249] LOG:  checkpoint complete: wrote 0 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.014 s; sync files=0, longest=0.000 s, average=0.000 s; distance=0 kB, estimate=3520 kB; lsn=0/3BBD280, redo lsn=0/3BBD280
-2025-06-09 15:41:12.472 UTC [92248] LOG:  database system is shut down
-2025-06-09 15:51:51.739 UTC [157919] LOG:  starting PostgreSQL 17.4 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 15.1.1 20250425, 64-bit
-2025-06-09 15:51:51.742 UTC [157919] LOG:  listening on IPv6 address "::1", port 5432
-2025-06-09 15:51:51.742 UTC [157919] LOG:  listening on IPv4 address "127.0.0.1", port 5432
-2025-06-09 15:51:51.745 UTC [157919] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
-2025-06-09 15:51:51.759 UTC [157922] LOG:  database system was shut down at 2025-06-09 15:41:12 UTC
-2025-06-09 15:51:51.769 UTC [157919] LOG:  database system is ready to accept connections
-2025-06-09 15:56:51.859 UTC [157920] LOG:  checkpoint starting: time
-2025-06-09 15:56:52.596 UTC [157920] LOG:  checkpoint complete: wrote 10 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.712 s, sync=0.009 s, total=0.738 s; sync files=7, longest=0.004 s, average=0.002 s; distance=0 kB, estimate=0 kB; lsn=0/3BBD650, redo lsn=0/3BBD5F8
-2025-06-09 16:01:51.697 UTC [157920] LOG:  checkpoint starting: time
-2025-06-09 16:01:52.145 UTC [157920] LOG:  checkpoint complete: wrote 5 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.415 s, sync=0.010 s, total=0.448 s; sync files=5, longest=0.005 s, average=0.002 s; distance=1 kB, estimate=1 kB; lsn=0/3BBDAC0, redo lsn=0/3BBDA68
-2025-06-09 16:06:51.244 UTC [157920] LOG:  checkpoint starting: time
-2025-06-09 16:06:51.866 UTC [157920] LOG:  checkpoint complete: wrote 7 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.604 s, sync=0.004 s, total=0.623 s; sync files=7, longest=0.002 s, average=0.001 s; distance=8 kB, estimate=8 kB; lsn=0/3BBFC08, redo lsn=0/3BBFBB0
+2025-06-12 11:52:31.571 UTC [14472] LOG:  checkpoint starting: time
+2025-06-12 11:52:31.594 UTC [14472] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.003 s, total=0.023 s; sync files=2, longest=0.002 s, average=0.002 s; distance=0 kB, estimate=0 kB; lsn=0/3BBFDC0, redo lsn=0/3BBFD68
+2025-06-12 15:19:58.602 UTC [95867] ERROR:  relation "tenants" does not exist at character 15
+2025-06-12 15:19:58.602 UTC [95867] STATEMENT:  select * from tenants
+2025-06-12 15:19:58.660 UTC [95868] ERROR:  relation "audit_logs" does not exist at character 22
+2025-06-12 15:19:58.660 UTC [95868] STATEMENT:  
+	        INSERT INTO audit_logs (user_id, action, table_name, record_id, changes)
+	        VALUES ($1, $2, $3, $4, $5)
+	      
+2025-06-12 15:20:45.099 UTC [96260] ERROR:  relation "Tenants" does not exist at character 15
+2025-06-12 15:20:45.099 UTC [96260] STATEMENT:  select * from "Tenants"
+2025-06-12 15:20:45.142 UTC [96261] ERROR:  relation "audit_logs" does not exist at character 22
+2025-06-12 15:20:45.142 UTC [96261] STATEMENT:  
+	        INSERT INTO audit_logs (user_id, action, table_name, record_id, changes)
+	        VALUES ($1, $2, $3, $4, $5)
+	      
+2025-06-12 15:21:43.353 UTC [96825] ERROR:  relation "audit_logs" does not exist at character 22
+2025-06-12 15:21:43.353 UTC [96825] STATEMENT:  
+	        INSERT INTO audit_logs (user_id, action, table_name, record_id, changes)
+	        VALUES ($1, $2, $3, $4, $5)
+	      
+2025-06-12 15:22:10.428 UTC [97078] ERROR:  relation "audit_logs" does not exist at character 22
+2025-06-12 15:22:10.428 UTC [97078] STATEMENT:  
+	        INSERT INTO audit_logs (user_id, action, table_name, record_id, changes)
+	        VALUES ($1, $2, $3, $4, $5)
+	      
+2025-06-12 15:22:35.790 UTC [14472] LOG:  checkpoint starting: time
+2025-06-12 15:22:36.933 UTC [14472] LOG:  checkpoint complete: wrote 11 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=1.117 s, sync=0.006 s, total=1.145 s; sync files=7, longest=0.006 s, average=0.001 s; distance=29 kB, estimate=29 kB; lsn=0/3BC73A0, redo lsn=0/3BC7348
+2025-06-12 15:23:59.056 UTC [98075] ERROR:  relation "audit_logs" does not exist at character 22
+2025-06-12 15:23:59.056 UTC [98075] STATEMENT:  
+	        INSERT INTO audit_logs (user_id, action, table_name, record_id, changes)
+	        VALUES ($1, $2, $3, $4, $5)
+	      
+2025-06-12 15:24:40.056 UTC [98358] ERROR:  relation "tenants" does not exist at character 15
+2025-06-12 15:24:40.056 UTC [98358] STATEMENT:  select * from tenants where id = $1
+2025-06-12 15:24:40.065 UTC [98359] ERROR:  relation "audit_logs" does not exist at character 22
+2025-06-12 15:24:40.065 UTC [98359] STATEMENT:  
+	        INSERT INTO audit_logs (user_id, action, table_name, record_id, changes)
+	        VALUES ($1, $2, $3, $4, $5)
+	      
+2025-06-12 15:25:13.397 UTC [98698] ERROR:  relation "audit_logs" does not exist at character 22
+2025-06-12 15:25:13.397 UTC [98698] STATEMENT:  
+	        INSERT INTO audit_logs (user_id, action, table_name, record_id, changes)
+	        VALUES ($1, $2, $3, $4, $5)
+	      
+2025-06-12 15:25:18.524 UTC [98749] ERROR:  relation "audit_logs" does not exist at character 22
+2025-06-12 15:25:18.524 UTC [98749] STATEMENT:  
+	        INSERT INTO audit_logs (user_id, action, table_name, record_id, changes)
+	        VALUES ($1, $2, $3, $4, $5)
+	      
+2025-06-12 15:27:12.379 UTC [99535] ERROR:  relation "audit_logs" does not exist at character 22
+2025-06-12 15:27:12.379 UTC [99535] STATEMENT:  
+	        INSERT INTO audit_logs (user_id, action, table_name, record_id, changes)
+	        VALUES ($1, $2, $3, $4, $5)
+	      

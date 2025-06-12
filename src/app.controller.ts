@@ -1,12 +1,22 @@
 import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
-
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
 }
+
+// import { ApiOperation, ApiBody, ApiResponse } from '@nestjs/swagger';
+// * Swagger documentation * //
+// @ApiOperation({ summary: 'Create a new resource' })
+// @ApiBody({
+//   schema: {
+//     example: {
+//       name: 'Sample Name',
+//       value: 123,
+//     },
+//   },
+// })
+// @ApiResponse({
+//   status: 201,
+//   description: 'The resource has been successfully created.',
+// })
+// * Swagger documentation * //

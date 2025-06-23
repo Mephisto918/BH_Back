@@ -2,6 +2,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { SwaggerTheme, SwaggerThemeNameEnum } from 'swagger-themes';
 import ip from 'ip';
 
 async function bootstrap() {
@@ -16,7 +17,12 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, swagConfig);
-  SwaggerModule.setup('docs', app, document);
+  const theme = new SwaggerTheme();
+  const options = {
+    explorer: true,
+    customCss: theme.getBuffer(SwaggerThemeNameEnum.DARK),
+  };
+  SwaggerModule.setup('docs', app, document, options);
 
   app.enableCors();
 

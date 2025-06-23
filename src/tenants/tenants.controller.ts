@@ -1,51 +1,48 @@
-import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
-import { ApiOperation, ApiBody, ApiResponse } from '@nestjs/swagger';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Patch,
+  Query
+} from '@nestjs/common';
 import { TenantsService } from './tenants.service';
 import { CreateTenantDto } from './dto/create-tenant.dto';
+import { CreateTenantDoc, GetTenantDoc } from './tenants.swagger';
+import { UpdateTenantDto } from './dto/update-tenant.dto';
+import { FindTenantsDto } from './dto/find-tenants.dto';
 @Controller('tenants')
 export class TenantsController {
   constructor(private readonly tenantsService: TenantsService) {}
 
   @Get()
-  findAll() {
-    const results = this.tenantsService.findAll();
-    return results
+  @GetTenantDoc()
+  findAll(@Query() findAllTenantsDto: FindTenantsDto) {
+    const results = this.tenantsService.findAll(findAllTenantsDto);
+    return results;
   }
 
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    const results = this.tenantsService.findOne(+id);
+    return results;
+  }
+
+  // TODO: add sub-resource routing e.g. (@Get(':id/something')) such as for image, pfp
+
   @Post()
-  @ApiOperation({ summary: 'Create a new resource' })
-  @ApiBody({
-    schema: {
-      example: {
-        username: 'user123',
-        firstname: 'John',
-        lastname: 'Doe',
-        email: 'ezVw2@example.com',
-        password: 'password123',
-        age: 30,
-        guardian: 'Jane Doe',
-        address: '123 Main St',
-        phone_number: '123-456-7890',
-      },
-    },
-  })
-  @ApiResponse({
-    status: 201,
-    description: 'The resource has been successfully created.',
-  })
+  @CreateTenantDoc()
   create(@Body() createTenantDto: CreateTenantDto) {
     return this.tenantsService.create(createTenantDto);
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.tenantsService.findOne(+id);
-  // }
-
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateTenantDto: UpdateTenantDto) {
-  //   return this.tenantsService.update(+id, updateTenantDto);
-  // }
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateTenantDto: UpdateTenantDto) {
+    const result = this.tenantsService.update(+id, updateTenantDto);
+    return result;
+  }
 
   @Delete(':id')
   remove(@Param('id') id: string) {

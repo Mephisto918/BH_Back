@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { DatabaseModule } from './common/database/database.module';
-import { ConfigService } from './config/config.service';
-import { ConfigModule } from './config/config.module';
+import { DatabaseModule } from './infrastructure/database/database.module';
 import { TenantsModule } from './tenants/tenants.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 
@@ -12,11 +10,15 @@ import { ResponseInterceptor } from './common/interceptors/response.interceptor'
 import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
 import { OwnersModule } from './owners/owners.module';
+import { ImageModule } from './infrastructure/image/image.module';
+import { AdminsModule } from './admins/admins.module';
+import { BoardingHousesModule } from './boarding-houses/boarding-houses.module';
+import { BoookingModule } from './boooking/boooking.module';
+import { PdfModule } from './infrastructure/pdf/pdf.module';
 
 @Module({
   imports: [
     TenantsModule,
-    ConfigModule,
     DatabaseModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'media'),
@@ -24,10 +26,14 @@ import { OwnersModule } from './owners/owners.module';
     }),
     AuthModule,
     OwnersModule,
+    ImageModule,
+    AdminsModule,
+    BoardingHousesModule,
+    BoookingModule,
+    PdfModule,
   ],
   controllers: [AppController],
   providers: [
-    ConfigService,
     {
       provide: APP_INTERCEPTOR,
       useClass: ResponseInterceptor,

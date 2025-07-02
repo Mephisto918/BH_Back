@@ -22,6 +22,8 @@ async function bootstrap() {
     explorer: true,
     customCss: theme.getBuffer(SwaggerThemeNameEnum.DARK),
   };
+
+  app.setGlobalPrefix('api');
   SwaggerModule.setup('docs', app, document, options);
 
   app.enableCors();
@@ -31,7 +33,6 @@ async function bootstrap() {
   const localIp: string = ip.address(); // uselless kay maka listen ra diay ka sa tanan port using 0.0.0.0
   console.log(`🚀 Server running at http://${localIp}:${port}`);
 
-  app.setGlobalPrefix('api');
   await app.listen(port, '0.0.0.0');
   // await app.listen(port, localIp);
 }

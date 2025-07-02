@@ -1,6 +1,7 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { CreateTenantDto } from './dto/create-tenant.dto';
+// import { time } from 'console';
 
 export function CreateTenantDoc() {
   return applyDecorators(
@@ -56,7 +57,7 @@ export function GetTenantDoc() {
             phone_number: '092313231231',
           },
         ],
-        timestamp: '2025-06-23T11:27:29.360Z',
+        timestamp: 'timestamp',
       },
     }),
   );

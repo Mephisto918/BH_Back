@@ -1,17 +1,24 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { IDatabaseService } from 'src/common/database/database.interface';
-import { PrismaService } from 'src/common/database/prisma.service';
+import { IDatabaseService } from 'src/infrastructure/database/database.interface';
+import { PrismaService } from 'src/infrastructure/database/prisma.service';
 
 import { CreateTenantDto } from './dto/create-tenant.dto';
 import { UpdateTenantDto } from './dto/update-tenant.dto';
 import { FindTenantsDto } from './dto/find-tenants.dto';
 import { Tenant } from '@prisma/client';
+import {
+  MediaUploadDto,
+  MediaUploadsDto,
+} from 'src/infrastructure/image/dto/media-upload.dto';
+import { ImageService } from 'src/infrastructure/image/image.service';
 
 @Injectable()
 export class TenantsService {
   constructor(
     @Inject('IDatabaseService') private readonly database: IDatabaseService,
+    private readonly imageService: ImageService,
   ) {}
+
   private get prisma() {
     return this.database.getClient() as PrismaService;
   }
@@ -46,6 +53,15 @@ export class TenantsService {
     });
   }
 
+  findByUsername(username: string) {
+    const prisma = this.prisma;
+    return prisma.tenant.findUnique({
+      where: {
+        username: username,
+      },
+    });
+  }
+
   create(dto: CreateTenantDto) {
     return this.prisma.tenant.create({
       data: {
@@ -60,6 +76,31 @@ export class TenantsService {
         phone_number: dto.phone_number,
       },
     });
+  }
+
+  upload({ resourceType, resourceId, mediaType, file }: MediaUploadDto) {
+    const result = this.imageService.processUpload(
+      file,
+      resourceType,
+      resourceId,
+      mediaType,
+    );
+
+    return result;
+  }
+
+  uploads({ resourceType, resourceId, mediaType, files }: MediaUploadsDto) {
+    if (!files || files.length === 0) {
+      throw new Error('No files provided');
+    }
+    const result = this.imageService.processUploads(
+      files,
+      resourceType,
+      resourceId,
+      mediaType,
+    );
+
+    return result;
   }
 
   update(id: number, updateTenantDto: UpdateTenantDto) {

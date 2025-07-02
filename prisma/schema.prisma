@@ -49,7 +49,7 @@ enum AuditAction {
 
 generator client {
   provider = "prisma-client-js"
-  // output   = "../generated/prisma" // need more research on this 
+  // output   = "../generated/prisma" // need more research on this
 }
 
 datasource db {
@@ -96,20 +96,20 @@ model Owner {
 }
 
 model Admin {
-  id             Int             @id @default(autoincrement())
-  username       String          @unique
-  firstname      String
-  lastname       String
-  email          String          @unique
-  password       String
-  role           UserRole        @default(OWNER)
-  isActive       Boolean         @default(true)
-  isVerified     Boolean         @default(false)
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
-  age            Int             @default(0)
-  address        String
-  phone_number   String
+  id           Int      @id @default(autoincrement())
+  username     String   @unique
+  firstname    String
+  lastname     String
+  email        String   @unique
+  password     String
+  role         UserRole @default(OWNER)
+  isActive     Boolean  @default(true)
+  isVerified   Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  age          Int      @default(0)
+  address      String
+  phone_number String
 }
 
 model Permit {
@@ -175,12 +175,12 @@ model BoardingHouseImage {
 }
 
 model AuditLog {
-  id         Int      @id @default(autoincrement())
-  userId     Int?
-  user       Json
-  action     AuditAction   // e.g. "CREATE", "UPDATE", "DELETE", "LOGIN", etc.
-  tableName  String   // e.g. "Tenant", "Booking"
-  recordId   Int?     // The ID of the record affected, nullable in case not applicable
-  meta       Json?    // Optional: store extra info (diff, payload, IP, etc.)
-  createdAt  DateTime @default(now())
+  id        Int         @id @default(autoincrement())
+  userId    Int?
+  user      Json
+  action    AuditAction // e.g. "CREATE", "UPDATE", "DELETE", "LOGIN", etc.
+  tableName String // e.g. "Tenant", "Booking"
+  recordId  Int? // The ID of the record affected, nullable in case not applicable
+  meta      Json? // Optional: store extra info (diff, payload, IP, etc.)
+  createdAt DateTime    @default(now())
 }

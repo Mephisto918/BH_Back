@@ -34,13 +34,11 @@ export class BoardingHousesController {
 
   @Post()
   @CreateBoardingHouseDoc()
-  create(
-    @Body() createBoardingHouseDto: CreateBoardingHouseDto,
-    locationDto: LocationDto,
-  ) {
+  create(@Body() createBoardingHouseDto: CreateBoardingHouseDto) {
+    const locationData = createBoardingHouseDto.location;
     return this.boardingHousesService.create(
       createBoardingHouseDto,
-      locationDto,
+      locationData,
     );
   }
 

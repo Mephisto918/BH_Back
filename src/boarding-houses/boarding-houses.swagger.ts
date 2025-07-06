@@ -10,18 +10,23 @@ export function CreateBoardingHouseDoc() {
       examples: {
         sample: {
           value: {
-            owner: 'Sample owner',
-            name: 'Pride Lotus Lodge',
-            address: 'Jl. Raya Kecamatan, Jakarta Timur, DKI Jakarta',
+            ownerId: 1,
+            owner: 'Echoes of Serenity',
+            name: 'Sunset Horizon Retreat',
+            address:
+              'Jl. Melati No. 45, Kebayoran Baru, Jakarta Selatan, DKI Jakarta',
             description:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-            price: 123.23,
-            availabilityStatus: true,
-            amenities: ['Wifi', 'Kitchen', 'Pool'],
-            properties: { capacity: 20, type: 'Private' },
+              'A tranquil place where comfort meets nature, perfect for relaxation and rejuvenation.',
+            price: '198.75',
+            availabilityStatus: false,
+            amenities: ['WiFi', 'AirConditioning', 'Gym'],
+            properties: {
+              capacity: 15,
+              type: 'Shared',
+            },
             location: {
-              latitude: '12321.123123',
-              longitude: '21323.3123',
+              latitude: 11.003229,
+              longitude: 124.3041542,
               city: 'Jakarta',
               province: 'DKI Jakarta',
               country: 'Indonesia',
@@ -57,8 +62,8 @@ export function GetBoardingHousesDoc() {
             amenities: ['Wifi', 'Kitchen', 'Pool'],
             properties: { capacity: 20, type: 'Private' },
             location: {
-              latitude: '12321.123123',
-              longitude: '21323.3123',
+              latitude: 11.004229,
+              longitude: 124.6041542,
               city: 'Jakarta',
               province: 'DKI Jakarta',
               country: 'Indonesia',

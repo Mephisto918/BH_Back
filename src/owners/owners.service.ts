@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import { CreateOwnerDto } from './dto/create-owner.dto';
 import { UpdateOwnerDto } from './dto/update-owner.dto';
 import { IDatabaseService } from 'src/infrastructure/database/database.interface';
@@ -96,10 +96,39 @@ export class OwnersService {
   }
 
   remove(id: number) {
-    return this.prisma.owner.delete({
-      where: {
-        id,
-      },
-    });
+    // TODO: fix this
+    const prisma = this.prisma;
+    try {
+      return prisma.owner.delete({ where: { id } });
+    } catch (err: unknown) {
+      if (err instanceof NotFoundException) {
+        throw new NotFoundException('Owner not found');
+      }
+      throw err; // Let Nest handle as 500
+    }
   }
 }
+
+// TODO: fixe the delete function in service which returns no record found from prisma
+/* sample reply from GPT
+ * async remove(id: string): Promise<void> {
+ *   try {
+ *     await this.prisma.product.delete({ where: { id } });
+ *   } catch (err) {
+ *     if (this.isPrismaNotFoundError(err)) {
+ *       throw new NotFoundException(`Product with id ${id} not found`);
+ *     }
+ *     throw err; // let global Nest handler log or map to 500
+ *   }
+ * }
+ *
+ * private isPrismaNotFoundError(err: unknown): err is { code: string } {
+ *   return (
+ *     typeof err === 'object' &&
+ *     err !== null &&
+ *     'code' in err &&
+ *     (err as any).code === 'P2025'
+ *   );
+ * }
+ *
+ */

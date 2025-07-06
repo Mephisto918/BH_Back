@@ -1,6 +1,7 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { CreateOwnerDto } from './dto/create-owner.dto';
+import { UpdateOwnerDto } from './dto/update-owner.dto';
 
 export function CreateOwnerDoc() {
   return applyDecorators(
@@ -51,6 +52,32 @@ export function GetOwnerDoc() {
         ],
         timestamp: 'some other time',
       },
+    }),
+  );
+}
+
+export function UpdateOwnerDoc() {
+  return applyDecorators(
+    ApiOperation({ summary: 'Update owners Info ' }),
+    ApiBody({
+      type: UpdateOwnerDto,
+      examples: {
+        sample: {
+          value: {
+            username: 'sample',
+            firstname: 'sampleFirst',
+            lastname: 'sampleLast',
+            email: 'sample.le@gmail.com',
+            age: 12,
+            address: 'sample brg xamp',
+            phone_number: '123123123',
+          },
+        },
+      },
+    }),
+    ApiResponse({
+      status: 201,
+      description: 'The resource has been successfully updated.',
     }),
   );
 }

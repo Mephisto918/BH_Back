@@ -184,3 +184,21 @@ model AuditLog {
   meta      Json? // Optional: store extra info (diff, payload, IP, etc.)
   createdAt DateTime    @default(now())
 }
+
+//* do this to change Json to JSONB
+// ALTER TABLE "BoardingHouse"
+// ALTER COLUMN "amenities" TYPE jsonb USING "amenities"::jsonb;
+
+// ALTER TABLE "BoardingHouse"
+// ALTER COLUMN "properties" TYPE jsonb USING "properties"::jsonb;
+
+//* for odler data
+// UPDATE "BoardingHouse"
+// SET "amenities" = '[]'::jsonb
+// WHERE "amenities" IS NULL;
+
+// UPDATE "BoardingHouse"
+// SET "properties" = '{}'::jsonb
+// WHERE "properties" IS NULL;
+
+

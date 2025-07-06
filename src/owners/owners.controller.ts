@@ -12,7 +12,7 @@ import { OwnersService } from './owners.service';
 import { CreateOwnerDto } from './dto/create-owner.dto';
 import { UpdateOwnerDto } from './dto/update-owner.dto';
 import { FindOwnersDto } from './dto/find-owners.dto';
-import { CreateOwnerDoc, GetOwnerDoc } from './owners.swagger';
+import { CreateOwnerDoc, GetOwnerDoc, UpdateOwnerDoc } from './owners.swagger';
 
 @Controller('owners')
 export class OwnersController {
@@ -38,6 +38,7 @@ export class OwnersController {
   }
 
   @Patch(':id')
+  @UpdateOwnerDoc()
   update(@Param('id') id: string, @Body() updateOwnerDto: UpdateOwnerDto) {
     const results = this.ownersService.update(+id, updateOwnerDto);
     return results;

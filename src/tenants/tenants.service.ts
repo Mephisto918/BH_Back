@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { IDatabaseService } from 'src/infrastructure/database/database.interface';
 import { PrismaService } from 'src/infrastructure/database/prisma.service';
 
@@ -124,10 +124,14 @@ export class TenantsService {
   }
 
   remove(id: number) {
-    return this.prisma.tenant.delete({
-      where: {
-        id,
-      },
-    });
+    const prisma = this.prisma;
+    try {
+      return prisma.tenant.delete({ where: { id } });
+    } catch (err: unknown) {
+      if (err instanceof NotFoundException) {
+        throw new NotFoundException('Tenant not found');
+      }
+      throw err; // Let Nest handle as 500
+    }
   }
 }

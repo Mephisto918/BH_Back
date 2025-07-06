@@ -7,21 +7,40 @@ import { LocationDto } from './dto/location.dto';
 
 // TODO: clean this later
 import { Prisma } from '@prisma/client';
+import { LocationService } from './location.service';
 
 @Injectable()
 export class BoardingHousesService {
   constructor(
     @Inject('IDatabaseService') private readonly database: IDatabaseService,
+    private readonly locationService: LocationService,
   ) {}
 
   private get prisma() {
     return this.database.getClient() as PrismaService;
   }
 
-  findAll() {
+  async findAll() {
     const prisma = this.prisma;
     // TODO: add pagination but geolocation is a concern
-    return prisma.boardingHouse.findMany();
+    // json cleaning
+    const data = await prisma.boardingHouse.findMany();
+
+    const result = await Promise.all(
+      data.map(async (house) => ({
+        ...house,
+        location: await this.locationService.findOne(house.locationId),
+        amenities: house.amenities,
+        properties: house.properties,
+      })),
+    );
+    return result;
+
+    // return prisma.boardingHouse.findMany({
+    //   include: {
+    //     location: true,
+    //   },
+    // });
   }
 
   findOne(id: number) {

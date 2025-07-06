@@ -1,13 +1,16 @@
-import { IsNotEmpty, IsString, IsNumber, IsOptional } from 'class-validator';
+import { IsString, IsNumber, IsOptional, IsDefined } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class LocationDto {
   // * Location Fields
-  @IsNotEmpty()
+  @IsDefined()
   @IsNumber()
+  @Type(() => Number)
   latitude!: number;
 
-  @IsNotEmpty()
+  @IsDefined()
   @IsNumber()
+  @Type(() => Number)
   longitude!: number;
 
   @IsString()

@@ -1,13 +1,14 @@
 import {
   IsBoolean,
-  IsJSON,
   IsNotEmpty,
   IsInt,
   IsString,
   IsNumberString,
-  IsOptional,
+  ValidateNested,
 } from 'class-validator';
-import { Prisma } from '@prisma/client';
+import { LocationDto } from './location.dto';
+import { IsDefined } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class CreateBoardingHouseDto {
   @IsInt()
@@ -35,16 +36,13 @@ export class CreateBoardingHouseDto {
   @IsNotEmpty()
   price!: number;
 
-  @IsJSON()
-  // @IsNotEmpty()
-  @IsOptional()
-  amenities?: Prisma.JsonValue;
+  @IsNotEmpty()
+  amenities?: Array<string>;
 
   @IsBoolean()
   @IsNotEmpty()
   availabilityStatus!: boolean;
 
-  @IsJSON()
   @IsNotEmpty()
   properties!: Record<string, any>;
 
@@ -57,4 +55,8 @@ export class CreateBoardingHouseDto {
   bookings           Booking[]
   BoardingHouseImage BoardingHouseImage[]
   */
+  @IsDefined()
+  @ValidateNested()
+  @Type(() => LocationDto)
+  location!: LocationDto;
 }

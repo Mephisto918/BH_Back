@@ -27,6 +27,9 @@ export class TenantsService {
     username = '',
     page = 1,
     offset = 15,
+    isDeleted = false,
+    isActive,
+    isVerified,
   }: FindTenantsDto): Promise<Tenant[]> {
     const userToSkip = (page - 1) * offset;
 
@@ -35,10 +38,12 @@ export class TenantsService {
       skip: userToSkip,
       take: offset,
       where: {
-        username: {
-          contains: username,
-          mode: 'insensitive',
-        },
+        ...(username && {
+          username: { contains: username, mode: 'insensitive' },
+        }),
+        isDeleted,
+        ...(isActive !== undefined && { isActive }),
+        ...(isVerified !== undefined && { isVerified }),
       },
       orderBy: { username: 'asc' },
     });
@@ -119,19 +124,19 @@ export class TenantsService {
         guardian: updateTenantDto.guardian,
         address: updateTenantDto.address,
         phone_number: updateTenantDto.phone_number,
+        isDeleted: updateTenantDto.isDeleted,
       },
     });
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     const prisma = this.prisma;
-    try {
-      return prisma.tenant.delete({ where: { id } });
-    } catch (err: unknown) {
-      if (err instanceof NotFoundException) {
-        throw new NotFoundException('Tenant not found');
-      }
-      throw err; // Let Nest handle as 500
-    }
+    const entity = await prisma.tenant.findUnique({ where: { id } });
+    if (!entity || entity.isDeleted) throw new NotFoundException('Not found');
+
+    return this.prisma.tenant.update({
+      where: { id },
+      data: { isDeleted: true },
+    });
   }
 }

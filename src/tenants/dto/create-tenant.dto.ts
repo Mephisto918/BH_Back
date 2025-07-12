@@ -15,7 +15,6 @@ export class CreateTenantDto {
 
   @IsNotEmpty()
   @IsEmail()
-  @IsString()
   email!: string;
 
   @IsNotEmpty()

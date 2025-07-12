@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
 import { IDatabaseService } from 'src/infrastructure/database/database.interface';
@@ -95,16 +95,19 @@ export class AdminsService {
         age: updateAdminDto.age,
         address: updateAdminDto.address,
         phone_number: updateAdminDto.phone_number,
+        isDeleted: updateAdminDto.isDeleted,
       },
     });
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     const prisma = this.prisma;
-    return prisma.admin.delete({
-      where: {
-        id,
-      },
+    const entity = await prisma.admin.findUnique({ where: { id } });
+    if (!entity || entity.isDeleted) throw new NotFoundException('Not found');
+
+    return this.prisma.admin.update({
+      where: { id },
+      data: { isDeleted: true },
     });
   }
 }

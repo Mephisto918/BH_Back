@@ -6,7 +6,7 @@ import {
   IsNumberString,
   ValidateNested,
 } from 'class-validator';
-import { LocationDto } from './location.dto';
+import { LocationDto } from 'src/infrastructure/location/dto/location.dto';
 import { IsDefined } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -14,10 +14,6 @@ export class CreateBoardingHouseDto {
   @IsInt()
   @IsNotEmpty()
   ownerId!: number;
-
-  @IsString()
-  @IsNotEmpty()
-  owner!: string;
 
   @IsString()
   @IsNotEmpty()
@@ -45,18 +41,18 @@ export class CreateBoardingHouseDto {
 
   @IsNotEmpty()
   properties!: Record<string, any>;
-
-  /*
-  id                 Int                  @id @default(autoincrement())
-  locationId         Int
-  location           Location             @relation(fields: [locationId], references: [id])
-  createdAt          DateTime             @default(now())
-  updatedAt          DateTime             @updatedAt
-  bookings           Booking[]
-  BoardingHouseImage BoardingHouseImage[]
-  */
   @IsDefined()
   @ValidateNested()
   @Type(() => LocationDto)
   location!: LocationDto;
 }
+
+/*
+    id                 Int                  @id @default(autoincrement())
+    locationId         Int
+    location           Location             @relation(fields: [locationId], references: [id])
+    createdAt          DateTime             @default(now())
+    updatedAt          DateTime             @updatedAt
+    bookings           Booking[]
+    BoardingHouseImage BoardingHouseImage[]
+    */

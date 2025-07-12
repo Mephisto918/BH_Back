@@ -22,6 +22,7 @@ export class OwnersController {
   @GetOwnerDoc()
   findAll(@Query() findAllOwnersDto: FindOwnersDto) {
     const results = this.ownersService.findAll(findAllOwnersDto);
+
     return results;
   }
 

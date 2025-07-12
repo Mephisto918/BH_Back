@@ -6,15 +6,16 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { BoardingHousesService } from './boarding-houses.service';
 import { CreateBoardingHouseDto } from './dto/create-boarding-house.dto';
 import { UpdateBoardingHouseDto } from './dto/update-boarding-house.dto';
-import { LocationDto } from './dto/location.dto';
 import {
   CreateBoardingHouseDoc,
   GetBoardingHousesDoc,
 } from './boarding-houses.swagger';
+import { FindBoardingHouseDto } from './dto/find-boarding-house.dto';
 
 @Controller('boarding-houses')
 export class BoardingHousesController {
@@ -22,9 +23,9 @@ export class BoardingHousesController {
 
   @Get()
   @GetBoardingHousesDoc()
-  findAll() {
+  findAll(@Query() filter: FindBoardingHouseDto) {
     // TODO: add query params for pagination
-    return this.boardingHousesService.findAll();
+    return this.boardingHousesService.findAll(filter);
   }
 
   @Get(':id')

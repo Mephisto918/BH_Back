@@ -3,8 +3,10 @@ import { CreateOwnerDto } from './dto/create-owner.dto';
 import { UpdateOwnerDto } from './dto/update-owner.dto';
 import { IDatabaseService } from 'src/infrastructure/database/database.interface';
 import { FindOwnersDto } from './dto/find-owners.dto';
-import { Owner } from '@prisma/client';
+// import { Owner } from '@prisma/client';
 import { PrismaService } from 'src/infrastructure/database/prisma.service';
+// import { OwnerWithBHId } from './types/owner.return.types';
+import { Owner } from '@prisma/client';
 
 /*
  * create a pdf service for certificate handling
@@ -38,6 +40,29 @@ export class OwnersService {
           mode: 'insensitive',
         },
       },
+      select: {
+        id: true,
+        username: true,
+        firstname: true,
+        lastname: true,
+        email: true,
+        password: true,
+        role: true,
+        isActive: true,
+        isVerified: true,
+        createdAt: true,
+        updatedAt: true,
+        age: true,
+        address: true,
+        phone_number: true,
+        isDeleted: true,
+        deletedAt: true,
+        boardingHouses: {
+          select: {
+            id: true,
+          },
+        },
+      },
       orderBy: { username: 'asc' },
     });
   }
@@ -47,6 +72,29 @@ export class OwnersService {
     return prisma.owner.findUnique({
       where: {
         id: id,
+      },
+      select: {
+        id: true,
+        username: true,
+        firstname: true,
+        lastname: true,
+        email: true,
+        password: true,
+        role: true,
+        isActive: true,
+        isVerified: true,
+        createdAt: true,
+        updatedAt: true,
+        age: true,
+        address: true,
+        phone_number: true,
+        isDeleted: true,
+        deletedAt: true,
+        boardingHouses: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
   }
@@ -91,21 +139,21 @@ export class OwnersService {
         age: updateOwnerDto.age,
         address: updateOwnerDto.address,
         phone_number: updateOwnerDto.phone_number,
+        isDeleted: updateOwnerDto.isDeleted,
       },
     });
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     // TODO: fix this
     const prisma = this.prisma;
-    try {
-      return prisma.owner.delete({ where: { id } });
-    } catch (err: unknown) {
-      if (err instanceof NotFoundException) {
-        throw new NotFoundException('Owner not found');
-      }
-      throw err; // Let Nest handle as 500
-    }
+    const entity = await prisma.owner.findUnique({ where: { id } });
+    if (!entity || entity.isDeleted) throw new NotFoundException('Not found');
+
+    return this.prisma.owner.update({
+      where: { id },
+      data: { isDeleted: true },
+    });
   }
 }
 

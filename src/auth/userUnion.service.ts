@@ -12,8 +12,8 @@ export class UserUnionService {
   ) {}
 
   async findUserByUsername(username: string) {
-    // const admin = await adminService.findUserByUsername(username);
-    // if (admin) return { type: 'admin', user: admin };
+    const admin = await this.adminService.findUserByUsername(username);
+    if (admin) return { type: 'admin', user: admin };
 
     const owner = await this.ownerService.findUserByUsername(username);
     if (owner) return { type: 'owner', user: owner };

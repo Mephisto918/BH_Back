@@ -12,10 +12,11 @@ import { OwnersModule } from './owners/owners.module';
 import { ImageModule } from './infrastructure/image/image.module';
 import { AdminsModule } from './admins/admins.module';
 import { BoardingHousesModule } from './boarding-houses/boarding-houses.module';
-import { BoookingModule } from './boooking/boooking.module';
 import { PdfModule } from './infrastructure/pdf/pdf.module';
 import { LoggingMiddleware } from './forNowMiddleware';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { BookingsModule } from './bookings/bookings.module';
+import { LocationModule } from './infrastructure/location/location.module';
 
 @Module({
   imports: [
@@ -30,8 +31,9 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
     ImageModule,
     AdminsModule,
     BoardingHousesModule,
-    BoookingModule,
     PdfModule,
+    BookingsModule,
+    LocationModule,
   ],
   controllers: [AppController],
   providers: [

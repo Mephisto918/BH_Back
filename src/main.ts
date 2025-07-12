@@ -34,7 +34,6 @@ async function bootstrap() {
   console.log(`🚀 Server running at http://${localIp}:${port}`);
 
   await app.listen(port, '0.0.0.0');
-  // await app.listen(port, localIp);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises

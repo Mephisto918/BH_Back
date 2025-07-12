@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
 import { BoardingHousesService } from './boarding-houses.service';
 import { BoardingHousesController } from './boarding-houses.controller';
-import { LocationService } from './location.service';
+import { LocationModule } from 'src/infrastructure/location/location.module';
+import { LocationService } from 'src/infrastructure/location/location.service';
 
 @Module({
+  imports: [LocationModule],
   controllers: [BoardingHousesController],
   providers: [BoardingHousesService, LocationService],
 })

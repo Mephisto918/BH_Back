@@ -74,6 +74,8 @@ model Tenant {
   address      String
   phone_number String
   bookings     Booking[]
+  isDeleted    Boolean   @default(false)
+  deletedAt    DateTime?
 }
 
 model Owner {
@@ -93,23 +95,27 @@ model Owner {
   phone_number   String
   boardingHouses BoardingHouse[]
   permits        Permit[] // permit relation
+  isDeleted      Boolean         @default(false)
+  deletedAt      DateTime?
 }
 
 model Admin {
-  id           Int      @id @default(autoincrement())
-  username     String   @unique
+  id           Int       @id @default(autoincrement())
+  username     String    @unique
   firstname    String
   lastname     String
-  email        String   @unique
+  email        String    @unique
   password     String
-  role         UserRole @default(OWNER)
-  isActive     Boolean  @default(true)
-  isVerified   Boolean  @default(false)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  age          Int      @default(0)
+  role         UserRole  @default(ADMIN)
+  isActive     Boolean   @default(true)
+  isVerified   Boolean   @default(false)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  age          Int       @default(0)
   address      String
   phone_number String
+  isDeleted    Boolean   @default(false)
+  deletedAt    DateTime?
 }
 
 model Permit {
@@ -119,6 +125,8 @@ model Permit {
   fileUrl   String // Link to file or pathnp
   expiresAt DateTime
   owner     Owner      @relation(fields: [ownerId], references: [id])
+  isDeleted Boolean    @default(false)
+  deletedAt DateTime?
 }
 
 model BoardingHouse {
@@ -129,26 +137,30 @@ model BoardingHouse {
   address            String?
   description        String?
   price              Decimal?             @db.Decimal(10, 2)
-  amenities          Json? // Typo fixed from 'ameneties'
-  availabilityStatus Boolean              @default(true) // Consider using an Enum later if you want more states
-  locationId         Int
-  location           Location             @relation(fields: [locationId], references: [id])
+  amenities          Json? 
+  availabilityStatus Boolean              @default(true)
+  locationId         Int                  @unique
+  location           Location             @relation(fields: [locationId], references: [id], name: "BoardingHouseToLocation")
   properties         Json
   createdAt          DateTime             @default(now())
   updatedAt          DateTime             @updatedAt
   bookings           Booking[]
   BoardingHouseImage BoardingHouseImage[]
+  isDeleted          Boolean              @default(false)
+  deletedAt          DateTime?
 }
 
 model Location {
-  id             Int             @id @default(autoincrement())
-  latitude       Float
-  longitude      Float
-  city           String?
-  province       String?
-  country        String? // optional
-  boardingHouses BoardingHouse[]
+  id              Int            @id @default(autoincrement())
+  coordinates     Unsupported("geometry")
+  city            String?
+  province        String?
+  country         String?
+  boardingHouse   BoardingHouse? @relation(name: "BoardingHouseToLocation")
+  isDeleted       Boolean        @default(false)
+  deletedAt       DateTime?
 }
+
 
 model Booking {
   id              Int           @id @default(autoincrement())
@@ -162,6 +174,8 @@ model Booking {
   status          BookingStatus @default(PENDING)
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
+  isDeleted       Boolean       @default(false)
+  deletedAt       DateTime?
 }
 
 model BoardingHouseImage {
@@ -172,6 +186,8 @@ model BoardingHouseImage {
   type            ImageType     @default(MAIN)
   quality         ImageQuality  @default(MEDIUM)
   createdAt       DateTime      @default(now())
+  isDeleted       Boolean       @default(false)
+  deletedAt       DateTime?
 }
 
 model AuditLog {
@@ -183,6 +199,8 @@ model AuditLog {
   recordId  Int? // The ID of the record affected, nullable in case not applicable
   meta      Json? // Optional: store extra info (diff, payload, IP, etc.)
   createdAt DateTime    @default(now())
+  isDeleted Boolean     @default(false)
+  deletedAt DateTime?
 }
 
 //* do this to change Json to JSONB
@@ -200,5 +218,3 @@ model AuditLog {
 // UPDATE "BoardingHouse"
 // SET "properties" = '{}'::jsonb
 // WHERE "properties" IS NULL;
-
-

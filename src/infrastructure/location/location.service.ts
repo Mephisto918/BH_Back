@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IDatabaseService } from 'src/infrastructure/database/database.interface';
-import { PrismaService } from 'src/infrastructure/database/prisma.service';
 import { LocationDto } from './dto/location.dto';
 
 @Injectable()
@@ -10,7 +9,7 @@ export class LocationService {
   ) {}
 
   private get prisma() {
-    return this.database.getClient() as PrismaService;
+    return this.database.getClient();
   }
 
   async findAll() {
@@ -57,7 +56,21 @@ export class LocationService {
   }
 
   async create(locationData: LocationDto): Promise<number> {
-    const { longitude, latitude, city, province, country } = locationData;
+    if (typeof locationData === 'string') {
+      locationData = JSON.parse(locationData);
+    }
+
+    const { coordinates, city, province, country } = locationData;
+    console.log('Location data received:', JSON.stringify(locationData));
+    console.log('Coordinates before check:', coordinates);
+
+    if (!coordinates || !Array.isArray(coordinates)) {
+      console.error('Coordinates is missing or not an array', coordinates);
+      throw new Error('Coordinates is missing or not an array');
+    }
+
+    const longitude = coordinates[0];
+    const latitude = coordinates[1];
 
     const result = await this.prisma.$queryRaw<
       { id: number }[]

@@ -7,7 +7,6 @@ import ip from 'ip';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(new ValidationPipe());
 
   const swagConfig = new DocumentBuilder()
     .setTitle('API')
@@ -24,6 +23,11 @@ async function bootstrap() {
   };
 
   app.setGlobalPrefix('api');
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+    }),
+  );
   SwaggerModule.setup('docs', app, document, options);
 
   app.enableCors();

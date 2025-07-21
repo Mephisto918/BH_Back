@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-// * using aliases for naming
+import { join } from 'path';
 import { ConfigService as ConfigurationService } from '@nestjs/config';
 
 @Injectable()
@@ -24,5 +24,12 @@ export class ConfigService {
 
   get JWT_SECRET_KEY() {
     return this.configService.get<string>('JWT_SECRET_KEY');
+  }
+
+  get mediaPaths() {
+    return {
+      public: join(__dirname, '..', 'media', 'public'),
+      protected: join(__dirname, '..', 'media', 'protected'),
+    };
   }
 }

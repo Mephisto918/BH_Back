@@ -1,15 +1,26 @@
-export type ResourceType = 'tenants' | 'owners' | 'boardinghouses';
-export type MediaType = 'images' | 'thumbnail' | 'profile-picture';
+export type ResourceType =
+  | 'TENANT'
+  | 'OWNER'
+  | 'ADMIN'
+  | 'BOARDING_HOUSE'
+  | 'ROOM';
+export type MediaType =
+  | 'PFP'
+  | 'THUMBNAIL'
+  | 'MAIN'
+  | 'GALLERY'
+  | 'BANNER'
+  | 'FLOORPLAN'
+  | 'DOCUMENT'
+  | 'QR'
+  | 'MAP'
+  | 'ROOM';
 
-// ? resolved into types because enums adds complexity
-// TODO: refactor and imlpement enums if ever posisble
-// export enum ResourceType {
-//   TENANT = 'tenant',
-//   OWNER = 'owner',
-//   BOARDINGHOUSE = 'boardinghouse',
-// }
-// export enum MediaType {
-//   IMAGES = 'images',
-//   THUMBNAIL = 'thumbnail',
-//   PROFILEPICTURE = 'profile-picture',
-// }
+export type PrismaModel =
+  | 'tenant'
+  | 'owner'
+  | 'admin'
+  | 'boardingHouse'
+  | 'room';
+
+export type ImageQuality = 'LOW' | 'MEDIUM' | 'HIGH';

@@ -74,6 +74,12 @@ generator client {
   // output   = "../generated/prisma" // need more research on this
 }
 
+//* during vps
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -321,7 +327,7 @@ model AuditLog {
  * CREATE INDEX gin_idx_room_tags ON "Room" USING GIN ("tags");
  * CREATE INDEX gin_idx_auditlog_meta ON "AuditLog" USING GIN ("meta");
  * CREATE INDEX gin_idx_auditlog_user ON "AuditLog" USING GIN ("user");
- * ///> add constraints for images
+ * -- add constraints for images
  * ALTER TABLE "Image" ADD CONSTRAINT check_one_relation CHECK ("boardingHouseId" IS NOT NULL OR "roomId" IS NOT NULL OR "ownerId" IS NOT NULL OR "tenantId" IS NOT NULL OR "adminId" IS NOT NULL);
  */
 

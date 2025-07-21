@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: nest-app
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgres://mephiscus:your_password_here@db:5432/bh
+    depends_on:
+      - db
+    command: >
+      sh -c "npx prisma migrate deploy &&
+            node dist/main"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  db:
+    image: postgis/postgis:latest
+    environment:
+      POSTGRES_USER: mephiscus
+      POSTGRES_PASSWORD: your_password_here
+      POSTGRES_DB: bh
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker-scripts:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+
+volumes:
+  pgdata:

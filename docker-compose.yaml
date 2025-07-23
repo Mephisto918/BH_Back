@@ -7,14 +7,16 @@ services:
     ports:
       - "3000:3000"
     environment:
-      DATABASE_URL: postgres://mephiscus:your_password_here@db:5432/bh
+      DATABASE_URL: postgres://mephiscus:devilMayCry5@db:5432/bh
     depends_on:
       - db
     command: >
-      sh -c "npx prisma migrate deploy &&
+      sh -c "npx prisma generate &&
+            npm run build &&
+            npx prisma migrate deploy &&
             node dist/main"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      test: [ "CMD", "curl", "-f", "http://localhost:3000" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -22,7 +24,7 @@ services:
     image: postgis/postgis:latest
     environment:
       POSTGRES_USER: mephiscus
-      POSTGRES_PASSWORD: your_password_here
+      POSTGRES_PASSWORD: devilMayCry5
       POSTGRES_DB: bh
     volumes:
       - pgdata:/var/lib/postgresql/data

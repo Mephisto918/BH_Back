@@ -19,8 +19,22 @@ async function seed() {
 
     const sql = fs.readFileSync(sqlFile, 'utf-8');
 
-    console.log(`🔍 Running SQL from: ${sqlFile}`);
-    await prisma.$executeRawUnsafe(sql);
+    // Split the file content by semicolon to separate statements,
+    // but also filter out empty statements caused by trailing semicolons or blank lines
+    const statements = sql
+      .split(';')
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0);
+
+    console.log(
+      `🔍 Running ${statements.length} SQL statements from: ${sqlFile}`,
+    );
+
+    for (const statement of statements) {
+      console.log(`📝 Executing statement:\n${statement};`);
+      await prisma.$executeRawUnsafe(statement);
+    }
+
     console.log('✅ Custom SQL script applied!');
   } catch (error) {
     console.error('❌ Seed error:', error);
@@ -35,6 +49,7 @@ seed()
     console.error(e);
     process.exit(1);
   })
-  .finally(async () => {
-    await prisma.$disconnect();
+  .then(() => prisma.$disconnect())
+  .catch((e) => {
+    console.error('Error during disconnect:', e);
   });

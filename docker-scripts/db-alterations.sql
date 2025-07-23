@@ -26,3 +26,5 @@ ALTER TABLE "Image" ADD CONSTRAINT IF NOT EXISTS check_one_relation CHECK (
   "tenantId" IS NOT NULL OR
   "adminId" IS NOT NULL
 );
+
+CREATE EXTENSION IF NOT EXISTS postgis;

@@ -26,9 +26,9 @@ RUN npm run build
 # Expose Nest port
 EXPOSE 3000
 
-# Copy and make startup script executable
-COPY docker-start.sh ./
-RUN chmod +x docker-start.sh
+# Copy both scripts
+COPY docker-start.sh ./docker-start.sh
+COPY wait-for-db.sh ./wait-for-db.sh
 
 # Set entrypoint to custom shell script
 CMD ["./docker-start.sh"]

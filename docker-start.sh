@@ -1,22 +1,12 @@
 #!/bin/sh
 
-# Wait until Postgres is up
-echo "⏳ Waiting for Postgres..."
-until nc -z db 5432; do
-  sleep 1
-done
+./wait-for-db.sh
 
-# Enable PostGIS extension if not already
-echo "🧩 Enabling PostGIS if missing..."
-npx prisma db execute --sql "CREATE EXTENSION IF NOT EXISTS postgis;" --preview-feature
+echo "⚙️ Running prisma generate..."
+npx prisma generate
 
-# Apply migrations
-echo "📦 Running Prisma Migrate Deploy..."
+echo "⚙️ Applying pending migrations..."
 npx prisma migrate deploy
 
-# (Optional) Run seeds
-# npx prisma db seed
-
-# Start server
-echo "🚀 Starting NestJS app..."
-node dist/main.js
+echo "🚀 Starting NestJS..."
+node dist/main

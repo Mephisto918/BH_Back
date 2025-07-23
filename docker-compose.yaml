@@ -8,9 +8,9 @@ services:
       DATABASE_URL: postgres://mephiscus:devilMayCry5@db:5432/bh
     depends_on:
       - db
-    # command: [ "./docker-start.sh" ]
-    command: >
-      sh -c "./wait-for-db.sh && npx prisma generate && npm run build && node dist/main"
+    command: ["sh", "-c", "./docker-start.sh"]
+    # command: >
+      # sh -c "./wait-for-db.sh && npx prisma generate && npm run build && node dist/main"
 
 
     healthcheck:

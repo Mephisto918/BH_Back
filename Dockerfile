@@ -12,7 +12,8 @@ RUN npm install
 COPY . .
 
 # Add curl (required for health checks or debug)
-RUN apk add --no-cache curl
+RUN apk add --no-cache curl postgresql-client
+
 
 # Make sure Prisma generates client
 RUN npx prisma generate

@@ -1622,3 +1622,5 @@
 	-- AddForeignKey
 	ALTER TABLE "RoomAvailabilityLog" ADD CONSTRAINT "RoomAvailabilityLog_roomId_fkey" FOREIGN KEY ("roomId") REFERENCES "Room"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 	
+2025-07-23 08:56:08.542 UTC [195975] LOG:  checkpoint starting: time
+2025-07-23 08:56:18.022 UTC [195975] LOG:  checkpoint complete: wrote 95 buffers (0.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=9.423 s, sync=0.017 s, total=9.481 s; sync files=73, longest=0.008 s, average=0.001 s; distance=469 kB, estimate=5884 kB; lsn=0/C6A9C28, redo lsn=0/C6A9B98

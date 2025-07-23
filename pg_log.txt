@@ -1311,3 +1311,314 @@
 2025-07-23 03:28:53.408 UTC [26987] LOG:  checkpoint starting: shutdown immediate
 2025-07-23 03:28:53.426 UTC [26987] LOG:  checkpoint complete: wrote 0 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.001 s, total=0.021 s; sync files=0, longest=0.000 s, average=0.000 s; distance=0 kB, estimate=0 kB; lsn=0/9B67410, redo lsn=0/9B67410
 2025-07-23 03:28:53.430 UTC [26986] LOG:  database system is shut down
+2025-07-23 08:30:32.866 UTC [195974] LOG:  starting PostgreSQL 17.4 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 15.1.1 20250425, 64-bit
+2025-07-23 08:30:32.867 UTC [195974] LOG:  listening on IPv6 address "::1", port 5432
+2025-07-23 08:30:32.867 UTC [195974] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2025-07-23 08:30:32.869 UTC [195974] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2025-07-23 08:30:32.879 UTC [195977] LOG:  database system was shut down at 2025-07-23 03:28:53 UTC
+2025-07-23 08:30:32.894 UTC [195974] LOG:  database system is ready to accept connections
+2025-07-23 08:30:37.909 UTC [196090] LOG:  could not receive data from client: Connection reset by peer
+2025-07-23 08:33:37.152 UTC [196993] ERROR:  database "bh" already exists
+2025-07-23 08:33:37.152 UTC [196993] STATEMENT:  CREATE DATABASE bh
+2025-07-23 08:35:32.975 UTC [195975] LOG:  checkpoint starting: time
+2025-07-23 08:35:32.994 UTC [195975] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.006 s, sync=0.002 s, total=0.019 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/9B67518, redo lsn=0/9B674C0
+2025-07-23 08:36:11.096 UTC [196993] ERROR:  cannot drop the currently open database
+2025-07-23 08:36:11.096 UTC [196993] STATEMENT:  DROP DATABASE IF EXISTS bh
+2025-07-23 08:36:38.936 UTC [196993] ERROR:  cannot drop the currently open database
+2025-07-23 08:36:38.936 UTC [196993] STATEMENT:  DROP DATABASE bh
+2025-07-23 08:38:11.650 UTC [196993] ERROR:  cannot drop the currently open database
+2025-07-23 08:38:11.650 UTC [196993] STATEMENT:  DROP DATABASE IF EXISTS bh
+2025-07-23 08:38:29.294 UTC [196993] ERROR:  cannot drop the currently open database
+2025-07-23 08:38:29.294 UTC [196993] STATEMENT:  DROP DATABASE IF EXISTS bh
+2025-07-23 08:41:14.595 UTC [199339] FATAL:  database "mephiscus" does not exist
+2025-07-23 08:43:31.592 UTC [199904] ERROR:  syntax error at or near "psql" at character 1
+2025-07-23 08:43:31.592 UTC [199904] STATEMENT:  psql
+	;
+2025-07-23 08:43:57.412 UTC [199904] ERROR:  syntax error at or near "EXIST" at character 18
+2025-07-23 08:43:57.412 UTC [199904] STATEMENT:  DROP DATABASE IF EXIST bh;
+2025-07-23 08:44:19.211 UTC [195975] LOG:  checkpoint starting: immediate force wait
+2025-07-23 08:44:19.227 UTC [195975] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.003 s, total=0.016 s; sync files=1, longest=0.003 s, average=0.003 s; distance=3 kB, estimate=3 kB; lsn=0/9B68170, redo lsn=0/9B68118
+2025-07-23 08:45:19.899 UTC [200746] LOG:  could not receive data from client: Connection reset by peer
+2025-07-23 08:47:33.239 UTC [199904] ERROR:  database "bh" is being accessed by other users
+2025-07-23 08:47:33.239 UTC [199904] DETAIL:  There are 2 other sessions using the database.
+2025-07-23 08:47:33.239 UTC [199904] STATEMENT:  DROP DATABASE bh;
+2025-07-23 08:47:51.014 UTC [195975] LOG:  checkpoint starting: immediate force wait
+2025-07-23 08:47:51.032 UTC [195975] LOG:  checkpoint complete: wrote 4 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.003 s, total=0.019 s; sync files=4, longest=0.002 s, average=0.001 s; distance=4571 kB, estimate=4571 kB; lsn=0/9FDEFE8, redo lsn=0/9FDEF90
+2025-07-23 08:48:04.140 UTC [201774] LOG:  could not receive data from client: Connection reset by peer
+2025-07-23 08:48:06.715 UTC [201804] ERROR:  table "_prisma_migrations" does not exist
+2025-07-23 08:48:06.715 UTC [201804] STATEMENT:  DROP TABLE _prisma_migrations
+2025-07-23 08:48:31.397 UTC [195975] LOG:  checkpoint starting: immediate force wait
+2025-07-23 08:48:31.646 UTC [195975] LOG:  checkpoint complete: wrote 974 buffers (5.9%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.016 s, sync=0.212 s, total=0.249 s; sync files=353, longest=0.120 s, average=0.001 s; distance=8823 kB, estimate=8823 kB; lsn=0/A87CE60, redo lsn=0/A87CE08
+2025-07-23 08:48:31.845 UTC [195975] LOG:  checkpoint starting: immediate force wait
+2025-07-23 08:48:31.871 UTC [195975] LOG:  checkpoint complete: wrote 38 buffers (0.2%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.003 s, sync=0.013 s, total=0.026 s; sync files=18, longest=0.011 s, average=0.001 s; distance=4331 kB, estimate=8374 kB; lsn=0/ACB7C68, redo lsn=0/ACB7C10
+2025-07-23 08:49:42.416 UTC [202584] LOG:  could not receive data from client: Connection reset by peer
+2025-07-23 08:49:42.693 UTC [195975] LOG:  checkpoint starting: immediate force wait
+2025-07-23 08:49:42.721 UTC [195975] LOG:  checkpoint complete: wrote 14 buffers (0.1%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.004 s, sync=0.012 s, total=0.029 s; sync files=10, longest=0.011 s, average=0.002 s; distance=4321 kB, estimate=7969 kB; lsn=0/B0F00F8, redo lsn=0/B0F00A0
+2025-07-23 08:49:42.998 UTC [195975] LOG:  checkpoint starting: immediate force wait
+2025-07-23 08:49:43.015 UTC [195975] LOG:  checkpoint complete: wrote 7 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.003 s, total=0.017 s; sync files=5, longest=0.002 s, average=0.001 s; distance=4273 kB, estimate=7599 kB; lsn=0/B51C8E0, redo lsn=0/B51C888
+2025-07-23 08:50:51.451 UTC [203026] ERROR:  table "_prisma_migrations" does not exist
+2025-07-23 08:50:51.451 UTC [203026] STATEMENT:  DROP TABLE _prisma_migrations
+2025-07-23 08:51:07.627 UTC [203248] LOG:  could not receive data from client: Connection reset by peer
+2025-07-23 08:51:07.827 UTC [195975] LOG:  checkpoint starting: immediate force wait
+2025-07-23 08:51:07.870 UTC [195975] LOG:  checkpoint complete: wrote 69 buffers (0.4%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.023 s, total=0.044 s; sync files=41, longest=0.016 s, average=0.001 s; distance=4675 kB, estimate=7307 kB; lsn=0/B9AD8D8, redo lsn=0/B9AD880
+2025-07-23 08:51:08.055 UTC [195975] LOG:  checkpoint starting: immediate force wait
+2025-07-23 08:51:08.078 UTC [195975] LOG:  checkpoint complete: wrote 14 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.003 s, sync=0.004 s, total=0.024 s; sync files=13, longest=0.003 s, average=0.001 s; distance=4281 kB, estimate=7004 kB; lsn=0/BDDBD78, redo lsn=0/BDDBD20
+2025-07-23 08:51:08.235 UTC [195975] LOG:  checkpoint starting: immediate force wait
+2025-07-23 08:51:08.263 UTC [195975] LOG:  checkpoint complete: wrote 4 buffers (0.0%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.004 s, sync=0.004 s, total=0.028 s; sync files=4, longest=0.002 s, average=0.001 s; distance=4272 kB, estimate=6731 kB; lsn=0/C208068, redo lsn=0/C207FF8
+2025-07-23 08:51:08.412 UTC [195975] LOG:  checkpoint starting: immediate force wait
+2025-07-23 08:51:08.442 UTC [195975] LOG:  checkpoint complete: wrote 4 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.004 s, total=0.030 s; sync files=4, longest=0.002 s, average=0.001 s; distance=4272 kB, estimate=6485 kB; lsn=0/C634428, redo lsn=0/C6343D0
+2025-07-23 08:51:08.472 UTC [203256] ERROR:  type "geometry" does not exist at character 3897
+2025-07-23 08:51:08.472 UTC [203256] STATEMENT:  -- CreateEnum
+	CREATE TYPE "ImageType" AS ENUM ('PFP', 'THUMBNAIL', 'MAIN', 'GALLERY', 'BANNER', 'FLOORPLAN', 'DOCUMENT', 'QR', 'MAP', 'ROOM');
+	
+	-- CreateEnum
+	CREATE TYPE "ImageQuality" AS ENUM ('LOW', 'MEDIUM', 'HIGH');
+	
+	-- CreateEnum
+	CREATE TYPE "BookingStatus" AS ENUM ('PENDING', 'CONFIRMED', 'CANCELLED', 'COMPLETED');
+	
+	-- CreateEnum
+	CREATE TYPE "RoomType" AS ENUM ('SOLO', 'DUO', 'TRIO', 'SQUAD', 'FAMILY');
+	
+	-- CreateEnum
+	CREATE TYPE "UserRole" AS ENUM ('TENANT', 'OWNER', 'ADMIN');
+	
+	-- CreateEnum
+	CREATE TYPE "ResourceType" AS ENUM ('TENANT', 'OWNER', 'ADMIN', 'BOARDING_HOUSE', 'ROOM');
+	
+	-- CreateEnum
+	CREATE TYPE "PermitType" AS ENUM ('BIR', 'FIRE_CERTIFICATE', 'MAYORS_PERMIT', 'DTI', 'BUSINESS_PERMIT');
+	
+	-- CreateEnum
+	CREATE TYPE "AuditAction" AS ENUM ('CREATE', 'UPDATE', 'DELETE', 'LOGIN', 'LOGOUT', 'VERIFY');
+	
+	-- CreateTable
+	CREATE TABLE "Tenant" (
+	    "id" SERIAL NOT NULL,
+	    "username" TEXT NOT NULL,
+	    "firstname" TEXT NOT NULL,
+	    "lastname" TEXT NOT NULL,
+	    "email" TEXT NOT NULL,
+	    "password" TEXT NOT NULL,
+	    "role" "UserRole" NOT NULL DEFAULT 'TENANT',
+	    "isActive" BOOLEAN NOT NULL DEFAULT true,
+	    "isVerified" BOOLEAN NOT NULL DEFAULT false,
+	    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	    "updatedAt" TIMESTAMP(3) NOT NULL,
+	    "age" INTEGER NOT NULL DEFAULT 0,
+	    "guardian" TEXT,
+	    "address" TEXT NOT NULL,
+	    "phone_number" TEXT NOT NULL,
+	    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
+	    "deletedAt" TIMESTAMP(3),
+	
+	    CONSTRAINT "Tenant_pkey" PRIMARY KEY ("id")
+	);
+	
+	-- CreateTable
+	CREATE TABLE "Owner" (
+	    "id" SERIAL NOT NULL,
+	    "username" TEXT NOT NULL,
+	    "firstname" TEXT NOT NULL,
+	    "lastname" TEXT NOT NULL,
+	    "email" TEXT NOT NULL,
+	    "password" TEXT NOT NULL,
+	    "role" "UserRole" NOT NULL DEFAULT 'OWNER',
+	    "isActive" BOOLEAN NOT NULL DEFAULT true,
+	    "isVerified" BOOLEAN NOT NULL DEFAULT false,
+	    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	    "updatedAt" TIMESTAMP(3) NOT NULL,
+	    "age" INTEGER NOT NULL DEFAULT 0,
+	    "address" TEXT NOT NULL,
+	    "phone_number" TEXT NOT NULL,
+	    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
+	    "deletedAt" TIMESTAMP(3),
+	
+	    CONSTRAINT "Owner_pkey" PRIMARY KEY ("id")
+	);
+	
+	-- CreateTable
+	CREATE TABLE "Admin" (
+	    "id" SERIAL NOT NULL,
+	    "username" TEXT NOT NULL,
+	    "firstname" TEXT NOT NULL,
+	    "lastname" TEXT NOT NULL,
+	    "email" TEXT NOT NULL,
+	    "password" TEXT NOT NULL,
+	    "role" "UserRole" NOT NULL DEFAULT 'ADMIN',
+	    "isActive" BOOLEAN NOT NULL DEFAULT true,
+	    "isVerified" BOOLEAN NOT NULL DEFAULT false,
+	    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	    "updatedAt" TIMESTAMP(3) NOT NULL,
+	    "age" INTEGER NOT NULL DEFAULT 0,
+	    "address" TEXT NOT NULL,
+	    "phone_number" TEXT NOT NULL,
+	    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
+	    "deletedAt" TIMESTAMP(3),
+	
+	    CONSTRAINT "Admin_pkey" PRIMARY KEY ("id")
+	);
+	
+	-- CreateTable
+	CREATE TABLE "Permit" (
+	    "id" SERIAL NOT NULL,
+	    "ownerId" INTEGER NOT NULL,
+	    "type" "PermitType" NOT NULL,
+	    "fileUrl" TEXT NOT NULL,
+	    "expiresAt" TIMESTAMP(3) NOT NULL,
+	    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
+	    "deletedAt" TIMESTAMP(3),
+	    "boardingHouseId" INTEGER,
+	
+	    CONSTRAINT "Permit_pkey" PRIMARY KEY ("id")
+	);
+	
+	-- CreateTable
+	CREATE TABLE "BoardingHouse" (
+	    "id" SERIAL NOT NULL,
+	    "ownerId" INTEGER NOT NULL,
+	    "name" TEXT NOT NULL,
+	    "address" TEXT,
+	    "description" TEXT,
+	    "amenities" JSONB,
+	    "availabilityStatus" BOOLEAN NOT NULL DEFAULT true,
+	    "locationId" INTEGER NOT NULL,
+	    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	    "updatedAt" TIMESTAMP(3) NOT NULL,
+	    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
+	    "deletedAt" TIMESTAMP(3),
+	
+	    CONSTRAINT "BoardingHouse_pkey" PRIMARY KEY ("id")
+	);
+	
+	-- CreateTable
+	CREATE TABLE "Location" (
+	    "id" SERIAL NOT NULL,
+	    "coordinates" geometry NOT NULL,
+	    "city" TEXT,
+	    "province" TEXT,
+	    "country" TEXT,
+	    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
+	    "deletedAt" TIMESTAMP(3),
+	
+	    CONSTRAINT "Location_pkey" PRIMARY KEY ("id")
+	);
+	
+	-- CreateTable
+	CREATE TABLE "Booking" (
+	    "id" SERIAL NOT NULL,
+	    "tenantId" INTEGER NOT NULL,
+	    "roomId" INTEGER NOT NULL,
+	    "dateBooked" TIMESTAMP(3) NOT NULL,
+	    "checkInDate" TIMESTAMP(3) NOT NULL,
+	    "checkOutDate" TIMESTAMP(3) NOT NULL,
+	    "status" "BookingStatus" NOT NULL DEFAULT 'PENDING',
+	    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	    "updatedAt" TIMESTAMP(3) NOT NULL,
+	    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
+	    "deletedAt" TIMESTAMP(3),
+	
+	    CONSTRAINT "Booking_pkey" PRIMARY KEY ("id")
+	);
+	
+	-- CreateTable
+	CREATE TABLE "Room" (
+	    "id" SERIAL NOT NULL,
+	    "boardingHouseId" INTEGER NOT NULL,
+	    "roomNumber" TEXT NOT NULL,
+	    "maxCapacity" INTEGER NOT NULL DEFAULT 1,
+	    "currentCapacity" INTEGER NOT NULL DEFAULT 0,
+	    "price" DECIMAL(10,2) NOT NULL,
+	    "tags" JSONB,
+	    "roomType" "RoomType" NOT NULL DEFAULT 'SOLO',
+	    "availabilityStatus" BOOLEAN NOT NULL DEFAULT true,
+	    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	    "updatedAt" TIMESTAMP(3) NOT NULL,
+	    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
+	    "deletedAt" TIMESTAMP(3),
+	
+	    CONSTRAINT "Room_pkey" PRIMARY KEY ("id")
+	);
+	
+	-- CreateTable
+	CREATE TABLE "RoomAvailabilityLog" (
+	    "id" SERIAL NOT NULL,
+	    "roomId" INTEGER NOT NULL,
+	    "status" BOOLEAN NOT NULL,
+	    "reason" TEXT,
+	    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	
+	    CONSTRAINT "RoomAvailabilityLog_pkey" PRIMARY KEY ("id")
+	);
+	
+	-- CreateTable
+	CREATE TABLE "Image" (
+	    "id" SERIAL NOT NULL,
+	    "url" TEXT NOT NULL,
+	    "type" "ImageType" NOT NULL,
+	    "quality" "ImageQuality" NOT NULL DEFAULT 'MEDIUM',
+	    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	    "entityType" "ResourceType" NOT NULL,
+	    "entityId" INTEGER NOT NULL,
+	
+	    CONSTRAINT "Image_pkey" PRIMARY KEY ("id")
+	);
+	
+	-- CreateTable
+	CREATE TABLE "AuditLog" (
+	    "id" SERIAL NOT NULL,
+	    "userId" INTEGER,
+	    "user" JSONB NOT NULL,
+	    "action" "AuditAction" NOT NULL,
+	    "tableName" TEXT NOT NULL,
+	    "recordId" INTEGER,
+	    "meta" JSONB,
+	    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
+	    "deletedAt" TIMESTAMP(3),
+	
+	    CONSTRAINT "AuditLog_pkey" PRIMARY KEY ("id")
+	);
+	
+	-- CreateIndex
+	CREATE UNIQUE INDEX "Tenant_username_key" ON "Tenant"("username");
+	
+	-- CreateIndex
+	CREATE UNIQUE INDEX "Owner_username_key" ON "Owner"("username");
+	
+	-- CreateIndex
+	CREATE UNIQUE INDEX "Owner_email_key" ON "Owner"("email");
+	
+	-- CreateIndex
+	CREATE UNIQUE INDEX "Admin_username_key" ON "Admin"("username");
+	
+	-- CreateIndex
+	CREATE UNIQUE INDEX "Admin_email_key" ON "Admin"("email");
+	
+	-- CreateIndex
+	CREATE UNIQUE INDEX "BoardingHouse_locationId_key" ON "BoardingHouse"("locationId");
+	
+	-- AddForeignKey
+	ALTER TABLE "Permit" ADD CONSTRAINT "Permit_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "Owner"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+	
+	-- AddForeignKey
+	ALTER TABLE "Permit" ADD CONSTRAINT "Permit_boardingHouseId_fkey" FOREIGN KEY ("boardingHouseId") REFERENCES "BoardingHouse"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+	
+	-- AddForeignKey
+	ALTER TABLE "BoardingHouse" ADD CONSTRAINT "BoardingHouse_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "Owner"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+	
+	-- AddForeignKey
+	ALTER TABLE "BoardingHouse" ADD CONSTRAINT "BoardingHouse_locationId_fkey" FOREIGN KEY ("locationId") REFERENCES "Location"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+	
+	-- AddForeignKey
+	ALTER TABLE "Booking" ADD CONSTRAINT "Booking_tenantId_fkey" FOREIGN KEY ("tenantId") REFERENCES "Tenant"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+	
+	-- AddForeignKey
+	ALTER TABLE "Booking" ADD CONSTRAINT "Booking_roomId_fkey" FOREIGN KEY ("roomId") REFERENCES "Room"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+	
+	-- AddForeignKey
+	ALTER TABLE "Room" ADD CONSTRAINT "Room_boardingHouseId_fkey" FOREIGN KEY ("boardingHouseId") REFERENCES "BoardingHouse"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+	
+	-- AddForeignKey
+	ALTER TABLE "RoomAvailabilityLog" ADD CONSTRAINT "RoomAvailabilityLog_roomId_fkey" FOREIGN KEY ("roomId") REFERENCES "Room"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+	

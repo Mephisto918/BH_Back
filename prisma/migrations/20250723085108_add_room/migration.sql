@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "ImageType" AS ENUM ('THUMBNAIL', 'MAIN', 'GALLERY');
+CREATE TYPE "ImageType" AS ENUM ('PFP', 'THUMBNAIL', 'MAIN', 'GALLERY', 'BANNER', 'FLOORPLAN', 'DOCUMENT', 'QR', 'MAP', 'ROOM');
 
 -- CreateEnum
 CREATE TYPE "ImageQuality" AS ENUM ('LOW', 'MEDIUM', 'HIGH');
@@ -8,7 +8,13 @@ CREATE TYPE "ImageQuality" AS ENUM ('LOW', 'MEDIUM', 'HIGH');
 CREATE TYPE "BookingStatus" AS ENUM ('PENDING', 'CONFIRMED', 'CANCELLED', 'COMPLETED');
 
 -- CreateEnum
+CREATE TYPE "RoomType" AS ENUM ('SOLO', 'DUO', 'TRIO', 'SQUAD', 'FAMILY');
+
+-- CreateEnum
 CREATE TYPE "UserRole" AS ENUM ('TENANT', 'OWNER', 'ADMIN');
+
+-- CreateEnum
+CREATE TYPE "ResourceType" AS ENUM ('TENANT', 'OWNER', 'ADMIN', 'BOARDING_HOUSE', 'ROOM');
 
 -- CreateEnum
 CREATE TYPE "PermitType" AS ENUM ('BIR', 'FIRE_CERTIFICATE', 'MAYORS_PERMIT', 'DTI', 'BUSINESS_PERMIT');
@@ -33,6 +39,8 @@ CREATE TABLE "Tenant" (
     "guardian" TEXT,
     "address" TEXT NOT NULL,
     "phone_number" TEXT NOT NULL,
+    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
+    "deletedAt" TIMESTAMP(3),
 
     CONSTRAINT "Tenant_pkey" PRIMARY KEY ("id")
 );
@@ -53,6 +61,8 @@ CREATE TABLE "Owner" (
     "age" INTEGER NOT NULL DEFAULT 0,
     "address" TEXT NOT NULL,
     "phone_number" TEXT NOT NULL,
+    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
+    "deletedAt" TIMESTAMP(3),
 
     CONSTRAINT "Owner_pkey" PRIMARY KEY ("id")
 );
@@ -65,7 +75,7 @@ CREATE TABLE "Admin" (
     "lastname" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "role" "UserRole" NOT NULL DEFAULT 'OWNER',
+    "role" "UserRole" NOT NULL DEFAULT 'ADMIN',
     "isActive" BOOLEAN NOT NULL DEFAULT true,
     "isVerified" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -73,6 +83,8 @@ CREATE TABLE "Admin" (
     "age" INTEGER NOT NULL DEFAULT 0,
     "address" TEXT NOT NULL,
     "phone_number" TEXT NOT NULL,
+    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
+    "deletedAt" TIMESTAMP(3),
 
     CONSTRAINT "Admin_pkey" PRIMARY KEY ("id")
 );
@@ -84,6 +96,9 @@ CREATE TABLE "Permit" (
     "type" "PermitType" NOT NULL,
     "fileUrl" TEXT NOT NULL,
     "expiresAt" TIMESTAMP(3) NOT NULL,
+    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
+    "deletedAt" TIMESTAMP(3),
+    "boardingHouseId" INTEGER,
 
     CONSTRAINT "Permit_pkey" PRIMARY KEY ("id")
 );
@@ -95,13 +110,13 @@ CREATE TABLE "BoardingHouse" (
     "name" TEXT NOT NULL,
     "address" TEXT,
     "description" TEXT,
-    "price" DECIMAL(10,2),
     "amenities" JSONB,
     "availabilityStatus" BOOLEAN NOT NULL DEFAULT true,
     "locationId" INTEGER NOT NULL,
-    "properties" JSONB NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
+    "deletedAt" TIMESTAMP(3),
 
     CONSTRAINT "BoardingHouse_pkey" PRIMARY KEY ("id")
 );
@@ -109,11 +124,12 @@ CREATE TABLE "BoardingHouse" (
 -- CreateTable
 CREATE TABLE "Location" (
     "id" SERIAL NOT NULL,
-    "latitude" DOUBLE PRECISION NOT NULL,
-    "longitude" DOUBLE PRECISION NOT NULL,
+    "coordinates" geometry NOT NULL,
     "city" TEXT,
     "province" TEXT,
     "country" TEXT,
+    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
+    "deletedAt" TIMESTAMP(3),
 
     CONSTRAINT "Location_pkey" PRIMARY KEY ("id")
 );
@@ -122,27 +138,60 @@ CREATE TABLE "Location" (
 CREATE TABLE "Booking" (
     "id" SERIAL NOT NULL,
     "tenantId" INTEGER NOT NULL,
-    "boardingHouseId" INTEGER NOT NULL,
+    "roomId" INTEGER NOT NULL,
     "dateBooked" TIMESTAMP(3) NOT NULL,
     "checkInDate" TIMESTAMP(3) NOT NULL,
     "checkOutDate" TIMESTAMP(3) NOT NULL,
     "status" "BookingStatus" NOT NULL DEFAULT 'PENDING',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
+    "deletedAt" TIMESTAMP(3),
 
     CONSTRAINT "Booking_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "BoardingHouseImage" (
+CREATE TABLE "Room" (
     "id" SERIAL NOT NULL,
     "boardingHouseId" INTEGER NOT NULL,
-    "url" TEXT NOT NULL,
-    "type" "ImageType" NOT NULL DEFAULT 'MAIN',
-    "quality" "ImageQuality" NOT NULL DEFAULT 'MEDIUM',
+    "roomNumber" TEXT NOT NULL,
+    "maxCapacity" INTEGER NOT NULL DEFAULT 1,
+    "currentCapacity" INTEGER NOT NULL DEFAULT 0,
+    "price" DECIMAL(10,2) NOT NULL,
+    "tags" JSONB,
+    "roomType" "RoomType" NOT NULL DEFAULT 'SOLO',
+    "availabilityStatus" BOOLEAN NOT NULL DEFAULT true,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
+    "deletedAt" TIMESTAMP(3),
+
+    CONSTRAINT "Room_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "RoomAvailabilityLog" (
+    "id" SERIAL NOT NULL,
+    "roomId" INTEGER NOT NULL,
+    "status" BOOLEAN NOT NULL,
+    "reason" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "BoardingHouseImage_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "RoomAvailabilityLog_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Image" (
+    "id" SERIAL NOT NULL,
+    "url" TEXT NOT NULL,
+    "type" "ImageType" NOT NULL,
+    "quality" "ImageQuality" NOT NULL DEFAULT 'MEDIUM',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "entityType" "ResourceType" NOT NULL,
+    "entityId" INTEGER NOT NULL,
+
+    CONSTRAINT "Image_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -155,6 +204,8 @@ CREATE TABLE "AuditLog" (
     "recordId" INTEGER,
     "meta" JSONB,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
+    "deletedAt" TIMESTAMP(3),
 
     CONSTRAINT "AuditLog_pkey" PRIMARY KEY ("id")
 );
@@ -174,8 +225,14 @@ CREATE UNIQUE INDEX "Admin_username_key" ON "Admin"("username");
 -- CreateIndex
 CREATE UNIQUE INDEX "Admin_email_key" ON "Admin"("email");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "BoardingHouse_locationId_key" ON "BoardingHouse"("locationId");
+
 -- AddForeignKey
 ALTER TABLE "Permit" ADD CONSTRAINT "Permit_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "Owner"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Permit" ADD CONSTRAINT "Permit_boardingHouseId_fkey" FOREIGN KEY ("boardingHouseId") REFERENCES "BoardingHouse"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "BoardingHouse" ADD CONSTRAINT "BoardingHouse_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "Owner"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -187,7 +244,10 @@ ALTER TABLE "BoardingHouse" ADD CONSTRAINT "BoardingHouse_locationId_fkey" FOREI
 ALTER TABLE "Booking" ADD CONSTRAINT "Booking_tenantId_fkey" FOREIGN KEY ("tenantId") REFERENCES "Tenant"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Booking" ADD CONSTRAINT "Booking_boardingHouseId_fkey" FOREIGN KEY ("boardingHouseId") REFERENCES "BoardingHouse"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Booking" ADD CONSTRAINT "Booking_roomId_fkey" FOREIGN KEY ("roomId") REFERENCES "Room"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "BoardingHouseImage" ADD CONSTRAINT "BoardingHouseImage_boardingHouseId_fkey" FOREIGN KEY ("boardingHouseId") REFERENCES "BoardingHouse"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Room" ADD CONSTRAINT "Room_boardingHouseId_fkey" FOREIGN KEY ("boardingHouseId") REFERENCES "BoardingHouse"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "RoomAvailabilityLog" ADD CONSTRAINT "RoomAvailabilityLog_roomId_fkey" FOREIGN KEY ("roomId") REFERENCES "Room"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

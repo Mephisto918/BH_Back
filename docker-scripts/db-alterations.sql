@@ -1,3 +1,6 @@
+CREATE EXTENSION IF NOT EXISTS postgis;
+
+
 ALTER TABLE "BoardingHouse" ALTER COLUMN "amenities" TYPE jsonb USING "amenities"::jsonb;
 ALTER TABLE "BoardingHouse" ALTER COLUMN "properties" TYPE jsonb USING "properties"::jsonb;
 ALTER TABLE "Room" ALTER COLUMN "features" TYPE jsonb USING "features"::jsonb;
@@ -27,4 +30,3 @@ ALTER TABLE "Image" ADD CONSTRAINT IF NOT EXISTS check_one_relation CHECK (
   "adminId" IS NOT NULL
 );
 
-CREATE EXTENSION IF NOT EXISTS postgis;

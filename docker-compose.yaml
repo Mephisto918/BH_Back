@@ -10,11 +10,11 @@ services:
       DATABASE_URL: postgres://mephiscus:devilMayCry5@db:5432/bh
     depends_on:
       - db
-    command: >
-      sh -c "npx prisma generate &&
-            npm run build &&
-            npx prisma migrate deploy &&
-            node dist/main"
+    # command: >
+    #   sh -c "npx prisma generate &&
+    #         npm run build &&
+    #         npx prisma migrate deploy &&
+    #         node dist/main"
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:3000" ]
       interval: 10s

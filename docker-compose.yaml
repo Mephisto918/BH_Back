@@ -14,12 +14,14 @@ services:
       sh -c "npx prisma generate &&
             npm run build &&
             node dist/main"
+      command: [ "sh", "-c", "./wait-for-db.sh && npm run build && node dist/main" ]
 
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:3000" ]
       interval: 10s
       timeout: 5s
       retries: 5
+
   db:
     image: postgis/postgis:latest
     environment:
@@ -31,6 +33,17 @@ services:
       - ./docker-scripts:/docker-entrypoint-initdb.d
     ports:
       - "3101:5432"
+
+  app-shell:
+    build: .
+    container_name: nest-shell
+    command: sh
+    stdin_open: true
+    tty: true
+    environment:
+      DATABASE_URL: postgres://mephiscus:devilMayCry5@db:5432/bh
+    depends_on:
+      - db
 
 volumes:
   pgdata:

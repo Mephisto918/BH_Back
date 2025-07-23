@@ -21,7 +21,7 @@ services:
       timeout: 5s
       retries: 5
   db:
-    image: postgres/postgis:latest
+    image: postgis/postgis:latest
     environment:
       POSTGRES_USER: mephiscus
       POSTGRES_PASSWORD: devilMayCry5

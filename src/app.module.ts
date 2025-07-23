@@ -1,23 +1,23 @@
 import { AppController } from './app.controller';
 import { DatabaseModule } from './infrastructure/database/database.module';
-import { TenantsModule } from './app/tenants/tenants.module';
+import { TenantsModule } from './domains/tenants/tenants.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 
 import { join } from 'path';
-import { AuthModule } from './app/auth/auth.module';
-import { OwnersModule } from './app/owners/owners.module';
+import { AuthModule } from './domains/auth/auth.module';
+import { OwnersModule } from './domains/owners/owners.module';
 import { ImageModule } from './infrastructure/image/image.module';
-import { AdminsModule } from './app/admins/admins.module';
-import { BoardingHousesModule } from './app/boarding-houses/boarding-houses.module';
+import { AdminsModule } from './domains/admins/admins.module';
+import { BoardingHousesModule } from './domains/boarding-houses/boarding-houses.module';
 import { PdfModule } from './infrastructure/pdf/pdf.module';
 import { LoggingMiddleware } from './forNowMiddleware';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { BookingsModule } from './app/bookings/bookings.module';
+import { BookingsModule } from './domains/bookings/bookings.module';
 import { LocationModule } from './infrastructure/location/location.module';
-import { RoomsModule } from './app/rooms/rooms.module';
+import { RoomsModule } from './domains/rooms/rooms.module';
 
 @Module({
   imports: [

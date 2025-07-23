@@ -1,8 +1,10 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { IDatabaseService } from 'src/infrastructure/database/database.interface';
-import { CreateRoomsDto } from './dto/create-rooms.dto';
 import { PrismaService } from 'src/infrastructure/database/prisma.service';
 import { UpdateRoomDto } from './dto/update-room.dto';
+import { ImageService } from 'src/infrastructure/image/image.service';
+import { Prisma } from '@prisma/client';
+import { CreateRoomsWithGallery } from './types';
 
 // * turn this into module later
 
@@ -10,25 +12,40 @@ import { UpdateRoomDto } from './dto/update-room.dto';
 export class RoomsService {
   constructor(
     @Inject('IDatabaseService') private readonly database: IDatabaseService,
+    private readonly imageService: ImageService,
   ) {}
 
   private get prisma(): PrismaService {
     return this.database.getClient();
   }
 
-  create(
-    rooms: CreateRoomsDto[],
+  async create(
+    rooms: CreateRoomsWithGallery[],
     boardingHouseId: number,
-    prismaClient = this.prisma,
-  ) {
-    const roomsWithBHId = rooms.map((room) => ({
-      ...room,
-      boardingHouseId,
-    }));
+    prismaClient: Prisma.TransactionClient = this.prisma,
+  ): Promise<void> {
+    for (const room of rooms) {
+      const { gallery, ...roomData } = room;
 
-    return prismaClient.room.createMany({
-      data: roomsWithBHId,
-    });
+      // Create room first to get ID
+      const createdRoom = await prismaClient.room.create({
+        data: {
+          ...roomData,
+          boardingHouseId,
+        },
+      });
+
+      // Optional: Upload gallery if provided
+      if (gallery?.length) {
+        await this.imageService.processUploadInTransaction(
+          prismaClient,
+          gallery,
+          'ROOM',
+          createdRoom.id,
+          'GALLERY',
+        );
+      }
+    }
   }
 
   async findAll(bhId: number) {

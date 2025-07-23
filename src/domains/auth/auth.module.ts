@@ -4,12 +4,12 @@ import { AuthController } from './auth.controller';
 import { UserUnionService } from './userUnion.service';
 import { CryptoService } from './utilities/crypto.service';
 import { ImageModule } from 'src/infrastructure/image/image.module';
-import { TenantsModule } from 'src/app/tenants/tenants.module';
+import { TenantsModule } from 'src/domains/tenants/tenants.module';
 import { JwtStrategy } from './strategy/jwt.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConfig } from './config/jwt.config';
-import { AdminsModule } from 'src/app/admins/admins.module';
-import { OwnersModule } from 'src/app/owners/owners.module';
+import { AdminsModule } from 'src/domains/admins/admins.module';
+import { OwnersModule } from 'src/domains/owners/owners.module';
 
 @Module({
   imports: [

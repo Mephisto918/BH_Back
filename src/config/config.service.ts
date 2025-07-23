@@ -27,9 +27,10 @@ export class ConfigService {
   }
 
   get mediaPaths() {
+    const baseDir = this.configService.get<string>('MEDIA_DIR_PATH') || 'media';
     return {
-      public: join(__dirname, '..', 'media', 'public'),
-      protected: join(__dirname, '..', 'media', 'protected'),
+      public: join(baseDir, 'public'),
+      protected: join(baseDir, 'protected'),
     };
   }
 }

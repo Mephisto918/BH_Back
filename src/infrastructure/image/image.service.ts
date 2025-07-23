@@ -37,8 +37,8 @@ export class ImageService {
     mediaType: MediaType,
     quality: ImageQuality = 'MEDIUM',
     isPublic = true,
-  ): Promise<{ path: string; imageIds: number[] }> {
-    if (!files?.length) return { path: '', imageIds: [] };
+  ): Promise<{ imageIds: number[] }> {
+    if (!files?.length) return { imageIds: [] };
 
     const validImageTypes: MediaType[] = [
       'THUMBNAIL',
@@ -74,7 +74,6 @@ export class ImageService {
       return {
         absPath,
         relPath: path.join(
-          'media',
           resourceType,
           String(resourceId),
           mediaType,
@@ -104,10 +103,29 @@ export class ImageService {
     }
 
     return {
-      path: path.join('media', resourceType, String(resourceId), mediaType),
       imageIds,
     };
   }
+
+  // resourceType/resourceId/mediaType/filename
+  async processGet(filePath: string): Promise<Buffer> {
+    const fullPath = filePath.startsWith('media/')
+      ? filePath
+      : path.join(process.cwd(), 'media', filePath);
+
+    const mediaRoot = path.normalize(path.join(process.cwd(), 'media'));
+    const normalizedFullPath = path.normalize(fullPath);
+
+    if (!normalizedFullPath.startsWith(mediaRoot)) {
+      throw new Error(
+        'Invalid file path: Access restricted to media directory',
+      );
+    }
+
+    const data = await fsPromises.readFile(normalizedFullPath); // ✅ no conflict
+    return data;
+  }
+  
 
   private computeDestinationFor(
     resourceType: ResourceType,
@@ -163,25 +181,6 @@ export class ImageService {
   generateFilename(file: Express.Multer.File): string {
     const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
     return `${uniqueSuffix}-${file.originalname}`;
-  }
-
-  // resourceType/resourceId/mediaType/filename
-  async processGet(filePath: string): Promise<Buffer> {
-    const fullPath = filePath.startsWith('media/')
-      ? filePath
-      : path.join(process.cwd(), 'media', filePath);
-
-    const mediaRoot = path.normalize(path.join(process.cwd(), 'media'));
-    const normalizedFullPath = path.normalize(fullPath);
-
-    if (!normalizedFullPath.startsWith(mediaRoot)) {
-      throw new Error(
-        'Invalid file path: Access restricted to media directory',
-      );
-    }
-
-    const data = await fsPromises.readFile(normalizedFullPath); // ✅ no conflict
-    return data;
   }
 
   private hasFindUnique(model: unknown): model is Findable {

@@ -4,9 +4,30 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { SwaggerTheme, SwaggerThemeNameEnum } from 'swagger-themes';
 import ip from 'ip';
+import { join } from 'path';
+import * as express from 'express'; // <-- Add this
+import { ConfigService } from './config/config.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const configService = app.get(ConfigService);
+
+  if (process.env.NODE_ENV !== 'production') {
+    // Serve static files directly from /public folder in project root during dev
+    app.use('/', express.static(join(process.cwd(), 'public')));
+    console.log('Serving static files from:', join(process.cwd(), 'public'));
+  } else {
+    // In production, serve from dist/public (after build)
+    app.use('/', express.static(join(__dirname, '..', 'public')));
+    console.log('Serving static files from:', join(__dirname, '..', 'public'));
+  }
+
+  app.use(
+    '/media/public',
+    express.static(
+      join(process.cwd(), configService.mediaPaths.public || 'media/public'),
+    ),
+  );
 
   const swagConfig = new DocumentBuilder()
     .setTitle('API')

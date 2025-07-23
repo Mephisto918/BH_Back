@@ -9,8 +9,8 @@ import { LocationService } from 'src/infrastructure/location/location.service';
 import { LocationDto } from 'src/infrastructure/location/dto/location.dto';
 import { FindBoardingHouseDto } from './dto/find-boarding-house.dto';
 import { RoomsService } from '../rooms/rooms.service';
-import { MediaUploadsDto } from 'src/infrastructure/image/dto/media-upload.dto';
 import { ImageService } from 'src/infrastructure/image/image.service';
+import { FileMap } from 'src/common/types/file.type';
 
 @Injectable()
 export class BoardingHousesService {
@@ -119,19 +119,13 @@ export class BoardingHousesService {
   async create(
     boardinghouseData: CreateBoardingHouseDto,
     locationData: LocationDto,
-    images: {
-      thumbnail?: Express.Multer.File[];
-      gallery?: Express.Multer.File[];
-      main?: Express.Multer.File[];
-      banner?: Express.Multer.File[];
-    },
+    images: FileMap,
   ) {
     const prisma = this.prisma;
 
     return prisma.$transaction(async (tx) => {
       const returnedLocationId =
         await this.locationService.create(locationData);
-      // console.log('location id: ', returnedLocationId);
 
       const createBoardingHouse = await tx.boardingHouse.create({
         data: {
@@ -146,15 +140,12 @@ export class BoardingHousesService {
         },
       });
 
-      if (boardinghouseData.rooms && boardinghouseData.rooms.length > 0) {
-        const roomsWithBHId = boardinghouseData.rooms.map((room) => ({
-          ...room,
-          boardingHouseId: createBoardingHouse.id,
-        }));
-
-        await tx.room.createMany({
-          data: roomsWithBHId,
-        });
+      if (boardinghouseData.rooms?.length) {
+        await this.roomsService.create(
+          boardinghouseData.rooms,
+          createBoardingHouse.id,
+          tx,
+        );
       }
 
       if (images.thumbnail) {

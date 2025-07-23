@@ -1,11 +1,76 @@
 import { applyDecorators } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
+import {
+  ApiConsumes,
+  ApiOperation,
+  ApiResponse,
+  ApiBody,
+} from '@nestjs/swagger';
 import { CreateBoardingHouseDto } from './dto/create-boarding-house.dto';
 
 export function CreateBoardingHouseDoc() {
   return applyDecorators(
     ApiOperation({ summary: 'Create a new resource' }),
+    ApiConsumes('multipart/form-data'),
     ApiBody({
+      schema: {
+        type: 'object',
+        properties: {
+          ownerId: { type: 'number' },
+          name: { type: 'string' },
+          address: { type: 'string' },
+          description: { type: 'string' },
+          availabilityStatus: { type: 'boolean' },
+          amenities: {
+            type: 'array',
+            items: { type: 'string' },
+          },
+          location: {
+            type: 'object',
+            properties: {
+              type: { type: 'string' },
+              coordinates: {
+                type: 'array',
+                items: { type: 'number' },
+              },
+            },
+          },
+          rooms: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                roomNumber: { type: 'string' },
+                maxCapacity: { type: 'number' },
+                currentCapacity: { type: 'number' },
+                price: { type: 'number' },
+                tags: {
+                  type: 'object',
+                  additionalProperties: true,
+                },
+                roomType: { type: 'string' },
+                availabilityStatus: { type: 'boolean' },
+                gallery: {
+                  type: 'array',
+                  items: { type: 'string', format: 'binary' },
+                },
+              },
+            },
+          },
+          thumbnail: { type: 'string', format: 'binary' },
+          gallery: {
+            type: 'array',
+            items: { type: 'string', format: 'binary' },
+          },
+          main: {
+            type: 'array',
+            items: { type: 'string', format: 'binary' },
+          },
+          banner: {
+            type: 'array',
+            items: { type: 'string', format: 'binary' },
+          },
+        },
+      },
       type: CreateBoardingHouseDto,
       examples: {
         sample: {
@@ -17,11 +82,12 @@ export function CreateBoardingHouseDoc() {
               'Experience luxury and serenity by the lakeside, ideal for family gatherings and peaceful escapes.',
             availabilityStatus: true,
             amenities: ['WiFi', 'SwimmingPool', 'Parking'],
-            thumbnail: ['https://example.com/thumbnail.jpg'],
+            thumbnail: [
+              { uri: 'sample file uri', name: 'sample name', type: '.png' },
+            ],
             gallery: [
-              'https://example.com/gallery.jpg',
-              'https://example.com/gallery.jpg',
-              'https://example.com/gallery.jpg',
+              { uri: 'sample file uri', name: 'sample name', type: '.png' },
+              { uri: 'sample file uri', name: 'sample name', type: '.png' },
             ],
             location: {
               longitude: 124.614262,
@@ -42,6 +108,10 @@ export function CreateBoardingHouseDoc() {
                 },
                 roomType: 'DUO',
                 availabilityStatus: true,
+                gallery: [
+                  { uri: 'sample file uri', name: 'sample name', type: '.png' },
+                  { uri: 'sample file uri', name: 'sample name', type: '.png' },
+                ],
               },
               {
                 roomNumber: '102',
@@ -54,6 +124,10 @@ export function CreateBoardingHouseDoc() {
                 },
                 roomType: 'SQUAD',
                 availabilityStatus: true,
+                gallery: [
+                  { uri: 'sample file uri', name: 'sample name', type: '.png' },
+                  { uri: 'sample file uri', name: 'sample name', type: '.png' },
+                ],
               },
             ],
           },

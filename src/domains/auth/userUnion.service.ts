@@ -1,7 +1,7 @@
-import { AdminsService } from 'src/app/admins/admins.service';
+import { AdminsService } from 'src/domains/admins/admins.service';
 import { TenantsService } from '../tenants/tenants.service';
 import { Injectable } from '@nestjs/common';
-import { OwnersService } from 'src/app/owners/owners.service';
+import { OwnersService } from 'src/domains/owners/owners.service';
 
 @Injectable()
 export class UserUnionService {

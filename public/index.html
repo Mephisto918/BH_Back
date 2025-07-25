@@ -1,15 +1,101 @@
-<!-- public/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8" />
-  <title>Backend API Only</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BH Backend API</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      max-width: 600px;
+      font-size: 1rem;
+      margin: 0.5rem 0;
+    }
+
+    a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .box {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      max-width: 700px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #6c757d;
+      color: white;
+      border-radius: 20px;
+      padding: 0.3rem 1rem;
+      font-size: 0.8rem;
+      margin-bottom: 1rem;
+    }
+  </style>
 </head>
 
 <body>
-  <h1>This is a backend API only.</h1>
-  <p>Please use the mobile app frontend to interact.</p>
+  <div class="box">
+    <div class="badge">API Only</div>
+    <h1>Welcome to the BH Backend API</h1>
+    <p>This is the backend service for the BH Boarding House mobile app.</p>
+    <p>
+      You can interact with the backend only through the mobile application.
+    </p>
+    <p>
+      Developers and testers can refer to the
+      <a href="https://bhhph.online/docs#/" target="_blank">API Docs (Swagger)</a>
+      for testing and integration.
+    </p>
+
+    <!-- App Download Placeholder -->
+    <div class="download-section">
+      <h2>📱 Download the App</h2>
+      <p>
+        The mobile frontend is required to use the features of this API.
+      </p>
+      <ul style="list-style: none; padding: 0;">
+        <li>
+          <a href="#" id="play-store-link">[Google Play Store Link]</a>
+        </li>
+        <li>
+          <a href="#" id="app-store-link">[Apple App Store Link]</a>
+        </li>
+      </ul>
+    </div>
+
+    <p style="margin-top: 2rem; font-size: 0.9rem; color: #555;">
+      ⚠️ This API is in development. All public data is accessible for testing.
+      Private routes will be locked down later.
+    </p>
+  </div>
 </body>
 
 </html>

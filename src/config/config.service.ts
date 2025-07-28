@@ -18,8 +18,8 @@ export class ConfigService {
   get DOMAIN_URL() {
     const domainUrl =
       this.ENVIRONMENT === 'PRODUCTION'
-        ? 'https://domain.com'
-        : 'http://' + ip.address() + ':3000';
+        ? 'https://bhhph.online'
+        : 'http://' + ip.address() + ':3000/';
     return domainUrl;
   }
 
@@ -33,9 +33,14 @@ export class ConfigService {
 
   get mediaPaths() {
     const baseDir = this.configService.get<string>('MEDIA_DIR_PATH') || 'media';
+
+    const cleanBaseDir = baseDir.startsWith('/')
+      ? baseDir.slice(1) // remove leading slash
+      : baseDir;
+
     return {
-      public: join(baseDir, 'public'),
-      protected: join(baseDir, 'protected'),
+      public: join(cleanBaseDir, 'public'),
+      protected: join(cleanBaseDir, 'protected'),
     };
   }
 }

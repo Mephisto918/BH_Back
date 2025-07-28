@@ -7,6 +7,7 @@ import ip from 'ip';
 import { join } from 'path';
 import * as express from 'express'; // <-- Add this
 import { ConfigService } from './config/config.service';
+import { resolve } from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -24,11 +25,8 @@ async function bootstrap() {
 
   app.use(
     '/media/public',
-    express.static(
-      join(process.cwd(), configService.mediaPaths.public || 'media/public'),
-    ),
+    express.static(resolve(process.cwd(), configService.mediaPaths.public)),
   );
-
   const swagConfig = new DocumentBuilder()
     .setTitle('API')
     .setDescription('BH Api')

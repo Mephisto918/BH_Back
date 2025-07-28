@@ -18,7 +18,7 @@ export class ConfigService {
   get DOMAIN_URL() {
     const domainUrl =
       this.ENVIRONMENT === 'PRODUCTION'
-        ? 'https://bhhph.online'
+        ? 'https://bhhph.online/'
         : 'http://' + ip.address() + ':3000/';
     return domainUrl;
   }
@@ -31,7 +31,10 @@ export class ConfigService {
     return this.configService.get<string>('JWT_SECRET_KEY');
   }
 
-  get mediaPaths() {
+  get mediaPaths(): {
+    public: string;
+    protected: string;
+  } {
     const baseDir = this.configService.get<string>('MEDIA_DIR_PATH') || 'media';
 
     const cleanBaseDir = baseDir.startsWith('/')

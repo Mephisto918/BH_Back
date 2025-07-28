@@ -5,6 +5,10 @@ import { UpdateRoomDto } from './dto/update-room.dto';
 import { ImageService } from 'src/infrastructure/image/image.service';
 import { Prisma } from '@prisma/client';
 import { CreateRoomsWithGallery } from './types';
+import {
+  MediaType,
+  ResourceType,
+} from 'src/infrastructure/image/types/resources-types';
 
 // * turn this into module later
 
@@ -27,7 +31,7 @@ export class RoomsService {
     for (const room of rooms) {
       const { gallery, ...roomData } = room;
 
-      // Create room first to get ID
+      // Create the room first to get its ID
       const createdRoom = await prismaClient.room.create({
         data: {
           ...roomData,
@@ -38,11 +42,17 @@ export class RoomsService {
       // Optional: Upload gallery if provided
       if (gallery?.length) {
         await this.imageService.processUploadInTransaction(
-          prismaClient,
-          gallery,
-          'ROOM',
-          createdRoom.id,
-          'GALLERY',
+          prismaClient, // ✅ correct tx
+          gallery, // ✅ correct file array
+          ResourceType.BOARDING_HOUSE,
+          boardingHouseId,
+          MediaType.GALLERY,
+          'MEDIUM',
+          true,
+          {
+            childType: ResourceType.ROOM,
+            childId: createdRoom.id,
+          },
         );
       }
     }
@@ -63,15 +73,15 @@ export class RoomsService {
         entityId: bhId,
       },
     });
-    console.log('queryied images: ', images);
+    // console.log('queryied images: ', images);
 
     const thumbnail = images
       .filter((img) => img.type === 'THUMBNAIL')
-      .map((img) => this.imageService.getMedilaPath(img.url, true));
+      .map((img) => this.imageService.getMediaPath(img.url, true));
 
     const gallery = images
       .filter((img) => img.type === 'GALLERY')
-      .map((img) => this.imageService.getMedilaPath(img.url, true));
+      .map((img) => this.imageService.getMediaPath(img.url, true));
 
     if (!room) {
       throw new NotFoundException(
@@ -104,11 +114,11 @@ export class RoomsService {
 
     const thumbnail = images
       .filter((img) => img.type === 'THUMBNAIL')
-      .map((img) => this.imageService.getMedilaPath(img.url, true));
+      .map((img) => this.imageService.getMediaPath(img.url, true));
 
     const gallery = images
       .filter((img) => img.type === 'GALLERY')
-      .map((img) => this.imageService.getMedilaPath(img.url, true));
+      .map((img) => this.imageService.getMediaPath(img.url, true));
 
     if (!room) {
       throw new NotFoundException(

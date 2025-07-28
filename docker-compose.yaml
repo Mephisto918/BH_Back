@@ -11,7 +11,8 @@ services:
     command: ["sh", "-c", "./docker-start.sh"]
     # command: >
       # sh -c "./wait-for-db.sh && npx prisma generate && npm run build && node dist/main"
-
+    volumes:
+          - ./media:/app/media
 
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:3000" ]

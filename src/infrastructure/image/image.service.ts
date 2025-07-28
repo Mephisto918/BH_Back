@@ -7,6 +7,7 @@ import { ConfigService } from 'src/config/config.service';
 import { IDatabaseService } from '../database/database.interface';
 import { ImageQuality, Prisma, PrismaClient } from '@prisma/client';
 import { Findable } from './types/type.guards';
+import { ImagePathUtil } from './image.path-builder';
 
 /**
  ** This Service only concers on read and writing on disk *
@@ -18,11 +19,12 @@ import { Findable } from './types/type.guards';
 export class ImageService {
   constructor(
     @Inject('IDatabaseService') private readonly database: IDatabaseService,
-    private readonly condfigService: ConfigService,
+    private readonly configService: ConfigService,
+    private readonly imagePathUtil: ImagePathUtil,
   ) {}
 
   get mediaPaths() {
-    return this.condfigService.mediaPaths;
+    return this.configService.mediaPaths;
   }
 
   get prisma() {
@@ -37,82 +39,110 @@ export class ImageService {
     mediaType: MediaType,
     quality: ImageQuality = 'MEDIUM',
     isPublic = true,
+    options?: { childType?: ResourceType; childId?: number }, //* possible raname
   ): Promise<{ imageIds: number[] }> {
-    if (!files?.length) return { imageIds: [] };
+    try {
+      if (
+        options?.childType &&
+        !Object.values(ResourceType).includes(options.childType)
+      ) {
+        throw new Error(`Invalid childType: ${options.childType}`);
+      }
+      if (!files?.length) return { imageIds: [] };
 
-    const validImageTypes: MediaType[] = [
-      'THUMBNAIL',
-      'MAIN',
-      'GALLERY',
-      'PFP',
-      'ROOM',
-    ];
-    if (!validImageTypes.includes(mediaType)) {
-      throw new Error(`Invalid mediaType: ${mediaType}`);
-    }
+      const castedOptions = options?.childType
+        ? {
+            ...options,
+            childType: options.childType, // 👈 cast string to ResourceType
+          }
+        : options;
 
-    // Ensure one instance of certain types
-    const SINGLE_INSTANCE_TYPES: MediaType[] = ['THUMBNAIL', 'MAIN', 'PFP'];
-    if (SINGLE_INSTANCE_TYPES.includes(mediaType)) {
-      await tx.image.deleteMany({
-        where: {
-          entityType: resourceType,
-          entityId: resourceId,
-          type: mediaType,
-        },
-      });
-    }
+      const validMediaTypes = [
+        MediaType.THUMBNAIL,
+        MediaType.MAIN,
+        MediaType.GALLERY,
+        MediaType.PFP,
+        MediaType.ROOM,
+      ];
+      if (!validMediaTypes.includes(mediaType)) {
+        throw new Error(`Invalid mediaType: ${mediaType}`);
+      }
 
-    const fileWrites = files.map((file) => {
-      const absPath = this.computeDestinationFor(
-        resourceType,
-        resourceId,
-        mediaType,
-        file,
-        isPublic,
-      );
-      return {
-        absPath,
-        relPath: path.join(
+      const SINGLE_INSTANCE_TYPES = [
+        MediaType.THUMBNAIL,
+        MediaType.MAIN,
+        MediaType.PFP,
+      ];
+      if (SINGLE_INSTANCE_TYPES.includes(mediaType)) {
+        await tx.image.deleteMany({
+          where: {
+            entityType: resourceType,
+            entityId: resourceId,
+            type: mediaType,
+          },
+        });
+      }
+
+      const imageIds: number[] = [];
+
+      for (const file of files) {
+        const absPath = this.imagePathUtil.buildAbsolutePath(
           resourceType,
-          String(resourceId),
+          resourceId,
           mediaType,
-          path.basename(absPath),
-        ),
-        buffer: file.buffer,
-      };
-    });
+          file.originalname,
+          isPublic,
+          castedOptions,
+        );
 
-    const imageIds: number[] = [];
+        const relPath = this.imagePathUtil.buildRelativePath(
+          resourceType,
+          resourceId,
+          mediaType,
+          file.originalname,
+          castedOptions,
+        );
 
-    for (const { absPath, relPath, buffer } of fileWrites) {
-      await fs.promises.mkdir(path.dirname(absPath), { recursive: true });
-      await fs.promises.writeFile(absPath, buffer);
+        // await this.imagePathUtil.ensureDirectoryExists(absPath);
+        await this.imagePathUtil.ensureDirectoryExists(path.dirname(absPath));
+        await fs.promises.writeFile(absPath, file.buffer);
 
-      const image = await tx.image.create({
-        data: {
-          url: relPath,
-          type: mediaType,
-          quality,
-          entityType: resourceType,
-          entityId: resourceId,
-        },
-      });
+        const image = await tx.image.create({
+          data: {
+            url: relPath,
+            type: mediaType,
+            quality,
+            entityType: resourceType,
+            entityId: resourceId,
+          },
+        });
 
-      imageIds.push(image.id);
+        imageIds.push(image.id);
+      }
+
+      return { imageIds };
+    } catch (err) {
+      console.error('Failed to write file:', err);
+      throw new Error('File system write failed');
     }
-
-    return {
-      imageIds,
-    };
   }
+  async getMediaPath(
+    fileUrl: string,
+    isPublic: boolean,
+  ): Promise<string | null> {
+    const fullPath = this.imagePathUtil.getAbsolutePath(fileUrl, isPublic);
 
-  // resourceType/resourceId/mediaType/filename
-  getMedilaPath(filePath: string, isPublic: boolean): string {
-    const mediaPath = isPublic
-      ? this.condfigService.mediaPaths.public
-      : this.mediaPaths.protected;
-    return this.condfigService.DOMAIN_URL + mediaPath + '/' + filePath;
+    try {
+      await fs.promises.access(fullPath, fs.constants.F_OK);
+      const baseUrl = this.configService.DOMAIN_URL.replace(/\/+$/, '');
+      const folder = isPublic
+        ? this.mediaPaths.public
+        : this.mediaPaths.protected;
+
+      return `${baseUrl}/${folder}/${fileUrl}`.replace(/\\/g, '/');
+    } catch {
+      return null;
+    }
   }
 
   private computeDestinationFor(
@@ -122,28 +152,51 @@ export class ImageService {
     file: Express.Multer.File,
     isPublic: boolean,
   ): string {
-    // You can choose dynamic folders here based on resource id, date, type, etc.
-    const filename = this.generateFilename(file);
-    const fullResourcePath = path.join(
-      resourceType,
-      String(resourceId),
-      mediaType,
-      filename,
-    );
+    // Convert enum to string for path building
     return path.join(
       process.cwd(),
-      isPublic ? this.mediaPaths.public : this.mediaPaths.protected,
-      fullResourcePath,
+      isPublic ? 'media/public' : 'media/protected',
+      resourceType.toString(),
+      resourceId.toString(),
+      mediaType.toString(),
+      `${Date.now()}-${file.originalname}`,
     );
+  }
+
+  private buildPathFromEntity({
+    entityType,
+    entityId,
+    parentEntityType,
+    parentEntityId,
+    mediaType,
+  }: {
+    entityType: ResourceType;
+    entityId: number;
+    parentEntityType?: ResourceType;
+    parentEntityId?: number;
+    mediaType: MediaType;
+  }) {
+    const segments: string[] = [];
+
+    if (parentEntityType && parentEntityId) {
+      segments.push(parentEntityType);
+      segments.push(String(parentEntityId));
+    }
+
+    segments.push(entityType);
+    segments.push(String(entityId));
+    segments.push(mediaType);
+
+    return path.join(...segments);
   }
 
   private async validateEntity(resourceType: ResourceType, resourceId: number) {
     const entityMap: Record<ResourceType, PrismaModel> = {
-      TENANT: 'tenant',
-      OWNER: 'owner',
-      ADMIN: 'admin',
-      BOARDING_HOUSE: 'boardingHouse',
-      ROOM: 'room',
+      TENANT: PrismaModel.TENANT,
+      OWNER: PrismaModel.OWNER,
+      ADMIN: PrismaModel.ADMIN,
+      BOARDING_HOUSE: PrismaModel.BOARDING_HOUSE,
+      ROOM: PrismaModel.ROOM,
     };
     const entityKey = entityMap[resourceType];
     const model = this.prisma[entityKey as keyof PrismaClient] as unknown;

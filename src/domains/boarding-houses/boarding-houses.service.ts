@@ -11,6 +11,10 @@ import { FindBoardingHouseDto } from './dto/find-boarding-house.dto';
 import { RoomsService } from '../rooms/rooms.service';
 import { ImageService } from 'src/infrastructure/image/image.service';
 import { FileMap } from 'src/common/types/file.type';
+import {
+  MediaType,
+  ResourceType,
+} from 'src/infrastructure/image/types/resources-types';
 
 @Injectable()
 export class BoardingHousesService {
@@ -103,14 +107,23 @@ export class BoardingHousesService {
               entityType: 'BOARDING_HOUSE',
             },
           });
+          // console.log('from prisma images: ', images);
 
-          const thumbnail = images
-            .filter((img) => img.type === 'THUMBNAIL')
-            .map((img) => this.imageService.getMedilaPath(img.url, true));
+          const thumbnail = (
+            await Promise.all(
+              images
+                .filter((img) => img.type === 'THUMBNAIL')
+                .map((img) => this.imageService.getMediaPath(img.url, true)),
+            )
+          ).filter((url): url is string => !!url); // Filters out null or undefined
 
-          const gallery = images
-            .filter((img) => img.type === 'GALLERY')
-            .map((img) => this.imageService.getMedilaPath(img.url, true));
+          const gallery = (
+            await Promise.all(
+              images
+                .filter((img) => img.type === 'GALLERY')
+                .map((img) => this.imageService.getMediaPath(img.url, true)),
+            )
+          ).filter((url): url is string => !!url); // Filters out null or undefined
 
           return {
             ...houseData,
@@ -178,9 +191,9 @@ export class BoardingHousesService {
         await this.imageService.processUploadInTransaction(
           tx,
           images.thumbnail,
-          'BOARDING_HOUSE',
+          ResourceType.BOARDING_HOUSE,
           createBoardingHouse.id,
-          'THUMBNAIL',
+          MediaType.THUMBNAIL,
         );
       }
 
@@ -188,9 +201,9 @@ export class BoardingHousesService {
         await this.imageService.processUploadInTransaction(
           tx,
           images.gallery,
-          'BOARDING_HOUSE',
+          ResourceType.BOARDING_HOUSE,
           createBoardingHouse.id,
-          'GALLERY',
+          MediaType.GALLERY,
         );
       }
 
@@ -198,9 +211,9 @@ export class BoardingHousesService {
         await this.imageService.processUploadInTransaction(
           tx,
           images.main,
-          'BOARDING_HOUSE',
+          ResourceType.BOARDING_HOUSE,
           createBoardingHouse.id,
-          'MAIN',
+          MediaType.MAIN,
         );
       }
 
@@ -208,9 +221,9 @@ export class BoardingHousesService {
         await this.imageService.processUploadInTransaction(
           tx,
           images.banner,
-          'BOARDING_HOUSE',
+          ResourceType.BOARDING_HOUSE,
           createBoardingHouse.id,
-          'BANNER',
+          MediaType.BANNER,
         );
       }
 

@@ -35,7 +35,7 @@ export class LocationService {
       city, 
       province, 
       country, 
-      "isDeleted", d
+      "isDeleted", 
       "deletedAt"
     FROM "Location"
     WHERE id = ${id};

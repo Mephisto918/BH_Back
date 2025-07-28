@@ -35,13 +35,13 @@ export class LocationService {
       city, 
       province, 
       country, 
-      "isDeleted", 
+      "isDeleted", d
       "deletedAt"
     FROM "Location"
     WHERE id = ${id};
   `;
 
-    return result[0];
+    return this.mapLocation(result[0]);
   }
 
   async findNearby(lat: number, lng: number, radiusInMeters: number = 1000) {
@@ -84,5 +84,26 @@ export class LocationService {
     RETURNING id`;
 
     return result[0].id;
+  }
+
+  private mapLocation(raw: {
+    id: number;
+    coordinates: { type: string; coordinates: [number, number] };
+    city: string | null;
+    province: string | null;
+    country: string | null;
+    isDeleted: boolean;
+    deletedAt: Date | null;
+  }) {
+    return {
+      id: raw.id,
+      type: raw.coordinates.type,
+      coordinates: raw.coordinates.coordinates,
+      city: raw.city,
+      province: raw.province,
+      country: raw.country,
+      isDeleted: raw.isDeleted,
+      deletedAt: raw.deletedAt,
+    };
   }
 }

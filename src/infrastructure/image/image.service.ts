@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import fsPromises from 'fs/promises';
+// import fsPromises from 'fs/promises';
 import { Inject, Injectable } from '@nestjs/common';
 import { ResourceType, MediaType, PrismaModel } from './types/resources-types';
 import { ConfigService } from 'src/config/config.service';
@@ -108,24 +108,12 @@ export class ImageService {
   }
 
   // resourceType/resourceId/mediaType/filename
-  async processGet(filePath: string): Promise<Buffer> {
-    const fullPath = filePath.startsWith('media/')
-      ? filePath
-      : path.join(process.cwd(), 'media', filePath);
-
-    const mediaRoot = path.normalize(path.join(process.cwd(), 'media'));
-    const normalizedFullPath = path.normalize(fullPath);
-
-    if (!normalizedFullPath.startsWith(mediaRoot)) {
-      throw new Error(
-        'Invalid file path: Access restricted to media directory',
-      );
-    }
-
-    const data = await fsPromises.readFile(normalizedFullPath); // ✅ no conflict
-    return data;
+  getMedilaPath(filePath: string, isPublic: boolean): string {
+    const mediaPath = isPublic
+      ? this.condfigService.mediaPaths.public
+      : this.mediaPaths.protected;
+    return this.condfigService.DOMAIN_URL + mediaPath + '/' + filePath;
   }
-  
 
   private computeDestinationFor(
     resourceType: ResourceType,

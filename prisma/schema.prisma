@@ -245,35 +245,6 @@ model Image {
   entityId   Int
 }
 
-// old
-// model Image {
-//   id              Int            @id @default(autoincrement())
-//   url             String
-//   type            ImageType      @default(MAIN)
-//   quality         ImageQuality   @default(MEDIUM)
-//   createdAt       DateTime       @default(now())
-//   isDeleted       Boolean        @default(false)
-//   deletedAt       DateTime?
-//   // I recommend optional foreign keys for one-to-many relations
-//   boardingHouseId Int?
-//   boardingHouse   BoardingHouse? @relation(fields: [boardingHouseId], references: [id], name: "BoardingHouseImages")
-//   roomId          Int?
-//   room            Room?          @relation(fields: [roomId], references: [id], name: "RoomImages")
-//   ownerId         Int?
-//   owner           Owner?         @relation(fields: [ownerId], references: [id], name: "OwnerImages")
-//   tenantId        Int?
-//   tenant          Tenant?        @relation(fields: [tenantId], references: [id], name: "TenantImages")
-//   adminId         Int?
-//   admin           Admin?         @relation(fields: [adminId], references: [id], name: "AdminImages")
-
-//   // I recommend indexes for performance
-//   @@index([boardingHouseId])
-//   @@index([roomId])
-//   @@index([ownerId])
-//   @@index([tenantId])
-//   @@index([adminId])
-// }
-
 model AuditLog {
   id        Int         @id @default(autoincrement())
   userId    Int?
@@ -289,46 +260,46 @@ model AuditLog {
 
 //* do this to change Json to JSONB
 /**
- * ALTER TABLE "BoardingHouse"
- * ALTER COLUMN "amenities" TYPE jsonb USING "amenities"::jsonb;
- * ALTER TABLE "BoardingHouse"
- * ALTER COLUMN "properties" TYPE jsonb USING "properties"::jsonb;
- * ALTER TABLE "Room"
- * ALTER COLUMN "features" TYPE jsonb USING "features"::jsonb;
- * ALTER TABLE "Room"
- * ALTER COLUMN "tags" TYPE jsonb USING "tags"::jsonb;
- * ALTER TABLE "AuditLog"
- * ALTER COLUMN "meta" TYPE jsonb USING "meta"::jsonb;
- * ALTER TABLE "AuditLog"
- * ALTER COLUMN "user" TYPE jsonb USING "user"::jsonb;
- * -- 🧼 Update NULLs to default values
- * UPDATE "BoardingHouse"
- * SET "amenities" = '[]'::jsonb
- * WHERE "amenities" IS NULL;
- * UPDATE "BoardingHouse"
- * SET "properties" = '{}'::jsonb
- * WHERE "properties" IS NULL;
- * UPDATE "Room"
- * SET "features" = '{}'::jsonb
- * WHERE "features" IS NULL;
- * UPDATE "Room"
- * SET "tags" = '[]'::jsonb
- * WHERE "tags" IS NULL;
- * UPDATE "AuditLog"
- * SET "meta" = '{}'::jsonb
- * WHERE "meta" IS NULL;
- * UPDATE "AuditLog"
- * SET "user" = '{}'::jsonb
- * WHERE "user" IS NULL;
- * -- ⚡ Add GIN indexes for JSONB fields
- * CREATE INDEX gin_idx_boardinghouse_amenities ON "BoardingHouse" USING GIN ("amenities");
- * CREATE INDEX gin_idx_boardinghouse_properties ON "BoardingHouse" USING GIN ("properties");
- * CREATE INDEX gin_idx_room_features ON "Room" USING GIN ("features");
- * CREATE INDEX gin_idx_room_tags ON "Room" USING GIN ("tags");
- * CREATE INDEX gin_idx_auditlog_meta ON "AuditLog" USING GIN ("meta");
- * CREATE INDEX gin_idx_auditlog_user ON "AuditLog" USING GIN ("user");
- * -- add constraints for images
- * ALTER TABLE "Image" ADD CONSTRAINT check_one_relation CHECK ("boardingHouseId" IS NOT NULL OR "roomId" IS NOT NULL OR "ownerId" IS NOT NULL OR "tenantId" IS NOT NULL OR "adminId" IS NOT NULL);
+ ALTER TABLE "BoardingHouse"
+ ALTER COLUMN "amenities" TYPE jsonb USING "amenities"::jsonb;
+ ALTER TABLE "BoardingHouse"
+ ALTER COLUMN "properties" TYPE jsonb USING "properties"::jsonb;
+ ALTER TABLE "Room"
+ ALTER COLUMN "features" TYPE jsonb USING "features"::jsonb;
+ ALTER TABLE "Room"
+ ALTER COLUMN "tags" TYPE jsonb USING "tags"::jsonb;
+ ALTER TABLE "AuditLog"
+ ALTER COLUMN "meta" TYPE jsonb USING "meta"::jsonb;
+ ALTER TABLE "AuditLog"
+ ALTER COLUMN "user" TYPE jsonb USING "user"::jsonb;
+ -- 🧼 Update NULLs to default values
+ UPDATE "BoardingHouse"
+ SET "amenities" = '[]'::jsonb
+ WHERE "amenities" IS NULL;
+ UPDATE "BoardingHouse"
+ SET "properties" = '{}'::jsonb
+ WHERE "properties" IS NULL;
+ UPDATE "Room"
+ SET "features" = '{}'::jsonb
+ WHERE "features" IS NULL;
+ UPDATE "Room"
+ SET "tags" = '[]'::jsonb
+ WHERE "tags" IS NULL;
+ UPDATE "AuditLog"
+ SET "meta" = '{}'::jsonb
+ WHERE "meta" IS NULL;
+ UPDATE "AuditLog"
+ SET "user" = '{}'::jsonb
+ WHERE "user" IS NULL;
+ -- ⚡ Add GIN indexes for JSONB fields
+ CREATE INDEX gin_idx_boardinghouse_amenities ON "BoardingHouse" USING GIN ("amenities");
+ CREATE INDEX gin_idx_boardinghouse_properties ON "BoardingHouse" USING GIN ("properties");
+ CREATE INDEX gin_idx_room_features ON "Room" USING GIN ("features");
+ CREATE INDEX gin_idx_room_tags ON "Room" USING GIN ("tags");
+ CREATE INDEX gin_idx_auditlog_meta ON "AuditLog" USING GIN ("meta");
+ CREATE INDEX gin_idx_auditlog_user ON "AuditLog" USING GIN ("user");
+ -- add constraints for images, ❗ Reserved for future schema integrity
+ ALTER TABLE "Image" ADD CONSTRAINT check_one_relation CHECK ("boardingHouseId" IS NOT NULL OR "roomId" IS NOT NULL OR "ownerId" IS NOT NULL OR "tenantId" IS NOT NULL OR "adminId" IS NOT NULL);
  */
 
 //* for older data

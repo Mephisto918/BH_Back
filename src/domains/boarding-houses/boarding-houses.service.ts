@@ -76,7 +76,15 @@ export class BoardingHousesService {
 
       const includeRawLocationPostGIST = await Promise.all(
         result.map(async (house) => {
-          const rooms = house.rooms;
+          const { rooms, ...houseData } = house;
+          const roomsIdArray = rooms.map((room) => room.id);
+          const roomsWithImages = await Promise.all(
+            roomsIdArray.map(async (roomId) => {
+              const room = await this.roomsService.findOne(house.id, roomId);
+              return room; // or transform further if needed
+            }),
+          );
+
           const fullLocation = await this.locationService.findOne(
             house.locationId,
           );
@@ -84,18 +92,36 @@ export class BoardingHousesService {
           let totalCapacity = 0;
           let currentCapacity = 0;
 
-          rooms.forEach((room) => {
+          house.rooms.forEach((room) => {
             totalCapacity += room.maxCapacity;
             currentCapacity += room.currentCapacity;
           });
 
+          const images = await this.prisma.image.findMany({
+            where: {
+              entityId: house.id,
+              entityType: 'BOARDING_HOUSE',
+            },
+          });
+
+          const thumbnail = images
+            .filter((img) => img.type === 'THUMBNAIL')
+            .map((img) => this.imageService.getMedilaPath(img.url, true));
+
+          const gallery = images
+            .filter((img) => img.type === 'GALLERY')
+            .map((img) => this.imageService.getMedilaPath(img.url, true));
+
           return {
-            ...house,
+            ...houseData,
+            rooms: roomsWithImages,
             capacity: {
               totalCapacity,
               currentCapacity,
             },
             location: fullLocation,
+            thumbnail,
+            gallery,
           };
         }),
       );

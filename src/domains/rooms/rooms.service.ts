@@ -57,22 +57,70 @@ export class RoomsService {
       },
     });
 
+    const images = await this.prisma.image.findMany({
+      where: {
+        entityType: 'ROOM',
+        entityId: bhId,
+      },
+    });
+    console.log('queryied images: ', images);
+
+    const thumbnail = images
+      .filter((img) => img.type === 'THUMBNAIL')
+      .map((img) => this.imageService.getMedilaPath(img.url, true));
+
+    const gallery = images
+      .filter((img) => img.type === 'GALLERY')
+      .map((img) => this.imageService.getMedilaPath(img.url, true));
+
     if (!room) {
       throw new NotFoundException(
         'Room not found or does not belong to this boarding house.',
       );
     }
-    return room;
+    return {
+      ...room,
+      thumbnail,
+      gallery,
+    };
   }
 
-  findOne(bhId: number, roomId: number) {
+  async findOne(bhId: number, roomId: number) {
     const prisma = this.prisma;
-    return prisma.room.findUnique({
+    const room = await prisma.room.findUnique({
       where: {
         id: roomId,
         boardingHouseId: bhId,
       },
     });
+
+    const images = await this.prisma.image.findMany({
+      where: {
+        entityType: 'ROOM',
+        entityId: bhId,
+      },
+    });
+    console.log('queryied images: ', images);
+
+    const thumbnail = images
+      .filter((img) => img.type === 'THUMBNAIL')
+      .map((img) => this.imageService.getMedilaPath(img.url, true));
+
+    const gallery = images
+      .filter((img) => img.type === 'GALLERY')
+      .map((img) => this.imageService.getMedilaPath(img.url, true));
+
+    if (!room) {
+      throw new NotFoundException(
+        'Room not found or does not belong to this boarding house.',
+      );
+    }
+
+    return {
+      ...room,
+      thumbnail,
+      gallery,
+    };
   }
 
   async patch(roomId: number, roomData: UpdateRoomDto) {

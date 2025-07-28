@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { join } from 'path';
 import { ConfigService as ConfigurationService } from '@nestjs/config';
+import ip from 'ip';
 
 @Injectable()
 export class ConfigService {
@@ -10,12 +11,16 @@ export class ConfigService {
     return this.configService.get<string>('DATABASE_URL');
   }
 
-  get PORT() {
-    return this.configService.get<number>('PORT');
-  }
-
   get ENVIRONMENT() {
     return this.configService.get<string>('ENVIRONMENT');
+  }
+
+  get DOMAIN_URL() {
+    const domainUrl =
+      this.ENVIRONMENT === 'PRODUCTION'
+        ? 'https://domain.com'
+        : 'http://' + ip.address() + ':3000';
+    return domainUrl;
   }
 
   get SECRET_KEY() {

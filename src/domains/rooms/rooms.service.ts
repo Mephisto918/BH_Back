@@ -110,7 +110,7 @@ export class RoomsService {
         entityId: bhId,
       },
     });
-    console.log('queryied images: ', images);
+    // console.log('queryied images: ', images);
 
     const thumbnail = images
       .filter((img) => img.type === 'THUMBNAIL')

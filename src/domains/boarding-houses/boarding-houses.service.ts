@@ -145,14 +145,85 @@ export class BoardingHousesService {
     }
   }
 
-  findOne(id: number) {
+  async findOne(id: number) {
     const prisma = this.prisma;
 
-    return prisma.boardingHouse.findUnique({
-      where: {
-        id,
-      },
-    });
+    try {
+      const result = await prisma.boardingHouse.findMany({
+        where: {
+          id,
+        },
+        include: {
+          location: true,
+          rooms: true,
+        },
+      });
+
+      const includeRawLocationPostGIST = await Promise.all(
+        result.map(async (house) => {
+          const { rooms, ...houseData } = house;
+          const roomsIdArray = rooms.map((room) => room.id);
+          const roomsWithImages = await Promise.all(
+            roomsIdArray.map(async (roomId) => {
+              const room = await this.roomsService.findOne(house.id, roomId);
+              return room; // or transform further if needed
+            }),
+          );
+
+          const fullLocation = await this.locationService.findOne(
+            house.locationId,
+          );
+
+          let totalCapacity = 0;
+          let currentCapacity = 0;
+
+          house.rooms.forEach((room) => {
+            totalCapacity += room.maxCapacity;
+            currentCapacity += room.currentCapacity;
+          });
+
+          const images = await this.prisma.image.findMany({
+            where: {
+              entityId: house.id,
+              entityType: 'BOARDING_HOUSE',
+            },
+          });
+          // console.log('from prisma images: ', images);
+
+          const thumbnail = (
+            await Promise.all(
+              images
+                .filter((img) => img.type === 'THUMBNAIL')
+                .map((img) => this.imageService.getMediaPath(img.url, true)),
+            )
+          ).filter((url): url is string => !!url); // Filters out null or undefined
+
+          const gallery = (
+            await Promise.all(
+              images
+                .filter((img) => img.type === 'GALLERY')
+                .map((img) => this.imageService.getMediaPath(img.url, true)),
+            )
+          ).filter((url): url is string => !!url); // Filters out null or undefined
+
+          return {
+            ...houseData,
+            rooms: roomsWithImages,
+            capacity: {
+              totalCapacity,
+              currentCapacity,
+            },
+            location: fullLocation,
+            thumbnail,
+            gallery,
+          };
+        }),
+      );
+
+      return includeRawLocationPostGIST;
+    } catch (error: any) {
+      throw new Error(`Error finding boarding houses: ${error}`);
+    }
   }
 
   async create(

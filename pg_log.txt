@@ -3570,3 +3570,9 @@
 2025-08-10 15:10:18.655 UTC [162503] LOG:  checkpoint starting: shutdown immediate
 2025-08-10 15:10:18.665 UTC [162503] LOG:  checkpoint complete: wrote 0 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.018 s; sync files=0, longest=0.000 s, average=0.000 s; distance=0 kB, estimate=10240 kB; lsn=0/1B66FCD8, redo lsn=0/1B66FCD8
 2025-08-10 15:10:18.698 UTC [162502] LOG:  database system is shut down
+2025-08-11 10:57:19.643 UTC [41618] LOG:  starting PostgreSQL 17.4 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 15.1.1 20250425, 64-bit
+2025-08-11 10:57:19.645 UTC [41618] LOG:  listening on IPv6 address "::1", port 5432
+2025-08-11 10:57:19.645 UTC [41618] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2025-08-11 10:57:19.651 UTC [41618] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2025-08-11 10:57:19.658 UTC [41621] LOG:  database system was shut down at 2025-08-11 10:57:05 UTC
+2025-08-11 10:57:19.663 UTC [41618] LOG:  database system is ready to accept connections

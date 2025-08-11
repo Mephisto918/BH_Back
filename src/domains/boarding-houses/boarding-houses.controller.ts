@@ -18,15 +18,15 @@ import {
   GetBoardingHousesDoc,
 } from './boarding-houses.swagger';
 import { FindBoardingHouseDto } from './dto/find-boarding-house.dto';
-import {
-  AnyFilesInterceptor,
-  FileFieldsInterceptor,
-} from '@nestjs/platform-express';
-import { multerUploadConfig } from 'src/infrastructure/image/multer-upload.config';
-import { FileMap } from 'src/common/types/file.type';
+import { AnyFilesInterceptor } from '@nestjs/platform-express';
+import { createMulterConfig } from 'src/infrastructure/shared/utils/multer-config.util';
+// import type { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
 
 @Controller('boarding-houses')
 export class BoardingHousesController {
+  // private readonly imageUploadOptions: MulterOptions =
+  //   createMulterConfig('image');
+
   constructor(private readonly boardingHousesService: BoardingHousesService) {}
 
   @Get()
@@ -43,13 +43,12 @@ export class BoardingHousesController {
 
   @Post()
   @CreateBoardingHouseDoc()
-  @UseInterceptors(AnyFilesInterceptor(multerUploadConfig))
+  @UseInterceptors(AnyFilesInterceptor(createMulterConfig('image')))
   create(
     @Body()
     payload: Record<string, string>,
     @UploadedFiles()
     files: Express.Multer.File[],
-    // files: FileMap,
   ) {
     // group files manually by fieldname
     const fileMap = files.reduce(
@@ -111,6 +110,31 @@ export class BoardingHousesController {
     );
   }
 
+  @Post(':id/gallery')
+  @UseInterceptors(AnyFilesInterceptor(createMulterConfig('image')))
+  galleryCreate(
+    @Param('id') id: string,
+    @UploadedFiles()
+    files: Express.Multer.File[],
+  ) {
+    // group files manually by fieldname
+    const fileMap = files.reduce(
+      (acc, file) => {
+        acc[file.fieldname] = acc[file.fieldname] || [];
+        acc[file.fieldname].push(file);
+        return acc;
+      },
+      {} as Record<string, Express.Multer.File[]>,
+    );
+    const imageFiles = {
+      thumbnail: fileMap.thumbnail ?? [],
+      gallery: fileMap.gallery ?? [],
+      main: fileMap.main ?? [],
+      banner: fileMap.banner ?? [],
+    };
+    return this.boardingHousesService.galleryCreate(+id, imageFiles);
+  }
+
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -123,4 +147,9 @@ export class BoardingHousesController {
   remove(@Param('id') id: string) {
     return this.boardingHousesService.remove(+id);
   }
+
+  // @Delete(':id/gallery')
+  // removeGallery(@Param('id') id: string) {
+  //   return this.boardingHousesService.removeGallery(+id);
+  // }
 }

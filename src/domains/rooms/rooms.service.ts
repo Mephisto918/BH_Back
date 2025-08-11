@@ -3,12 +3,11 @@ import { IDatabaseService } from 'src/infrastructure/database/database.interface
 import { PrismaService } from 'src/infrastructure/database/prisma.service';
 import { UpdateRoomDto } from './dto/update-room.dto';
 import { ImageService } from 'src/infrastructure/image/image.service';
-import { Prisma } from '@prisma/client';
+// import { ImageService } from 'src/infrastructure/image/image.service';
+import { MediaType, Prisma } from '@prisma/client';
 import { CreateRoomsWithGallery } from './types';
-import {
-  MediaType,
-  ResourceType,
-} from 'src/infrastructure/image/types/resources-types';
+import { ResourceType } from 'src/infrastructure/file-upload/types/resources-types';
+import { DBClient } from 'src/infrastructure/image/types/types';
 
 // * turn this into module later
 
@@ -26,13 +25,13 @@ export class RoomsService {
   async create(
     rooms: CreateRoomsWithGallery[],
     boardingHouseId: number,
-    prismaClient: Prisma.TransactionClient = this.prisma,
+    tx: DBClient = this.prisma,
   ): Promise<void> {
     for (const room of rooms) {
       const { gallery, ...roomData } = room;
 
       // Create the room first to get its ID
-      const createdRoom = await prismaClient.room.create({
+      const createdRoom = await tx.room.create({
         data: {
           ...roomData,
           boardingHouseId,
@@ -41,17 +40,19 @@ export class RoomsService {
 
       // Optional: Upload gallery if provided
       if (gallery?.length) {
-        await this.imageService.processUploadInTransaction(
-          prismaClient, // ✅ correct tx
-          gallery, // ✅ correct file array
-          ResourceType.BOARDING_HOUSE,
-          boardingHouseId,
-          MediaType.GALLERY,
-          'MEDIUM',
-          true,
+        await this.imageService.uploadImagesTransact(
+          tx,
+          gallery,
           {
-            childType: ResourceType.ROOM,
+            type: 'BOARDING_HOUSE_ROOMS',
+            targetId: boardingHouseId,
+            mediaType: MediaType.GALLERY,
             childId: createdRoom.id,
+          },
+          {
+            resourceId: createdRoom.id,
+            resourceType: ResourceType.ROOM,
+            mediaType: MediaType.GALLERY,
           },
         );
       }
@@ -73,15 +74,22 @@ export class RoomsService {
         entityId: bhId,
       },
     });
-    // console.log('queryied images: ', images);
 
-    const thumbnail = images
-      .filter((img) => img.type === 'THUMBNAIL')
-      .map((img) => this.imageService.getMediaPath(img.url, true));
+    // const thumbnail = images
+    //   .filter((img) => img.type === 'THUMBNAIL')
+    //   .map((img) => this.imageService.getMediaPath(img.url, true));
 
-    const gallery = images
-      .filter((img) => img.type === 'GALLERY')
-      .map((img) => this.imageService.getMediaPath(img.url, true));
+    // const gallery = images
+    //   .filter((img) => img.type === 'GALLERY')
+    //   .map((img) => this.imageService.getMediaPath(img.url, true));
+
+    const { gallery, thumbnail } = await this.imageService.getImageMetaData(
+      images,
+      (url, isPublic) => this.imageService.getMediaPath(url, isPublic),
+      ResourceType.ROOM,
+      bhId,
+      [MediaType.GALLERY],
+    );
 
     if (!room) {
       throw new NotFoundException(
@@ -97,7 +105,7 @@ export class RoomsService {
 
   async findOne(bhId: number, roomId: number) {
     const prisma = this.prisma;
-    const room = await prisma.room.findUnique({
+    const room = await prisma.room.findFirst({
       where: {
         id: roomId,
         boardingHouseId: bhId,
@@ -106,19 +114,18 @@ export class RoomsService {
 
     const images = await this.prisma.image.findMany({
       where: {
-        entityType: 'ROOM',
-        entityId: bhId,
+        entityId: roomId,
+        entityType: ResourceType.ROOM,
       },
     });
-    // console.log('queryied images: ', images);
 
-    const thumbnail = images
-      .filter((img) => img.type === 'THUMBNAIL')
-      .map((img) => this.imageService.getMediaPath(img.url, true));
-
-    const gallery = images
-      .filter((img) => img.type === 'GALLERY')
-      .map((img) => this.imageService.getMediaPath(img.url, true));
+    const { gallery } = await this.imageService.getImageMetaData(
+      images,
+      (url, isPublic) => this.imageService.getMediaPath(url, isPublic),
+      ResourceType.ROOM,
+      bhId,
+      [MediaType.GALLERY],
+    );
 
     if (!room) {
       throw new NotFoundException(
@@ -128,7 +135,7 @@ export class RoomsService {
 
     return {
       ...room,
-      thumbnail,
+      // thumbnail,
       gallery,
     };
   }

@@ -5,10 +5,7 @@ import { CreateTenantDto } from './dto/create-tenant.dto';
 import { UpdateTenantDto } from './dto/update-tenant.dto';
 import { FindTenantsDto } from './dto/find-tenants.dto';
 import { Tenant } from '@prisma/client';
-// import {
-//   MediaUploadDto,
-//   MediaUploadsDto,
-// } from 'src/infrastructure/image/dto/media-upload.dto';
+
 import { ImageService } from 'src/infrastructure/image/image.service';
 
 @Injectable()

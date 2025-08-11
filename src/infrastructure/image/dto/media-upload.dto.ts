@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ResourceType, MediaType } from '../types/resources-types';
+// import { ResourceType, MediaType } from '../../file-upload/types/resources-types';
+import { ResourceType, MediaType } from '@prisma/client';
 
 export class MediaUploadDto {
   @ApiProperty({

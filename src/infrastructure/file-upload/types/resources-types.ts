@@ -1,21 +1,17 @@
+import { Image, Permit } from '@prisma/client';
+
+export type ResourceMediaTypeMap = {
+  IMAGE: Image;
+  PDF: Permit;
+};
+
+export type ResourceMediaType = keyof ResourceMediaTypeMap;
+
 export enum ResourceType {
   TENANT = 'TENANT',
   OWNER = 'OWNER',
   ADMIN = 'ADMIN',
   BOARDING_HOUSE = 'BOARDING_HOUSE',
-  ROOM = 'ROOM',
-}
-
-export enum MediaType {
-  PFP = 'PFP',
-  THUMBNAIL = 'THUMBNAIL',
-  MAIN = 'MAIN',
-  GALLERY = 'GALLERY',
-  BANNER = 'BANNER',
-  FLOORPLAN = 'FLOORPLAN',
-  DOCUMENT = 'DOCUMENT',
-  QR = 'QR',
-  MAP = 'MAP',
   ROOM = 'ROOM',
 }
 

@@ -1,35 +1,40 @@
 # Base image
-FROM node:20-alpine
+FROM node:20-alpine AS builder
 
 # Create app directory
 WORKDIR /app
 
-# Install dependencies
+# Install dependencies for NestJS
 COPY package*.json ./
 RUN npm install
 
-# Copy everything
+# Copy backend source
 COPY . .
 
-# Add curl (required for health checks or debug)
-RUN apk add --no-cache curl postgresql-client
-
-
-# Make sure Prisma generates client
-RUN npx prisma generate
-
-# Optional: Run PostGIS extension manually with raw SQL if DB is already up — otherwise, do it in entry script
-# RUN npx prisma db execute --file ./prisma/init.sql --preview-feature
-
-# Build NestJS app
+# Build React frontend
+WORKDIR /app/frontend
+RUN npm install
 RUN npm run build
 
-# Expose Nest port
+# Back to backend
+WORKDIR /app
+
+# Prisma generate
+RUN npx prisma generate
+
+# Build NestJS (now /public has React build already)
+RUN npm run build
+
+# --- Production image ---
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copy only built files and node_modules
+COPY --from=builder /app /app
+
+RUN apk add --no-cache curl postgresql-client
+
 EXPOSE 3000
 
-# Copy both scripts
-COPY docker-start.sh ./docker-start.sh
-COPY wait-for-db.sh ./wait-for-db.sh
-
-# Set entrypoint to custom shell script
 CMD ["./docker-start.sh"]

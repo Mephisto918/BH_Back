@@ -4,7 +4,15 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-enum ImageType {
+enum FileFormat {
+  IMAGE
+  PDF
+  VIDEO
+  AUDIO
+  OTHER
+}
+
+enum MediaType {
   PFP
   THUMBNAIL
   MAIN
@@ -15,6 +23,7 @@ enum ImageType {
   QR
   MAP
   ROOM
+  VALID_ID
 }
 
 enum ImageQuality {
@@ -53,11 +62,20 @@ enum ResourceType {
 }
 
 enum PermitType {
-  BIR // Bureau of Internal Revenue
-  FIRE_CERTIFICATE // Fire Certificate
-  MAYORS_PERMIT // Mayor's Permit
-  DTI // Department of Trade and Industry
-  BUSINESS_PERMIT // Business Permit
+  BUSINESS_PERMIT // Base for DTI and SEC
+  DTI // sole proprietors, Optional Extension
+  SEC // sole corporation/partnerships, Optional Extension
+  // FIRE_CERTIFICATE // Fire Certificate
+  // MAYORS_PERMIT // Mayor's Permit
+  // DTI // Department of Trade and Industry
+  // BUSINESS_PERMIT // Business Permit
+}
+
+enum PermitStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  EXPIRED
 }
 
 enum AuditAction {
@@ -73,12 +91,6 @@ generator client {
   provider = "prisma-client-js"
   // output   = "../generated/prisma" // need more research on this
 }
-
-//* during vps
-// datasource db {
-//   provider = "postgresql"
-//   url      = env("DATABASE_URL")
-// }
 
 datasource db {
   provider = "postgresql"
@@ -144,19 +156,7 @@ model Admin {
   phone_number String
   isDeleted    Boolean   @default(false)
   deletedAt    DateTime?
-}
-
-model Permit {
-  id              Int            @id @default(autoincrement())
-  ownerId         Int
-  type            PermitType
-  fileUrl         String // Link to file or pathnp
-  expiresAt       DateTime
-  owner           Owner          @relation(fields: [ownerId], references: [id])
-  isDeleted       Boolean        @default(false)
-  deletedAt       DateTime?
-  BoardingHouse   BoardingHouse? @relation(fields: [boardingHouseId], references: [id])
-  boardingHouseId Int?
+  Permit       Permit[]
 }
 
 model BoardingHouse {
@@ -175,7 +175,6 @@ model BoardingHouse {
   isDeleted          Boolean   @default(false)
   deletedAt          DateTime?
   rooms              Room[]
-  permits            Permit[]
 }
 
 model Location {
@@ -233,12 +232,34 @@ model RoomAvailabilityLog {
   createdAt DateTime @default(now())
 }
 
+model Permit {
+  id           Int          @id @default(autoincrement())
+  ownerId      Int
+  fileFormat   FileFormat   @default(PDF)
+  type         PermitType
+  url          String
+  expiresAt    DateTime
+  status       PermitStatus @default(PENDING)
+  verifiedById Int? // FK to Admin who verified
+  verifiedBy   Admin?       @relation(fields: [verifiedById], references: [id])
+  verifiedAt   DateTime?
+  approvedAt   DateTime?
+  owner        Owner        @relation(fields: [ownerId], references: [id])
+  isDeleted    Boolean      @default(false)
+  deletedAt    DateTime?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
 model Image {
-  id        Int          @id @default(autoincrement())
-  url       String
-  type      ImageType
-  quality   ImageQuality @default(MEDIUM)
-  createdAt DateTime     @default(now())
+  id         Int          @id @default(autoincrement())
+  url        String
+  fileFormat FileFormat   @default(IMAGE)
+  type       MediaType
+  quality    ImageQuality @default(MEDIUM)
+  createdAt  DateTime     @default(now())
+  isDeleted  Boolean      @default(false) // For soft deletion
+  deletedAt  DateTime?
 
   // Polymorphic references
   entityType ResourceType
@@ -260,46 +281,46 @@ model AuditLog {
 
 //* do this to change Json to JSONB
 /**
- ALTER TABLE "BoardingHouse"
- ALTER COLUMN "amenities" TYPE jsonb USING "amenities"::jsonb;
- ALTER TABLE "BoardingHouse"
- ALTER COLUMN "properties" TYPE jsonb USING "properties"::jsonb;
- ALTER TABLE "Room"
- ALTER COLUMN "features" TYPE jsonb USING "features"::jsonb;
- ALTER TABLE "Room"
- ALTER COLUMN "tags" TYPE jsonb USING "tags"::jsonb;
- ALTER TABLE "AuditLog"
- ALTER COLUMN "meta" TYPE jsonb USING "meta"::jsonb;
- ALTER TABLE "AuditLog"
- ALTER COLUMN "user" TYPE jsonb USING "user"::jsonb;
- -- 🧼 Update NULLs to default values
- UPDATE "BoardingHouse"
- SET "amenities" = '[]'::jsonb
- WHERE "amenities" IS NULL;
- UPDATE "BoardingHouse"
- SET "properties" = '{}'::jsonb
- WHERE "properties" IS NULL;
- UPDATE "Room"
- SET "features" = '{}'::jsonb
- WHERE "features" IS NULL;
- UPDATE "Room"
- SET "tags" = '[]'::jsonb
- WHERE "tags" IS NULL;
- UPDATE "AuditLog"
- SET "meta" = '{}'::jsonb
- WHERE "meta" IS NULL;
- UPDATE "AuditLog"
- SET "user" = '{}'::jsonb
- WHERE "user" IS NULL;
- -- ⚡ Add GIN indexes for JSONB fields
- CREATE INDEX gin_idx_boardinghouse_amenities ON "BoardingHouse" USING GIN ("amenities");
- CREATE INDEX gin_idx_boardinghouse_properties ON "BoardingHouse" USING GIN ("properties");
- CREATE INDEX gin_idx_room_features ON "Room" USING GIN ("features");
- CREATE INDEX gin_idx_room_tags ON "Room" USING GIN ("tags");
- CREATE INDEX gin_idx_auditlog_meta ON "AuditLog" USING GIN ("meta");
- CREATE INDEX gin_idx_auditlog_user ON "AuditLog" USING GIN ("user");
- -- add constraints for images, ❗ Reserved for future schema integrity
- ALTER TABLE "Image" ADD CONSTRAINT check_one_relation CHECK ("boardingHouseId" IS NOT NULL OR "roomId" IS NOT NULL OR "ownerId" IS NOT NULL OR "tenantId" IS NOT NULL OR "adminId" IS NOT NULL);
+ * ALTER TABLE "BoardingHouse"
+ * ALTER COLUMN "amenities" TYPE jsonb USING "amenities"::jsonb;
+ * ALTER TABLE "BoardingHouse"
+ * ALTER COLUMN "properties" TYPE jsonb USING "properties"::jsonb;
+ * ALTER TABLE "Room"
+ * ALTER COLUMN "features" TYPE jsonb USING "features"::jsonb;
+ * ALTER TABLE "Room"
+ * ALTER COLUMN "tags" TYPE jsonb USING "tags"::jsonb;
+ * ALTER TABLE "AuditLog"
+ * ALTER COLUMN "meta" TYPE jsonb USING "meta"::jsonb;
+ * ALTER TABLE "AuditLog"
+ * ALTER COLUMN "user" TYPE jsonb USING "user"::jsonb;
+ * -- 🧼 Update NULLs to default values
+ * UPDATE "BoardingHouse"
+ * SET "amenities" = '[]'::jsonb
+ * WHERE "amenities" IS NULL;
+ * UPDATE "BoardingHouse"
+ * SET "properties" = '{}'::jsonb
+ * WHERE "properties" IS NULL;
+ * UPDATE "Room"
+ * SET "features" = '{}'::jsonb
+ * WHERE "features" IS NULL;
+ * UPDATE "Room"
+ * SET "tags" = '[]'::jsonb
+ * WHERE "tags" IS NULL;
+ * UPDATE "AuditLog"
+ * SET "meta" = '{}'::jsonb
+ * WHERE "meta" IS NULL;
+ * UPDATE "AuditLog"
+ * SET "user" = '{}'::jsonb
+ * WHERE "user" IS NULL;
+ * -- ⚡ Add GIN indexes for JSONB fields
+ * CREATE INDEX gin_idx_boardinghouse_amenities ON "BoardingHouse" USING GIN ("amenities");
+ * CREATE INDEX gin_idx_boardinghouse_properties ON "BoardingHouse" USING GIN ("properties");
+ * CREATE INDEX gin_idx_room_features ON "Room" USING GIN ("features");
+ * CREATE INDEX gin_idx_room_tags ON "Room" USING GIN ("tags");
+ * CREATE INDEX gin_idx_auditlog_meta ON "AuditLog" USING GIN ("meta");
+ * CREATE INDEX gin_idx_auditlog_user ON "AuditLog" USING GIN ("user");
+ * -- add constraints for images, ❗ Reserved for future schema integrity
+ * ALTER TABLE "Image" ADD CONSTRAINT check_one_relation CHECK ("boardingHouseId" IS NOT NULL OR "roomId" IS NOT NULL OR "ownerId" IS NOT NULL OR "tenantId" IS NOT NULL OR "adminId" IS NOT NULL);
  */
 
 //* for older data

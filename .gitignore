@@ -1,7 +1,12 @@
 # compiled output
 /dist
+/frontend/dist
 /node_modules
+/frontend/node_modules
 /build
+/frontend/build
+/frontend/.pnp
+/frontend/.pnp.js
 
 # Logs
 logs
@@ -11,12 +16,16 @@ pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
+/frontend/npm-debug.log*
+/frontend/yarn-debug.log*
+/frontend/yarn-error.log*
 
 # OS
 .DS_Store
 
 # Tests
 /coverage
+/frontend/coverage
 /.nyc_output
 
 # IDEs and editors

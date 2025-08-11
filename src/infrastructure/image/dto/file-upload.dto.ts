@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { File } from '../types/file';
+import { File } from '../../file-upload/types/file';
 
 /** Describes the information needed to upload a file */
 export class FileUploadDto {

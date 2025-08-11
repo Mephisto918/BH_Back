@@ -4,17 +4,14 @@ import { UpdateBoardingHouseDto } from './dto/update-boarding-house.dto';
 import { IDatabaseService } from 'src/infrastructure/database/database.interface';
 
 // TODO: clean this later
-import { BoardingHouse, Prisma } from '@prisma/client';
+import { BoardingHouse, MediaType, Prisma } from '@prisma/client';
+import { ResourceType } from 'src/infrastructure/file-upload/types/resources-types';
 import { LocationService } from 'src/infrastructure/location/location.service';
 import { LocationDto } from 'src/infrastructure/location/dto/location.dto';
 import { FindBoardingHouseDto } from './dto/find-boarding-house.dto';
 import { RoomsService } from '../rooms/rooms.service';
 import { ImageService } from 'src/infrastructure/image/image.service';
 import { FileMap } from 'src/common/types/file.type';
-import {
-  MediaType,
-  ResourceType,
-} from 'src/infrastructure/image/types/resources-types';
 
 @Injectable()
 export class BoardingHousesService {
@@ -85,7 +82,7 @@ export class BoardingHousesService {
           const roomsWithImages = await Promise.all(
             roomsIdArray.map(async (roomId) => {
               const room = await this.roomsService.findOne(house.id, roomId);
-              return room; // or transform further if needed
+              return room;
             }),
           );
 
@@ -104,26 +101,18 @@ export class BoardingHousesService {
           const images = await this.prisma.image.findMany({
             where: {
               entityId: house.id,
-              entityType: 'BOARDING_HOUSE',
+              entityType: ResourceType.BOARDING_HOUSE,
             },
           });
-          // console.log('from prisma images: ', images);
 
-          const thumbnail = (
-            await Promise.all(
-              images
-                .filter((img) => img.type === 'THUMBNAIL')
-                .map((img) => this.imageService.getMediaPath(img.url, true)),
-            )
-          ).filter((url): url is string => !!url); // Filters out null or undefined
-
-          const gallery = (
-            await Promise.all(
-              images
-                .filter((img) => img.type === 'GALLERY')
-                .map((img) => this.imageService.getMediaPath(img.url, true)),
-            )
-          ).filter((url): url is string => !!url); // Filters out null or undefined
+          const { gallery, thumbnail } =
+            await this.imageService.getImageMetaData(
+              images,
+              (url, isPublic) => this.imageService.getMediaPath(url, isPublic),
+              ResourceType.BOARDING_HOUSE,
+              house.id,
+              [MediaType.GALLERY, MediaType.THUMBNAIL],
+            );
 
           return {
             ...houseData,
@@ -188,23 +177,6 @@ export class BoardingHousesService {
               entityType: 'BOARDING_HOUSE',
             },
           });
-          // console.log('from prisma images: ', images);
-
-          const thumbnail = (
-            await Promise.all(
-              images
-                .filter((img) => img.type === 'THUMBNAIL')
-                .map((img) => this.imageService.getMediaPath(img.url, true)),
-            )
-          ).filter((url): url is string => !!url); // Filters out null or undefined
-
-          const gallery = (
-            await Promise.all(
-              images
-                .filter((img) => img.type === 'GALLERY')
-                .map((img) => this.imageService.getMediaPath(img.url, true)),
-            )
-          ).filter((url): url is string => !!url); // Filters out null or undefined
 
           return {
             ...houseData,
@@ -214,8 +186,8 @@ export class BoardingHousesService {
               currentCapacity,
             },
             location: fullLocation,
-            thumbnail,
-            gallery,
+            // thumbnail,
+            // gallery,
           };
         }),
       );
@@ -259,50 +231,95 @@ export class BoardingHousesService {
       }
 
       if (images.thumbnail) {
-        await this.imageService.processUploadInTransaction(
+        await this.imageService.uploadImagesTransact(
           tx,
           images.thumbnail,
-          ResourceType.BOARDING_HOUSE,
-          createBoardingHouse.id,
-          MediaType.THUMBNAIL,
+          {
+            type: 'BOARDING_HOUSE',
+            targetId: createBoardingHouse.id,
+            mediaType: MediaType.THUMBNAIL,
+          },
+          {
+            resourceId: createBoardingHouse.id,
+            resourceType: ResourceType.BOARDING_HOUSE,
+            mediaType: MediaType.THUMBNAIL,
+          },
         );
       }
 
       if (images.gallery) {
-        await this.imageService.processUploadInTransaction(
+        await this.imageService.uploadImagesTransact(
           tx,
           images.gallery,
-          ResourceType.BOARDING_HOUSE,
-          createBoardingHouse.id,
-          MediaType.GALLERY,
+          {
+            type: 'BOARDING_HOUSE',
+            targetId: createBoardingHouse.id,
+            mediaType: MediaType.GALLERY,
+          },
+          {
+            resourceId: createBoardingHouse.id,
+            resourceType: ResourceType.BOARDING_HOUSE,
+            mediaType: MediaType.GALLERY,
+          },
         );
       }
 
       if (images.main) {
-        await this.imageService.processUploadInTransaction(
+        await this.imageService.uploadImagesTransact(
           tx,
           images.main,
-          ResourceType.BOARDING_HOUSE,
-          createBoardingHouse.id,
-          MediaType.MAIN,
+          {
+            type: 'BOARDING_HOUSE',
+            targetId: createBoardingHouse.id,
+            mediaType: MediaType.MAIN,
+          },
+          {
+            resourceId: createBoardingHouse.id,
+            resourceType: ResourceType.BOARDING_HOUSE,
+            mediaType: MediaType.MAIN,
+          },
         );
       }
 
-      if (images.banner) {
-        await this.imageService.processUploadInTransaction(
-          tx,
-          images.banner,
-          ResourceType.BOARDING_HOUSE,
-          createBoardingHouse.id,
-          MediaType.BANNER,
-        );
-      }
+      // if (images.banner) {
+      //   await this.imageService.processUploadInTransaction(
+      //     tx,
+      //     images.banner,
+      //     ResourceType.BOARDING_HOUSE,
+      //     createBoardingHouse.id,
+      //     MediaType.BANNER,
+      //   );
+      // }
 
       return {
         ...createBoardingHouse,
         location: await this.locationService.findOne(returnedLocationId),
       };
     });
+  }
+
+  async galleryCreate(id: number, images: FileMap) {
+    const prisma = this.prisma;
+    return await this.imageService.uploadImages(
+      prisma,
+      images.gallery,
+      {
+        type: 'BOARDING_HOUSE',
+        targetId: id,
+        mediaType: MediaType.GALLERY,
+      },
+      {
+        resourceId: id,
+        resourceType: ResourceType.BOARDING_HOUSE,
+        mediaType: MediaType.GALLERY,
+      },
+    );
+    // return await this.imageService.processUpload(
+    //   images.gallery,
+    //   ResourceType.BOARDING_HOUSE,
+    //   id,
+    //   MediaType.GALLERY,
+    // );
   }
 
   update(id: number, updateBoardingHouseDto: UpdateBoardingHouseDto) {
@@ -331,6 +348,23 @@ export class BoardingHousesService {
     return this.prisma.boardingHouse.update({
       where: { id },
       data: { isDeleted: true },
+    });
+  }
+
+  // TODO: delete images
+  // TODO: update images
+  async removeGallery(id: number) {
+    return this.prisma.$transaction(async (tx) => {
+      // Get permit to find the filePath/url
+      const permit = await tx.permit.findUnique({ where: { id: permitId } });
+      if (!permit) {
+        throw new Error(`Permit ${permitId} not found`);
+      }
+
+      // Delete permit file + db record atomically as possible
+      await this.imageService.deletePermit(tx, permitId, permit.url, false);
+
+      return { success: true };
     });
   }
 }

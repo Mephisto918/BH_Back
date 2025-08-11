@@ -33,7 +33,7 @@ export class ConfigService {
 
   get mediaPaths(): {
     public: string;
-    protected: string;
+    private: string;
   } {
     const baseDir = this.configService.get<string>('MEDIA_DIR_PATH') || 'media';
 
@@ -43,7 +43,7 @@ export class ConfigService {
 
     return {
       public: join(cleanBaseDir, 'public'),
-      protected: join(cleanBaseDir, 'protected'),
+      private: join(cleanBaseDir, 'private'),
     };
   }
 }

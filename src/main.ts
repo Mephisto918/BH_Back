@@ -5,27 +5,32 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { SwaggerTheme, SwaggerThemeNameEnum } from 'swagger-themes';
 import ip from 'ip';
 import { join } from 'path';
-import * as express from 'express'; // <-- Add this
+import express from 'express';
 import { ConfigService } from './config/config.service';
 import { resolve } from 'path';
+import { ExpressAdapter } from '@nestjs/platform-express';
+import { existsSync } from 'fs';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const server = express();
+  const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
   const configService = app.get(ConfigService);
 
-  if (process.env.NODE_ENV !== 'production') {
-    // Serve static files directly from /public folder in project root during dev
-    app.use('/', express.static(join(process.cwd(), 'public')));
-    console.log('Serving static files from:', join(process.cwd(), 'public'));
-  } else {
-    // In production, serve from dist/public (after build)
-    app.use('/', express.static(join(__dirname, '..', 'public')));
-    console.log('Serving static files from:', join(__dirname, '..', 'public'));
-  }
+  const publicPath =
+    process.env.NODE_ENV !== 'production'
+      ? join(process.cwd(), 'public')
+      : join(__dirname, '..', 'public');
+
+  server.use(express.static(publicPath));
 
   app.use(
-    '/media/public',
+    '/media/public', //* actual web url path not the physical one
     express.static(resolve(process.cwd(), configService.mediaPaths.public)),
+  );
+  app.use(
+    // TODO: tirm this into a guarded route
+    '/media/private', //* actual web url path not the physical one
+    express.static(resolve(process.cwd(), configService.mediaPaths.private)),
   );
   const swagConfig = new DocumentBuilder()
     .setTitle('API')
@@ -50,6 +55,16 @@ async function bootstrap() {
   SwaggerModule.setup('docs', app, document, options);
 
   app.enableCors();
+
+  // React Fall back
+  server.get(/^\/(?!api).*/, (req: express.Request, res: express.Response) => {
+    const indexPath = join(publicPath, 'index.html');
+    if (existsSync(indexPath)) {
+      res.sendFile(indexPath);
+    } else {
+      res.status(404).send('Not found');
+    }
+  });
 
   const port = 3000;
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access

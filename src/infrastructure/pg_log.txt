@@ -1,0 +1,61 @@
+2025-08-08 13:47:54.838 UTC [196432] LOG:  starting PostgreSQL 17.4 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 15.1.1 20250425, 64-bit
+2025-08-08 13:47:54.842 UTC [196432] LOG:  listening on IPv6 address "::1", port 5432
+2025-08-08 13:47:54.842 UTC [196432] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2025-08-08 13:47:54.844 UTC [196432] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2025-08-08 13:47:54.851 UTC [196435] LOG:  database system was shut down at 2025-08-08 04:50:13 UTC
+2025-08-08 13:47:54.860 UTC [196432] LOG:  database system is ready to accept connections
+2025-08-08 13:48:10.912 UTC [196432] LOG:  received fast shutdown request
+2025-08-08 13:48:10.914 UTC [196432] LOG:  aborting any active transactions
+2025-08-08 13:48:10.917 UTC [196432] LOG:  background worker "logical replication launcher" (PID 196438) exited with exit code 1
+2025-08-08 13:48:10.919 UTC [196433] LOG:  shutting down
+2025-08-08 13:48:10.922 UTC [196433] LOG:  checkpoint starting: shutdown immediate
+2025-08-08 13:48:10.945 UTC [196433] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.008 s, sync=0.002 s, total=0.026 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/13C77B68, redo lsn=0/13C77B68
+2025-08-08 13:48:10.950 UTC [196432] LOG:  database system is shut down
+2025-08-09 08:58:28.719 UTC [17129] LOG:  starting PostgreSQL 17.4 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 15.1.1 20250425, 64-bit
+2025-08-09 08:58:28.721 UTC [17129] LOG:  listening on IPv6 address "::1", port 5432
+2025-08-09 08:58:28.721 UTC [17129] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2025-08-09 08:58:28.723 UTC [17129] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2025-08-09 08:58:28.731 UTC [17133] LOG:  database system was shut down at 2025-08-08 13:48:10 UTC
+2025-08-09 08:58:28.739 UTC [17129] LOG:  database system is ready to accept connections
+2025-08-09 09:03:28.829 UTC [17131] LOG:  checkpoint starting: time
+2025-08-09 09:03:28.846 UTC [17131] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.002 s, total=0.017 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/13C77C70, redo lsn=0/13C77C18
+2025-08-09 16:28:03.971 UTC [151375] ERROR:  column "fileFormat" of relation "Image" does not exist at character 37
+2025-08-09 16:28:03.971 UTC [151375] STATEMENT:  INSERT INTO "public"."Image" ("url","fileFormat","type","quality","createdAt","isDeleted","entityType","entityId") VALUES ($1,CAST($2::text AS "public"."FileFormat"),CAST($3::text AS "public"."MediaType"),CAST($4::text AS "public"."ImageQuality"),$5,$6,CAST($7::text AS "public"."ResourceType"),$8) RETURNING "public"."Image"."id", "public"."Image"."url", "public"."Image"."fileFormat"::text, "public"."Image"."type"::text, "public"."Image"."quality"::text, "public"."Image"."createdAt", "public"."Image"."isDeleted", "public"."Image"."deletedAt", "public"."Image"."entityType"::text, "public"."Image"."entityId"
+2025-08-09 16:28:37.653 UTC [17131] LOG:  checkpoint starting: time
+2025-08-09 16:28:40.989 UTC [17131] LOG:  checkpoint complete: wrote 34 buffers (0.2%); 0 WAL file(s) added, 0 removed, 0 recycled; write=3.316 s, sync=0.005 s, total=3.336 s; sync files=21, longest=0.002 s, average=0.001 s; distance=53 kB, estimate=53 kB; lsn=0/13C85378, redo lsn=0/13C85320
+2025-08-09 16:30:40.882 UTC [153110] ERROR:  table "_prisma_migrations" does not exist
+2025-08-09 16:30:40.882 UTC [153110] STATEMENT:  DROP TABLE _prisma_migrations
+2025-08-09 16:32:06.061 UTC [153780] ERROR:  column "fileFormat" of relation "Image" does not exist at character 37
+2025-08-09 16:32:06.061 UTC [153780] STATEMENT:  INSERT INTO "public"."Image" ("url","fileFormat","type","quality","createdAt","isDeleted","entityType","entityId") VALUES ($1,CAST($2::text AS "public"."FileFormat"),CAST($3::text AS "public"."MediaType"),CAST($4::text AS "public"."ImageQuality"),$5,$6,CAST($7::text AS "public"."ResourceType"),$8) RETURNING "public"."Image"."id", "public"."Image"."url", "public"."Image"."fileFormat"::text, "public"."Image"."type"::text, "public"."Image"."quality"::text, "public"."Image"."createdAt", "public"."Image"."isDeleted", "public"."Image"."deletedAt", "public"."Image"."entityType"::text, "public"."Image"."entityId"
+2025-08-09 16:33:38.090 UTC [17131] LOG:  checkpoint starting: time
+2025-08-09 16:35:15.512 UTC [17131] LOG:  checkpoint complete: wrote 1454 buffers (8.9%); 0 WAL file(s) added, 0 removed, 1 recycled; write=97.377 s, sync=0.018 s, total=97.423 s; sync files=196, longest=0.003 s, average=0.001 s; distance=12327 kB, estimate=12327 kB; lsn=0/15638FE8, redo lsn=0/1488F2B8
+2025-08-09 16:35:15.512 UTC [17131] LOG:  checkpoint starting: immediate force wait
+2025-08-09 16:35:15.530 UTC [17131] LOG:  checkpoint complete: wrote 5 buffers (0.0%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.003 s, sync=0.003 s, total=0.018 s; sync files=5, longest=0.002 s, average=0.001 s; distance=13991 kB, estimate=13991 kB; lsn=0/156390B8, redo lsn=0/15639060
+2025-08-09 16:35:16.142 UTC [17131] LOG:  checkpoint starting: immediate force wait
+2025-08-09 16:35:16.159 UTC [17131] LOG:  checkpoint complete: wrote 18 buffers (0.1%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.003 s, sync=0.004 s, total=0.017 s; sync files=8, longest=0.002 s, average=0.001 s; distance=14001 kB, estimate=14001 kB; lsn=0/163E5598, redo lsn=0/163E5540
+2025-08-09 16:35:16.651 UTC [17131] LOG:  checkpoint starting: immediate force wait
+2025-08-09 16:35:16.667 UTC [17131] LOG:  checkpoint complete: wrote 4 buffers (0.0%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.003 s, sync=0.003 s, total=0.017 s; sync files=4, longest=0.002 s, average=0.001 s; distance=13991 kB, estimate=14000 kB; lsn=0/1718F580, redo lsn=0/1718F528
+2025-08-09 16:35:38.283 UTC [17131] LOG:  checkpoint starting: immediate force wait
+2025-08-09 16:35:38.297 UTC [17131] LOG:  checkpoint complete: wrote 4 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.003 s, sync=0.003 s, total=0.015 s; sync files=4, longest=0.002 s, average=0.001 s; distance=13992 kB, estimate=13999 kB; lsn=0/17F39670, redo lsn=0/17F39618
+2025-08-09 16:40:38.397 UTC [17131] LOG:  checkpoint starting: time
+2025-08-09 16:40:47.258 UTC [17131] LOG:  checkpoint complete: wrote 88 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=8.794 s, sync=0.051 s, total=8.862 s; sync files=63, longest=0.013 s, average=0.001 s; distance=317 kB, estimate=12631 kB; lsn=0/17F88B38, redo lsn=0/17F88AA8
+2025-08-09 16:50:11.909 UTC [152507] ERROR:  relation "imag" does not exist at character 15
+2025-08-09 16:50:11.909 UTC [152507] STATEMENT:  select * from Imag
+2025-08-09 16:50:38.456 UTC [17131] LOG:  checkpoint starting: time
+2025-08-09 16:50:40.192 UTC [17131] LOG:  checkpoint complete: wrote 17 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=1.719 s, sync=0.007 s, total=1.736 s; sync files=12, longest=0.004 s, average=0.001 s; distance=7 kB, estimate=11368 kB; lsn=0/17F8AA40, redo lsn=0/17F8A9E8
+2025-08-09 16:51:09.798 UTC [160814] ERROR:  relation "information_schema" does not exist at character 15
+2025-08-09 16:51:09.798 UTC [160814] STATEMENT:  select * from information_schema
+2025-08-09 16:51:21.785 UTC [160814] ERROR:  relation "bh" does not exist at character 15
+2025-08-09 16:51:21.785 UTC [160814] STATEMENT:  select * from bh
+2025-08-09 16:55:38.291 UTC [17131] LOG:  checkpoint starting: time
+2025-08-09 16:55:39.214 UTC [17131] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.906 s, sync=0.006 s, total=0.924 s; sync files=4, longest=0.004 s, average=0.002 s; distance=22 kB, estimate=10234 kB; lsn=0/17F90560, redo lsn=0/17F904D0
+2025-08-09 18:18:32.575 UTC [17129] LOG:  received fast shutdown request
+2025-08-09 18:18:32.580 UTC [17129] LOG:  aborting any active transactions
+2025-08-09 18:18:32.583 UTC [161136] FATAL:  terminating connection due to administrator command
+2025-08-09 18:18:32.584 UTC [161132] FATAL:  terminating connection due to administrator command
+2025-08-09 18:18:32.585 UTC [161129] FATAL:  terminating connection due to administrator command
+2025-08-09 18:18:32.587 UTC [17129] LOG:  background worker "logical replication launcher" (PID 17136) exited with exit code 1
+2025-08-09 18:18:32.588 UTC [17131] LOG:  shutting down
+2025-08-09 18:18:32.592 UTC [17131] LOG:  checkpoint starting: shutdown immediate
+2025-08-09 18:18:32.613 UTC [17131] LOG:  checkpoint complete: wrote 0 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.001 s, total=0.024 s; sync files=0, longest=0.000 s, average=0.000 s; distance=0 kB, estimate=9210 kB; lsn=0/17F90610, redo lsn=0/17F90610
+2025-08-09 18:18:32.632 UTC [17129] LOG:  database system is shut down

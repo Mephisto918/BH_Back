@@ -3,7 +3,10 @@ import { CreateOwnerDto } from './dto/create-owner.dto';
 import { UpdateOwnerDto } from './dto/update-owner.dto';
 import { IDatabaseService } from 'src/infrastructure/database/database.interface';
 import { FindOwnersDto } from './dto/find-owners.dto';
-import { Owner } from '@prisma/client';
+import { FileFormat, MediaType, Owner, PermitType } from '@prisma/client';
+import { Multer } from 'multer';
+import { Express } from 'express';
+import { PermitService } from '../../infrastructure/permit/permit.service';
 
 /*
  * create a pdf service for certificate handling
@@ -14,6 +17,7 @@ import { Owner } from '@prisma/client';
 export class OwnersService {
   constructor(
     @Inject('IDatabaseService') private readonly database: IDatabaseService,
+    private readonly permitService: PermitService,
   ) {}
 
   private get prisma() {
@@ -117,6 +121,56 @@ export class OwnersService {
         address: dto.address,
         phone_number: dto.phone_number,
       },
+    });
+  }
+
+  async createPermit(
+    payload: { id: number; type: PermitType; expiresAt: string },
+    file: Express.Multer.File,
+  ) {
+    try {
+      const id = await this.prisma.$transaction(async (tx) => {
+        return await this.permitService.create(
+          tx,
+          file,
+          {
+            type: 'OWNER',
+            targetId: payload.id,
+            mediaType: MediaType.DOCUMENT,
+          },
+          {
+            ownerId: payload.id,
+            expiresAt: payload.expiresAt,
+            type: payload.type,
+            fileFormat: FileFormat.PDF,
+          },
+          false,
+        );
+      });
+      return id;
+    } catch (error: any) {
+      console.log('error', error); // TODO fix that shiii
+      throw error;
+    }
+  }
+
+  async findPermits(id: number) {
+    const prisma = this.prisma;
+    return await this.permitService.getPermitMetaData(prisma, id, false);
+  }
+
+  async removePermit(permitId: number) {
+    return this.prisma.$transaction(async (tx) => {
+      // Get permit to find the filePath/url
+      const permit = await tx.permit.findUnique({ where: { id: permitId } });
+      if (!permit) {
+        throw new Error(`Permit ${permitId} not found`);
+      }
+
+      // Delete permit file + db record atomically as possible
+      await this.permitService.deletePermit(tx, permitId, permit.url, false);
+
+      return { success: true };
     });
   }
 

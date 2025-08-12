@@ -50,8 +50,8 @@ export default function Hero() {
 }
 
 const HeroContainer = styled.div`
-  height: 90dvh;
-  min-height: 90dvh;
+  height: 92dvh;
+  min-height: 92dvh;
   display: flex;
 
   > .container {
@@ -66,7 +66,7 @@ const HeroContainer = styled.div`
       ${Colors.PrimaryLight[9]},
       ${Colors.PrimaryLight[9]},
       ${Colors.PrimaryLight[9]}
-      );
+    );
     height: 100%;
     max-width: 100% !important;
     width: 100%;
@@ -84,7 +84,11 @@ const HeroContainer = styled.div`
 
     > .box {
       border: 1px solid white;
-      background-color: color-mix(in srgb, black 50%, ${Colors.PrimaryLight[7]} 50%,);
+      background-color: color-mix(
+        in srgb,
+        black 50%,
+        ${Colors.PrimaryLight[7]} 50%
+      );
       border-radius: ${BorderRadius.xl};
       box-shadow: ${ShadowDark.xl};
       backdrop-filter: blur(100px);
@@ -106,13 +110,42 @@ const HeroContainer = styled.div`
     }
   }
   @media (max-width: 768px) {
+    height: auto;
+    min-height: auto;
+
     > .container {
+      > .box {
+        background-color: color-mix(
+          in srgb,
+          black 20%,
+          ${Colors.PrimaryLight[7]} 50%
+        );
+        backdrop-filter: blur(10px);
+      }
+      background-image:
+        radial-gradient(
+          circle 32px at 53px 56px,
+          rgba(225, 225, 225, 0.8),
+          transparent
+        ),
+        radial-gradient(
+          circle at 30% 30%,
+          ${Colors.PrimaryLight[9]},
+          ${Colors.PrimaryLight[6]},
+          ${Colors.PrimaryLight[3]},
+          ${Colors.PrimaryLight[3]},
+          ${Colors.PrimaryLight[2]},
+          ${Colors.PrimaryLight[5]},
+          ${Colors.PrimaryLight[9]}
+        );
+
       flex-direction: column;
       > .box {
         width: 100%;
       }
       > .hero3D {
-        flex: 1;
+        /* border: 1px solid red; */
+        /* width: 100%; */
       }
     }
   }

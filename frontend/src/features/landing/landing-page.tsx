@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import React from 'react';
 import { Box, Heading, Button } from '@chakra-ui/react';
 import { Colors, Spacing } from '../constants';
 import Hero from './hero';
@@ -11,7 +10,7 @@ export default function LandingPage() {
     <Container>
       <Box className="box">
         <nav>
-          <Heading className="heading" as="h1" size="2xl">
+          <Heading className="heading" as="h1" size="lg">
             BH Hunter
           </Heading>
           <Box className="box">
@@ -38,8 +37,9 @@ const Container = styled.div`
 
   /* Content grows to fill the space pushing footer down */
   > .box:nth-child(1) {
-    padding: 1rem ${Spacing.xxxl};
-    height: 10dvh;
+    padding: 1rem;
+    /* height: 8dvh; */
+    /* border: 1px solid white; */
 
     > nav {
       background-color: ${Colors.PrimaryLight[9]};

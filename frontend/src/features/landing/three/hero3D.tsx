@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Euler } from 'three';
 import { useGLTF } from '@react-three/drei';
+import styled from '@emotion/styled';
+import { Colors } from '@/features/constants';
 
 function Model({ rotationY }: { rotationY: number }) {
   const gltf = useGLTF('/three_models/samsung_phone.glb');
@@ -78,7 +80,7 @@ export default function Hero3D({ className }: { className?: string }) {
   };
 
   return (
-    <div className={className}>
+    <Container className={className}>
       <Canvas
         style={{ height: '100%', width: '100%' }}
         camera={{ position: [0, 2, 12], fov: 50 }}
@@ -91,6 +93,34 @@ export default function Hero3D({ className }: { className?: string }) {
         <RotatingModel dragDeltaXRef={dragDeltaXRef} />
         <ZoomControl />
       </Canvas>
-    </div>
+    </Container>
   );
 }
+
+const Container = styled.section`
+  @media (max-width: 768px) {
+    .container {
+      /* background-image: linear-gradient(
+        to left,
+        ${Colors.PrimaryLight[8]},
+        ${Colors.PrimaryLight[5]},
+        ${Colors.PrimaryLight[9]},
+        ${Colors.PrimaryLight[8]},
+        ${Colors.PrimaryLight[9]},
+        ${Colors.PrimaryLight[4]},
+        ${Colors.PrimaryLight[5]},
+        ${Colors.PrimaryLight[9]},
+      ); */
+    }
+
+    height: auto;
+    min-height: auto;
+
+    canvas {
+      width: 100%;
+      min-width: 100%;
+      height: 500px;
+      min-height: 500px;
+    }
+  }
+`;

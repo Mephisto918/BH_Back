@@ -21,6 +21,12 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false
   },
-  "exclude": ["**/*.d.ts"],
+   "exclude": [
+    "node_modules",
+    "dist",
+    "frontend",       // ⬅️ add your frontend folder name here
+    "**/*.spec.ts",
+    "**/*.test.ts"
+  ],
   "include": ["src/**/*"]
 }

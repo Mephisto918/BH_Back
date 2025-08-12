@@ -7,6 +7,7 @@
 /frontend/build
 /frontend/.pnp
 /frontend/.pnp.js
+/public/*
 
 # Logs
 logs

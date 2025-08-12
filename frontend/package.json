@@ -1,45 +1,47 @@
 {
   "name": "frontend",
-  "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@testing-library/dom": "^10.4.1",
-    "@testing-library/jest-dom": "^6.6.4",
-    "@testing-library/react": "^16.3.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.126",
-    "@types/react": "^19.1.9",
-    "@types/react-dom": "^19.1.7",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
-    "react-scripts": "5.0.1",
-    "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
-  },
-  "proxy": "http://localhost:3001/api",
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build && rm -rf ../public/* && cp -r build/* ../public/",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "vite",
+    "dev-host": "vite --host",
+    "build": "vite build && rm -rf ../public/* && cp -r dist/* ../public/",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "dependencies": {
+    "@chakra-ui/icons": "^2.2.4",
+    "@chakra-ui/react": "^2.10.9",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@react-three/drei": "^9.56.3",
+    "@react-three/fiber": "^8.18.0",
+    "@reduxjs/toolkit": "^2.8.2",
+    "@tanstack/react-query": "^5.84.2",
+    "framer-motion": "^12.23.12",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.62.0",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.8.0",
+    "tech-stack-icons": "^3.3.2",
+    "three": "^0.152.2",
+    "zod": "^4.0.17"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "devDependencies": {
+    "@babel/preset-react": "^7.27.1",
+    "@eslint/js": "^9.32.0",
+    "@linaria/babel-preset": "^4.5.4",
+    "@types/react": "^18.3.23",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^4.7.0",
+    "eslint": "^9.32.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.3.0",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.39.0",
+    "vite": "^7.1.0"
   }
 }

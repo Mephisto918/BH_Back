@@ -80,7 +80,7 @@ const Section = styled.section`
       justify-content: center;
 
       > .stack-row {
-        border: 1px solid green;
+        /* border: 1px solid green; */
         display: flex;
         flex-direction: row;
         overflow: auto;

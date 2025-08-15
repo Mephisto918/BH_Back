@@ -36,16 +36,15 @@ export default function TechStack() {
                 >
                   {tech.name}
                 </Text>
-                {tech.description && (
-                  <Text
-                    mt={1}
-                    fontSize="sm"
-                    color={Colors.TextInverse[2]}
-                    lineHeight="tall"
-                  >
-                    {tech.description}
-                  </Text>
-                )}
+                <Text
+                  mt={1}
+                  fontSize="sm"
+                  // color={Colors.TextInverse[2]}
+                  color="white"
+                  lineHeight="tall"
+                >
+                  {tech.description}
+                </Text>
               </a>
             ))}
           </Stack>
@@ -56,9 +55,14 @@ export default function TechStack() {
 }
 
 const Section = styled.section`
+  --con-height: 50dvh;
+
   background-color: #f5f5f5;
   padding: 3rem 1rem;
   text-align: center;
+  height: --con-height;
+  max-height: --con-height;
+  min-height: --con-height;
 
   > .stack {
     > .heading-container {
@@ -66,7 +70,6 @@ const Section = styled.section`
       > .heading {
         display: inline-block;
         color: ${Colors.PrimaryLight[6]};
-        /* font-size: 3.5rem; */
         font-weight: 900;
       }
       > .subheading {
@@ -78,9 +81,9 @@ const Section = styled.section`
       display: flex;
       flex-direction: row;
       justify-content: center;
+      height: 100%;
 
       > .stack-row {
-        /* border: 1px solid green; */
         display: flex;
         flex-direction: row;
         overflow: auto;
@@ -111,11 +114,13 @@ const Section = styled.section`
           }
 
           > .icon {
-            /* border: 2px solid yellow; */
             aspect-ratio: 1;
             height: 100px;
             margin: 0 auto;
             display: block;
+          }
+          > * {
+            height: auto;
           }
 
           > p,
@@ -128,49 +133,43 @@ const Section = styled.section`
   }
 
   /* Tablet */
-  @media screen and (min-width: 400px) {
+  /* @media screen and (min-width: 400px) {
     .heading {
       font-size: 2.3rem;
-      /* border: 2px solid green; */
     }
     .stack-row {
       justify-content: flex-start;
     }
-  }
+  } */
 
-  @media screen and (min-width: 768px) {
+  /* @media screen and (min-width: 768px) {
     .heading {
       font-size: 2.3rem;
-      /* border: 2px solid green; */
     }
     .stack-row {
       justify-content: flex-start;
     }
-  }
+  } */
 
   /* Small desktop */
-  @media screen and (min-width: 1024px) {
+  /* @media screen and (min-width: 1024px) {
     .heading {
       font-size: 3rem;
-      /* border: 2px solid green; */
     }
     .stack-row {
-      /* justify-content: flex-start;
-      padding-left: 1rem;
-      padding-right: 1rem; */
+
     }
-  }
+  } */
 
   /* Large desktop / Ultra-wide */
-  @media screen and (min-width: 1440px) {
+  /* @media screen and (min-width: 1440px) {
     .heading {
       font-size: 4rem;
-      /* border: 2px solid yellow; */
     }
     .stack-row {
       justify-content: space-between;
       padding-left: 1rem;
       padding-right: 1rem;
     }
-  }
+  } */
 `;

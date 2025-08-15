@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Colors } from '@/features/constants'; 
+import { Colors } from '@/features/constants';
 import { Text } from '@chakra-ui/react';
 
 export default function footer() {
@@ -23,6 +23,9 @@ export default function footer() {
 const Footer = styled.footer`
   color: white;
   background-color: ${Colors.PrimaryLight[8]};
+  height: 10rem;
+  min-height: 10rem;
+  max-height: 10rem;
 
   display: flex;
   flex-direction: row;
@@ -30,5 +33,23 @@ const Footer = styled.footer`
   padding: 0 2rem;
   align-items: center;
   margin-top: auto;
-  height: 10rem;
+
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+
+  > * {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    > * {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 `;

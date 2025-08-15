@@ -36,10 +36,9 @@ const Container = styled.div`
   flex-grow: 1;
 
   /* Content grows to fill the space pushing footer down */
-  > .box:nth-child(1) {
+  > .box:nth-of-type(1) {
     padding: 1rem;
-    /* height: 8dvh; */
-    /* border: 1px solid white; */
+    /* border: 3px solid green; */
 
     > nav {
       background-color: ${Colors.PrimaryLight[9]};

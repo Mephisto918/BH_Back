@@ -26,11 +26,10 @@ export class TenantsService {
     isDeleted = false,
     isActive,
     isVerified,
-  }: FindTenantsDto): Promise<Tenant[]> {
+  }: FindTenantsDto): Promise<Partial<Tenant>[]> {
     const userToSkip = (page - 1) * offset;
 
-    const prisma = this.prisma;
-    return prisma.tenant.findMany({
+    return this.prisma.tenant.findMany({
       skip: userToSkip,
       take: offset,
       where: {
@@ -42,6 +41,18 @@ export class TenantsService {
         ...(isVerified !== undefined && { isVerified }),
       },
       orderBy: { username: 'asc' },
+      select: {
+        id: true,
+        username: true,
+        firstname: true,
+        lastname: true,
+        email: true,
+        role: true,
+        isActive: true,
+        isVerified: true,
+        createdAt: true,
+        updatedAt: true,
+      },
     });
   }
 

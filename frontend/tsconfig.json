@@ -24,7 +24,8 @@
     "resolveJsonModule": true,
 
     /* Additional Flags */
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "types": ["pdfjs-dist"]
   },
   "include": ["src"],
   "references": []

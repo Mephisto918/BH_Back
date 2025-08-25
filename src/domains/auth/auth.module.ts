@@ -5,9 +5,9 @@ import { UserUnionService } from './userUnion.service';
 import { CryptoService } from './utilities/crypto.service';
 import { ImageModule } from 'src/infrastructure/image/image.module';
 import { TenantsModule } from 'src/domains/tenants/tenants.module';
-import { JwtStrategy } from './strategy/jwt.strategy';
+import { JwtStrategy } from './strategy/jwt/jwt.strategy';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConfig } from './config/jwt.config';
+import { jwtConfig } from './strategy/jwt/jwt.config';
 import { AdminsModule } from 'src/domains/admins/admins.module';
 import { OwnersModule } from 'src/domains/owners/owners.module';
 

@@ -54,7 +54,15 @@ async function bootstrap() {
   );
   SwaggerModule.setup('docs', app, document, options);
 
-  app.enableCors();
+  app.enableCors({
+    origin: [
+      'http://10.122.68.117:5173', // your Vite dev frontend IP + port
+      process.env.NODE_ENV !== 'production'
+        ? 'http://localhost:5173'
+        : 'https://bhhph.online',
+    ],
+    credentials: true, // if you use cookies/auth headers
+  });
 
   // React Fall back
   server.get(/^\/(?!api).*/, (req: express.Request, res: express.Response) => {

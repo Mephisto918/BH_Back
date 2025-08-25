@@ -17,7 +17,7 @@ import { CreateOwnerDoc, GetOwnerDoc, UpdateOwnerDoc } from './owners.swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { createMulterConfig } from 'src/infrastructure/shared/utils/multer-config.util';
 import { UploadedFile } from '@nestjs/common';
-import { PermitType } from '@prisma/client';
+import { CreatePermitDto } from 'src/infrastructure/permit/dto/create-permit.dto';
 
 @Controller('owners')
 export class OwnersController {
@@ -31,12 +31,6 @@ export class OwnersController {
     return results;
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    const results = this.ownersService.findOne(+id);
-    return results;
-  }
-
   @Post()
   @CreateOwnerDoc()
   create(@Body() createOwnerDto: CreateOwnerDto) {
@@ -46,15 +40,28 @@ export class OwnersController {
   @Post('permits')
   @UseInterceptors(FileInterceptor('file', createMulterConfig('pdf')))
   createPermit(
-    @Body() payload: { id: number; type: PermitType; expiresAt: string },
+    // @Body() payload: { id: number; type: PermitType; expiresAt: string },
+    @Body() payload: CreatePermitDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
     return this.ownersService.createPermit(payload, file);
   }
 
+  @Get('permits')
+  findAllPermits() {
+    return this.ownersService.findAllPermits();
+  }
+
+  //* put static routes first, parameterized routes later
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    const results = this.ownersService.findOne(+id);
+    return results;
+  }
+
   @Get(':id/permits')
-  findPermits(@Param('id') id: string) {
-    return this.ownersService.findPermits(+id);
+  findOnePermits(@Param('id') id: string) {
+    return this.ownersService.findOnePermits(+id);
   }
   @Delete('permits/:permitId')
   async deletePermit(

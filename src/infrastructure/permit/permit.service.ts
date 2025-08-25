@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { DocumentService } from '../document/document.service';
 import { DBClient } from '../image/types/types';
 import {
@@ -7,7 +7,6 @@ import {
 } from '../shared/utils/media-path-builder.util';
 import { FileOpsUtils } from '../shared/utils/file-ops.utls';
 import { CreatePermitDto } from './dto/create-permit.dto';
-import { PermitMetaData } from './types/permit.types';
 
 @Injectable()
 export class PermitService {
@@ -33,7 +32,7 @@ export class PermitService {
     const fullRelPath = `${relPath}/${filename}`;
     const fullAbsPath = `${absPath}/${filename}`;
 
-    // Start DB insert first inside the current transaction
+    //* Start DB insert first inside the current transaction
     const record = await prisma.permit.create({
       data: {
         ownerId: +payload.ownerId,
@@ -45,58 +44,56 @@ export class PermitService {
     });
 
     try {
-      // Now attempt file write
+      //* Attempt file write
       await this.documentService.writeFileToDisk(file, {
         relPath: fullRelPath,
         absPath: fullAbsPath,
       });
     } catch (error) {
-      // File write failed - delete the DB record manually to avoid orphan
+      //* File write failed - delete the DB record manually to avoid orphan
       await prisma.permit.delete({ where: { id: record.id } });
 
-      // Re-throw the error so transaction fails as well
+      //* Re-throw the error so transaction fails as well
       throw error;
     }
 
     return record.id;
   }
 
-  async getPermitMetaData(
-    prisma: DBClient,
-    id: number,
-    IsBoolean: boolean,
-    // getMediaPath: (url: string, isPublic: boolean) => Promise<string | null>,
-  ): Promise<{ permit: PermitMetaData }> {
-    const permit = await prisma.permit.findUnique({ where: { id } });
+  async getAllPermitMetaData(prisma: DBClient, IsPublic: boolean) {
+    const permits = await prisma.permit.findMany({
+      include: {
+        owner: {
+          select: {
+            firstname: true,
+            lastname: true,
+          },
+        },
+      },
+    });
+
+    return Promise.all(permits.map((p) => this.formatUrl(p.url, IsPublic)));
+  }
+
+  async getPermitMetaData(prisma: DBClient, id: number, IsPublic: boolean) {
+    const permit = await prisma.permit.findUnique({
+      where: { id },
+      include: {
+        owner: {
+          select: {
+            firstname: true,
+            lastname: true,
+          },
+        },
+      },
+    });
 
     if (!permit) {
-      throw new Error(`Permit with id ${id} not found`);
+      throw new NotFoundException(`Permit ${id} not found`);
     }
 
-    const transformedUrl = await this.fileOpsUtils.getMediaPath(
-      permit.url,
-      IsBoolean,
-    );
-    if (!transformedUrl) {
-      console.warn('Skipping pdf due to null transformedUrl:', permit.url);
-      console.warn('transformedUrl value:', transformedUrl);
-      throw new Error('Skipping pdf due to null transformedUrl');
-    }
-
-    // Map date fields to ISO strings, handle nullable dates properly
-    const mappedPermit: PermitMetaData = {
-      ...permit,
-      url: transformedUrl,
-      expiresAt: permit.expiresAt.toISOString(),
-      verifiedAt: permit.verifiedAt ? permit.verifiedAt.toISOString() : null,
-      approvedAt: permit.approvedAt ? permit.approvedAt.toISOString() : null,
-      deletedAt: permit.deletedAt ? permit.deletedAt.toISOString() : null,
-      createdAt: permit.createdAt.toISOString(),
-      updatedAt: permit.updatedAt.toISOString(),
-      // verifiedById is nullable in model, so might want to make it optional or nullable in interface
-    };
-
-    return { permit: mappedPermit };
+    const formattedUrl = await this.formatUrl(permit.url, IsPublic);
+    return { ...permit, url: formattedUrl };
   }
 
   async deletePermit(
@@ -124,4 +121,21 @@ export class PermitService {
   }
 
   //TODO update Permits
+
+  private async formatUrl(
+    permitUrl: string,
+    IsPublic: boolean,
+  ): Promise<string | null> {
+    const transformedUrl = await this.fileOpsUtils.getMediaPath(
+      permitUrl,
+      IsPublic,
+    );
+    if (!transformedUrl) {
+      console.warn('Skipping pdf due to null transformedUrl:', permitUrl);
+      console.warn('transformedUrl value:', transformedUrl);
+      throw new Error('Skipping pdf due to null transformedUrl');
+    }
+
+    return transformedUrl;
+  }
 }

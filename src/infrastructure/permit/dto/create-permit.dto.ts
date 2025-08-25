@@ -7,9 +7,10 @@ import {
 } from 'class-validator';
 
 import { FileFormat, PermitType } from '@prisma/client';
-import { Transform } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 
 export class CreatePermitDto {
+  @Type(() => Number)
   @IsInt()
   ownerId!: number;
 

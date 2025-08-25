@@ -1,42 +1,54 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import * as Cesium from 'cesium';
 import 'cesium/Build/Cesium/Widgets/widgets.css';
-import { getCesiumViewer } from './cesium.service';
-
+import { createCesiumViewer } from './cesium.service';
 import { CesiumGlobeProps } from './cesium.types';
-import { addMarker } from './marker';
+import { Spinner, Center } from '@chakra-ui/react';
 
-export default function CesiumGlobe({
-  markers = [],
-  className,
-}: CesiumGlobeProps) {
+export default function CesiumGlobe({ className }: CesiumGlobeProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const viewerRef = useRef<Cesium.Viewer | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     if (!containerRef.current) return;
+    let cancelled = false;
+    let v: Cesium.Viewer;
 
-    getCesiumViewer(containerRef.current).then((v) => {
-      if (!v) return; // skip malformed first call
+    createCesiumViewer(containerRef.current).then((viewer) => {
+      if (cancelled) {
+        viewer.destroy();
+        return;
+      }
+      v = viewer;
       viewerRef.current = v;
-      markers.forEach((m) => addMarker(v, m));
+      setIsLoaded(true);
     });
 
     return () => {
-      if (viewerRef.current) {
-        viewerRef.current?.destroy();
-        viewerRef.current = null;
-      }
+      cancelled = true;
+      if (v) v.destroy();
     };
-  }, [markers]);
+  }, []);
 
-  return <Wrap ref={containerRef} className={className} />;
+  // useEffect(() => {
+    // console.log('isLoaded: ', isLoaded);
+  // }, [isLoaded]);
+
+  return (
+    <Wrap ref={containerRef} className={className}>
+      {!isLoaded && (
+        <Center height="100%">
+          <Spinner size="xl" color="white" />
+        </Center>
+      )}
+    </Wrap>
+  );
 }
 
 const Wrap = styled.div`
   background-color: black;
   pointer-events: auto;
-  /* width: 100dvw; */
   height: 100%;
 `;

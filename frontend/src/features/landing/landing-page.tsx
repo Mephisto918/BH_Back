@@ -2,10 +2,13 @@ import styled from '@emotion/styled';
 import { Box, Heading, Button } from '@chakra-ui/react';
 import { Colors, Spacing } from '../constants';
 import Hero from './hero';
-import Footer from '../layouts/ui/footer';
+import Footer from '../shared/layouts/ui/footer';
 import Techstack from './techstack';
+import { useTypedRootNavigation } from '@/app/navigation/RootNavHook';
 
 export default function LandingPage() {
+  const navigate = useTypedRootNavigation();
+
   return (
     <Container>
       <Box className="box">
@@ -14,7 +17,14 @@ export default function LandingPage() {
             BH Hunter
           </Heading>
           <Box className="box">
-            <Button className="button">Login as Admin</Button>
+            <Button
+              className="button"
+              onClick={() => {
+                navigate('/auth/login');
+              }}
+            >
+              Login as Admin
+            </Button>
           </Box>
         </nav>
       </Box>

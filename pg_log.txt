@@ -3634,3 +3634,1163 @@
 2025-08-11 16:25:10.004 UTC [148726] LOG:  checkpoint starting: shutdown immediate
 2025-08-11 16:25:10.022 UTC [148726] LOG:  checkpoint complete: wrote 0 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.023 s; sync files=0, longest=0.000 s, average=0.000 s; distance=0 kB, estimate=0 kB; lsn=0/1B670480, redo lsn=0/1B670480
 2025-08-11 16:25:10.040 UTC [148725] LOG:  database system is shut down
+2025-08-18 12:37:57.539 UTC [21824] LOG:  starting PostgreSQL 17.4 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 15.1.1 20250425, 64-bit
+2025-08-18 12:37:57.543 UTC [21824] LOG:  listening on IPv6 address "::1", port 5432
+2025-08-18 12:37:57.543 UTC [21824] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2025-08-18 12:37:57.545 UTC [21824] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2025-08-18 12:37:57.556 UTC [21827] LOG:  database system was shut down at 2025-08-11 16:25:10 UTC
+2025-08-18 12:37:57.567 UTC [21824] LOG:  database system is ready to accept connections
+2025-08-18 12:42:57.656 UTC [21825] LOG:  checkpoint starting: time
+2025-08-18 12:42:57.677 UTC [21825] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.006 s, sync=0.002 s, total=0.021 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/1B670588, redo lsn=0/1B670530
+2025-08-18 12:47:57.776 UTC [21825] LOG:  checkpoint starting: time
+2025-08-18 12:47:58.400 UTC [21825] LOG:  checkpoint complete: wrote 7 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.605 s, sync=0.006 s, total=0.624 s; sync files=5, longest=0.005 s, average=0.002 s; distance=0 kB, estimate=0 kB; lsn=0/1B670950, redo lsn=0/1B6708F8
+2025-08-18 18:41:24.729 UTC [21825] LOG:  checkpoint starting: time
+2025-08-18 18:41:25.258 UTC [21825] LOG:  checkpoint complete: wrote 6 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.513 s, sync=0.003 s, total=0.531 s; sync files=6, longest=0.001 s, average=0.001 s; distance=1 kB, estimate=1 kB; lsn=0/1B670E18, redo lsn=0/1B670DC0
+2025-08-19 11:13:02.228 UTC [21824] LOG:  received fast shutdown request
+2025-08-19 11:13:02.235 UTC [21824] LOG:  aborting any active transactions
+2025-08-19 11:13:02.238 UTC [21824] LOG:  background worker "logical replication launcher" (PID 21830) exited with exit code 1
+2025-08-19 11:13:02.239 UTC [172596] FATAL:  terminating connection due to administrator command
+2025-08-19 11:13:02.239 UTC [170658] FATAL:  terminating connection due to administrator command
+2025-08-19 11:13:02.243 UTC [21825] LOG:  shutting down
+2025-08-19 11:13:02.247 UTC [21825] LOG:  checkpoint starting: shutdown immediate
+2025-08-19 11:13:02.276 UTC [21825] LOG:  checkpoint complete: wrote 0 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.006 s, sync=0.001 s, total=0.033 s; sync files=0, longest=0.000 s, average=0.000 s; distance=0 kB, estimate=1 kB; lsn=0/1B670EC8, redo lsn=0/1B670EC8
+2025-08-19 11:13:02.297 UTC [21824] LOG:  database system is shut down
+2025-08-24 09:05:04.448 UTC [38085] LOG:  starting PostgreSQL 17.4 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 15.1.1 20250425, 64-bit
+2025-08-24 09:05:04.449 UTC [38085] LOG:  listening on IPv6 address "::1", port 5432
+2025-08-24 09:05:04.449 UTC [38085] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2025-08-24 09:05:04.452 UTC [38085] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2025-08-24 09:05:04.465 UTC [38088] LOG:  database system was shut down at 2025-08-24 09:03:43 UTC
+2025-08-24 09:05:04.475 UTC [38085] LOG:  database system is ready to accept connections
+2025-08-24 09:05:23.385 UTC [38341] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:05:23.385 UTC [38341] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:05:23.385 UTC [38341] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:05:23.438 UTC [38342] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:05:23.438 UTC [38342] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:05:23.438 UTC [38342] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:06:04.542 UTC [38642] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:06:04.542 UTC [38642] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:06:04.542 UTC [38642] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:07:04.607 UTC [38960] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:07:04.607 UTC [38960] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:07:04.607 UTC [38960] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:08:04.652 UTC [39270] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:08:04.652 UTC [39270] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:08:04.652 UTC [39270] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:09:04.710 UTC [39605] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:09:04.710 UTC [39605] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:09:04.710 UTC [39605] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:10:04.567 UTC [38086] LOG:  checkpoint starting: time
+2025-08-24 09:10:04.616 UTC [38086] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.010 s, total=0.048 s; sync files=2, longest=0.009 s, average=0.005 s; distance=0 kB, estimate=0 kB; lsn=0/1B673E30, redo lsn=0/1B673DD8
+2025-08-24 09:10:04.781 UTC [39988] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:10:04.781 UTC [39988] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:10:04.781 UTC [39988] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:11:04.828 UTC [40383] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:11:04.828 UTC [40383] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:11:04.828 UTC [40383] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:12:04.886 UTC [40718] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:12:04.886 UTC [40718] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:12:04.886 UTC [40718] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:13:04.945 UTC [41005] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:13:04.945 UTC [41005] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:13:04.945 UTC [41005] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:14:05.004 UTC [41290] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:14:05.004 UTC [41290] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:14:05.004 UTC [41290] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:15:05.063 UTC [41580] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:15:05.063 UTC [41580] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:15:05.063 UTC [41580] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:16:05.104 UTC [41865] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:16:05.104 UTC [41865] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:16:05.104 UTC [41865] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:17:05.163 UTC [42153] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:17:05.163 UTC [42153] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:17:05.163 UTC [42153] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:18:05.219 UTC [42442] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:18:05.219 UTC [42442] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:18:05.219 UTC [42442] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:19:05.279 UTC [42908] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:19:05.279 UTC [42908] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:19:05.279 UTC [42908] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:20:05.336 UTC [43403] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:20:05.336 UTC [43403] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:20:05.336 UTC [43403] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:21:05.401 UTC [43843] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:21:05.401 UTC [43843] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:21:05.401 UTC [43843] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:22:05.450 UTC [44329] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:22:05.450 UTC [44329] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:22:05.450 UTC [44329] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:23:05.519 UTC [44801] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:23:05.519 UTC [44801] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:23:05.519 UTC [44801] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:24:05.568 UTC [45214] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:24:05.568 UTC [45214] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:24:05.568 UTC [45214] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:25:05.639 UTC [45503] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:25:05.639 UTC [45503] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:25:05.639 UTC [45503] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:26:05.681 UTC [45791] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:26:05.681 UTC [45791] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:26:05.681 UTC [45791] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:27:05.756 UTC [46115] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:27:05.756 UTC [46115] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:27:05.756 UTC [46115] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:28:05.823 UTC [46570] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:28:05.823 UTC [46570] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:28:05.823 UTC [46570] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:29:05.888 UTC [46981] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:29:05.888 UTC [46981] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:29:05.888 UTC [46981] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:30:05.942 UTC [47381] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:30:05.942 UTC [47381] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:30:05.942 UTC [47381] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:31:05.991 UTC [47750] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:31:05.991 UTC [47750] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:31:05.991 UTC [47750] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:31:25.129 UTC [47841] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:31:25.129 UTC [47841] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:31:25.129 UTC [47841] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:32:06.034 UTC [49338] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:32:06.034 UTC [49338] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:32:06.034 UTC [49338] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:33:06.056 UTC [51423] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:33:06.056 UTC [51423] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:33:06.056 UTC [51423] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:34:06.113 UTC [53390] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:34:06.113 UTC [53390] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:34:06.113 UTC [53390] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:35:06.170 UTC [55405] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:35:06.170 UTC [55405] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:35:06.170 UTC [55405] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:36:06.231 UTC [57265] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:36:06.231 UTC [57265] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:36:06.231 UTC [57265] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:37:06.287 UTC [59191] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:37:06.287 UTC [59191] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:37:06.287 UTC [59191] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:38:06.350 UTC [60934] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:38:06.350 UTC [60934] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:38:06.350 UTC [60934] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:39:06.404 UTC [62754] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:39:06.404 UTC [62754] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:39:06.404 UTC [62754] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:40:06.464 UTC [63826] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:40:06.464 UTC [63826] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:40:06.464 UTC [63826] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:41:06.523 UTC [64788] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:41:06.523 UTC [64788] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:41:06.523 UTC [64788] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:42:06.585 UTC [65749] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:42:06.585 UTC [65749] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:42:06.585 UTC [65749] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:42:20.679 UTC [66047] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:42:20.679 UTC [66047] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:42:20.679 UTC [66047] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:43:06.641 UTC [66685] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:43:06.641 UTC [66685] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:43:06.641 UTC [66685] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:44:06.699 UTC [67166] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:44:06.699 UTC [67166] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:44:06.699 UTC [67166] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:45:06.758 UTC [67542] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:45:06.758 UTC [67542] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:45:06.758 UTC [67542] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:46:06.812 UTC [69341] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:46:06.812 UTC [69341] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:46:06.812 UTC [69341] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:47:06.870 UTC [71148] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:47:06.870 UTC [71148] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:47:06.870 UTC [71148] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:48:06.929 UTC [72959] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:48:06.929 UTC [72959] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:48:06.929 UTC [72959] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:49:06.986 UTC [74681] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:49:06.986 UTC [74681] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:49:06.986 UTC [74681] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:50:07.046 UTC [76487] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:50:07.046 UTC [76487] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:50:07.046 UTC [76487] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:51:07.101 UTC [78418] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:51:07.101 UTC [78418] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:51:07.101 UTC [78418] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:51:08.307 UTC [78428] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:51:08.307 UTC [78428] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:51:08.307 UTC [78428] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:52:07.159 UTC [80319] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:52:07.159 UTC [80319] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:52:07.159 UTC [80319] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:53:07.216 UTC [82152] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:53:07.216 UTC [82152] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:53:07.216 UTC [82152] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:54:07.272 UTC [83963] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:54:07.272 UTC [83963] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:54:07.272 UTC [83963] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:55:07.329 UTC [85773] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:55:07.329 UTC [85773] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:55:07.329 UTC [85773] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:56:07.386 UTC [87616] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:56:07.386 UTC [87616] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:56:07.386 UTC [87616] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:57:07.446 UTC [89560] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:57:07.446 UTC [89560] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:57:07.446 UTC [89560] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:58:07.503 UTC [91432] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:58:07.503 UTC [91432] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:58:07.503 UTC [91432] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 09:59:07.562 UTC [93252] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 09:59:07.562 UTC [93252] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 09:59:07.562 UTC [93252] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 10:00:07.619 UTC [94920] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 10:00:07.619 UTC [94920] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 10:00:07.619 UTC [94920] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 10:01:07.677 UTC [96646] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 10:01:07.677 UTC [96646] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 10:01:07.677 UTC [96646] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 10:02:07.736 UTC [98453] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 10:02:07.736 UTC [98453] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 10:02:07.736 UTC [98453] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 10:03:07.794 UTC [100201] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 10:03:07.794 UTC [100201] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 10:03:07.794 UTC [100201] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 10:04:07.852 UTC [101743] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 10:04:07.852 UTC [101743] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 10:04:07.852 UTC [101743] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 10:05:07.909 UTC [103114] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 10:05:07.909 UTC [103114] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 10:05:07.909 UTC [103114] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 10:06:07.966 UTC [104408] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 10:06:07.966 UTC [104408] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 10:06:07.966 UTC [104408] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 10:06:51.989 UTC [38085] LOG:  received fast shutdown request
+2025-08-24 10:06:51.992 UTC [38085] LOG:  aborting any active transactions
+2025-08-24 10:06:51.994 UTC [78428] FATAL:  terminating connection due to administrator command
+2025-08-24 10:06:51.994 UTC [38342] FATAL:  terminating connection due to administrator command
+2025-08-24 10:06:51.995 UTC [38085] LOG:  background worker "logical replication launcher" (PID 38091) exited with exit code 1
+2025-08-24 10:06:51.997 UTC [38086] LOG:  shutting down
+2025-08-24 10:06:52.000 UTC [38086] LOG:  checkpoint starting: shutdown immediate
+2025-08-24 10:06:52.017 UTC [38086] LOG:  checkpoint complete: wrote 0 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.003 s, sync=0.001 s, total=0.020 s; sync files=0, longest=0.000 s, average=0.000 s; distance=0 kB, estimate=0 kB; lsn=0/1B673EE0, redo lsn=0/1B673EE0
+2025-08-24 10:06:52.021 UTC [38085] LOG:  database system is shut down
+2025-08-24 12:09:58.450 UTC [109204] LOG:  starting PostgreSQL 17.4 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 15.1.1 20250425, 64-bit
+2025-08-24 12:09:58.452 UTC [109204] LOG:  listening on IPv6 address "::1", port 5432
+2025-08-24 12:09:58.452 UTC [109204] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2025-08-24 12:09:58.454 UTC [109204] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2025-08-24 12:09:58.464 UTC [109207] LOG:  database system was shut down at 2025-08-24 10:06:52 UTC
+2025-08-24 12:09:58.472 UTC [109204] LOG:  database system is ready to accept connections
+2025-08-24 12:10:58.562 UTC [110956] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:10:58.562 UTC [110956] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:10:58.562 UTC [110956] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:11:03.139 UTC [111048] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:11:03.139 UTC [111048] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:11:03.139 UTC [111048] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:11:03.188 UTC [111049] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:11:03.188 UTC [111049] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:11:03.188 UTC [111049] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:11:58.592 UTC [111690] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:11:58.592 UTC [111690] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:11:58.592 UTC [111690] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:12:58.649 UTC [112020] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:12:58.649 UTC [112020] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:12:58.649 UTC [112020] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:13:58.709 UTC [112781] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:13:58.709 UTC [112781] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:13:58.709 UTC [112781] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:14:58.563 UTC [109205] LOG:  checkpoint starting: time
+2025-08-24 12:14:58.582 UTC [109205] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.002 s, total=0.020 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/1B673FE8, redo lsn=0/1B673F90
+2025-08-24 12:14:58.765 UTC [113458] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:14:58.765 UTC [113458] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:14:58.765 UTC [113458] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:15:58.825 UTC [114076] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:15:58.825 UTC [114076] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:15:58.825 UTC [114076] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:16:58.868 UTC [114540] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:16:58.868 UTC [114540] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:16:58.868 UTC [114540] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:17:58.928 UTC [114894] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:17:58.928 UTC [114894] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:17:58.928 UTC [114894] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:18:58.986 UTC [115274] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:18:58.986 UTC [115274] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:18:58.986 UTC [115274] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:19:59.042 UTC [115612] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:19:59.042 UTC [115612] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:19:59.042 UTC [115612] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:20:59.102 UTC [115921] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:20:59.102 UTC [115921] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:20:59.102 UTC [115921] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:21:59.160 UTC [116281] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:21:59.160 UTC [116281] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:21:59.160 UTC [116281] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:22:57.422 UTC [116658] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:22:57.422 UTC [116658] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:22:57.422 UTC [116658] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:22:59.219 UTC [116691] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:22:59.219 UTC [116691] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:22:59.219 UTC [116691] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:23:59.275 UTC [117321] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:23:59.275 UTC [117321] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:23:59.275 UTC [117321] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:24:59.332 UTC [118033] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:24:59.332 UTC [118033] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:24:59.332 UTC [118033] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:25:59.384 UTC [118714] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:25:59.384 UTC [118714] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:25:59.384 UTC [118714] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:26:59.451 UTC [119392] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:26:59.451 UTC [119392] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:26:59.451 UTC [119392] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:27:59.502 UTC [119994] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:27:59.502 UTC [119994] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:27:59.502 UTC [119994] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:28:59.560 UTC [120659] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:28:59.560 UTC [120659] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:28:59.560 UTC [120659] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:29:59.616 UTC [120991] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:29:59.616 UTC [120991] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:29:59.616 UTC [120991] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:30:59.676 UTC [121323] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:30:59.676 UTC [121323] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:30:59.676 UTC [121323] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:31:59.732 UTC [121635] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:31:59.732 UTC [121635] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:31:59.732 UTC [121635] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:32:59.789 UTC [121940] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:32:59.789 UTC [121940] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:32:59.789 UTC [121940] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:33:59.830 UTC [122251] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:33:59.830 UTC [122251] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:33:59.830 UTC [122251] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:34:59.889 UTC [122592] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:34:59.889 UTC [122592] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:34:59.889 UTC [122592] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:35:59.947 UTC [122911] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:35:59.947 UTC [122911] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:35:59.947 UTC [122911] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:37:00.005 UTC [123211] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:37:00.005 UTC [123211] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:37:00.005 UTC [123211] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:38:00.063 UTC [123511] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:38:00.063 UTC [123511] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:38:00.063 UTC [123511] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:39:00.122 UTC [123811] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:39:00.122 UTC [123811] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:39:00.122 UTC [123811] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:40:00.183 UTC [124129] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:40:00.183 UTC [124129] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:40:00.183 UTC [124129] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:41:00.241 UTC [124437] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:41:00.241 UTC [124437] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:41:00.241 UTC [124437] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:42:00.299 UTC [124738] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:42:00.299 UTC [124738] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:42:00.299 UTC [124738] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:43:00.355 UTC [125053] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:43:00.355 UTC [125053] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:43:00.355 UTC [125053] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:44:00.415 UTC [125355] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:44:00.415 UTC [125355] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:44:00.415 UTC [125355] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:45:00.473 UTC [125658] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:45:00.473 UTC [125658] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:45:00.473 UTC [125658] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:46:00.532 UTC [125961] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:46:00.532 UTC [125961] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:46:00.532 UTC [125961] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:47:00.589 UTC [126288] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:47:00.589 UTC [126288] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:47:00.589 UTC [126288] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:48:00.647 UTC [126609] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:48:00.647 UTC [126609] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:48:00.647 UTC [126609] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:49:00.703 UTC [126943] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:49:00.703 UTC [126943] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:49:00.703 UTC [126943] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:50:00.759 UTC [127229] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:50:00.759 UTC [127229] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:50:00.759 UTC [127229] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:51:00.817 UTC [127576] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:51:00.817 UTC [127576] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:51:00.817 UTC [127576] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:52:00.873 UTC [127892] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:52:00.873 UTC [127892] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:52:00.873 UTC [127892] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:53:00.931 UTC [128191] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:53:00.931 UTC [128191] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:53:00.931 UTC [128191] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:54:00.989 UTC [128536] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:54:00.989 UTC [128536] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:54:00.989 UTC [128536] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:55:01.047 UTC [128851] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:55:01.047 UTC [128851] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:55:01.047 UTC [128851] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:56:01.105 UTC [129154] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:56:01.105 UTC [129154] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:56:01.105 UTC [129154] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:57:01.162 UTC [129464] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:57:01.162 UTC [129464] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:57:01.162 UTC [129464] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:58:01.219 UTC [129766] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:58:01.219 UTC [129766] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:58:01.219 UTC [129766] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 12:59:01.278 UTC [130070] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 12:59:01.278 UTC [130070] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 12:59:01.278 UTC [130070] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:00:01.337 UTC [130436] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:00:01.337 UTC [130436] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:00:01.337 UTC [130436] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:01:01.395 UTC [130755] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:01:01.395 UTC [130755] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:01:01.395 UTC [130755] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:02:01.455 UTC [131106] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:02:01.455 UTC [131106] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:02:01.455 UTC [131106] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:03:01.489 UTC [131464] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:03:01.489 UTC [131464] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:03:01.489 UTC [131464] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:03:56.012 UTC [131768] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:03:56.012 UTC [131768] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:03:56.012 UTC [131768] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:04:01.550 UTC [131829] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:04:01.550 UTC [131829] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:04:01.550 UTC [131829] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:05:01.605 UTC [132269] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:05:01.605 UTC [132269] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:05:01.605 UTC [132269] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:06:01.664 UTC [132617] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:06:01.664 UTC [132617] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:06:01.664 UTC [132617] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:07:01.727 UTC [133049] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:07:01.727 UTC [133049] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:07:01.727 UTC [133049] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:08:01.778 UTC [133402] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:08:01.778 UTC [133402] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:08:01.778 UTC [133402] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:09:01.836 UTC [133727] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:09:01.836 UTC [133727] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:09:01.836 UTC [133727] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:09:59.640 UTC [109205] LOG:  checkpoint starting: time
+2025-08-24 13:10:00.472 UTC [109205] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.807 s, sync=0.009 s, total=0.833 s; sync files=6, longest=0.007 s, average=0.002 s; distance=1 kB, estimate=1 kB; lsn=0/1B6744B0, redo lsn=0/1B674420
+2025-08-24 13:10:01.894 UTC [134025] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:10:01.894 UTC [134025] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:10:01.894 UTC [134025] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:11:01.958 UTC [134336] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:11:01.958 UTC [134336] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:11:01.958 UTC [134336] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:12:02.012 UTC [134713] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:12:02.012 UTC [134713] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:12:02.012 UTC [134713] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:13:02.070 UTC [135064] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:13:02.070 UTC [135064] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:13:02.070 UTC [135064] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:14:02.128 UTC [135368] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:14:02.128 UTC [135368] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:14:02.128 UTC [135368] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:15:02.169 UTC [135687] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:15:02.169 UTC [135687] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:15:02.169 UTC [135687] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:16:02.225 UTC [135976] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:16:02.225 UTC [135976] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:16:02.225 UTC [135976] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:17:02.282 UTC [136266] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:17:02.282 UTC [136266] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:17:02.282 UTC [136266] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:18:02.349 UTC [136591] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:18:02.349 UTC [136591] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:18:02.349 UTC [136591] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:18:38.755 UTC [136769] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:18:38.755 UTC [136769] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:18:38.755 UTC [136769] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:19:02.404 UTC [136922] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:19:02.404 UTC [136922] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:19:02.404 UTC [136922] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:20:02.463 UTC [137257] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:20:02.463 UTC [137257] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:20:02.463 UTC [137257] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:21:02.519 UTC [137632] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:21:02.519 UTC [137632] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:21:02.519 UTC [137632] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:22:02.576 UTC [137949] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:22:02.576 UTC [137949] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:22:02.576 UTC [137949] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:23:02.635 UTC [138462] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:23:02.635 UTC [138462] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:23:02.635 UTC [138462] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:24:02.700 UTC [138750] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:24:02.700 UTC [138750] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:24:02.700 UTC [138750] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:25:02.752 UTC [139084] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:25:02.752 UTC [139084] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:25:02.752 UTC [139084] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:26:02.810 UTC [139408] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:26:02.810 UTC [139408] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:26:02.810 UTC [139408] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:26:44.294 UTC [139663] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:26:44.294 UTC [139663] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:26:44.294 UTC [139663] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:27:02.866 UTC [139787] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:27:02.866 UTC [139787] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:27:02.866 UTC [139787] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:28:02.922 UTC [140189] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:28:02.922 UTC [140189] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:28:02.922 UTC [140189] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:29:02.981 UTC [140476] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:29:02.981 UTC [140476] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:29:02.981 UTC [140476] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:30:03.033 UTC [140798] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:30:03.033 UTC [140798] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:30:03.033 UTC [140798] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:31:03.092 UTC [141090] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:31:03.092 UTC [141090] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:31:03.092 UTC [141090] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:32:03.151 UTC [141381] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:32:03.151 UTC [141381] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:32:03.151 UTC [141381] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:33:03.209 UTC [141723] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:33:03.209 UTC [141723] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:33:03.209 UTC [141723] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:34:03.266 UTC [142025] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:34:03.266 UTC [142025] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:34:03.266 UTC [142025] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:35:03.325 UTC [142326] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:35:03.325 UTC [142326] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:35:03.325 UTC [142326] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:36:03.390 UTC [142616] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:36:03.390 UTC [142616] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:36:03.390 UTC [142616] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:37:03.442 UTC [142939] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:37:03.442 UTC [142939] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:37:03.442 UTC [142939] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:38:03.499 UTC [143248] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:38:03.499 UTC [143248] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:38:03.499 UTC [143248] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:39:03.555 UTC [143579] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:39:03.555 UTC [143579] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:39:03.555 UTC [143579] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:40:03.614 UTC [143896] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:40:03.614 UTC [143896] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:40:03.614 UTC [143896] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:41:03.672 UTC [144203] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:41:03.672 UTC [144203] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:41:03.672 UTC [144203] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:42:03.731 UTC [144554] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:42:03.731 UTC [144554] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:42:03.731 UTC [144554] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:43:03.790 UTC [144844] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:43:03.790 UTC [144844] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:43:03.790 UTC [144844] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:44:03.846 UTC [145178] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:44:03.846 UTC [145178] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:44:03.846 UTC [145178] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:45:03.905 UTC [145505] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:45:03.905 UTC [145505] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:45:03.905 UTC [145505] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:46:03.962 UTC [145817] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:46:03.962 UTC [145817] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:46:03.962 UTC [145817] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:47:04.020 UTC [146138] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:47:04.020 UTC [146138] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:47:04.020 UTC [146138] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:48:04.079 UTC [146433] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:48:04.079 UTC [146433] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:48:04.079 UTC [146433] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:49:04.135 UTC [146721] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:49:04.135 UTC [146721] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:49:04.135 UTC [146721] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:50:04.195 UTC [147008] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:50:04.195 UTC [147008] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:50:04.195 UTC [147008] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:51:04.252 UTC [147298] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:51:04.252 UTC [147298] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:51:04.252 UTC [147298] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:52:04.309 UTC [147588] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:52:04.309 UTC [147588] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:52:04.309 UTC [147588] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:53:04.366 UTC [147876] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:53:04.366 UTC [147876] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:53:04.366 UTC [147876] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:54:04.426 UTC [148164] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:54:04.426 UTC [148164] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:54:04.426 UTC [148164] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:55:04.485 UTC [148451] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:55:04.485 UTC [148451] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:55:04.485 UTC [148451] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:56:04.544 UTC [148739] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:56:04.544 UTC [148739] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:56:04.544 UTC [148739] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:57:04.602 UTC [149036] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:57:04.602 UTC [149036] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:57:04.602 UTC [149036] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:58:04.662 UTC [149324] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:58:04.662 UTC [149324] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:58:04.662 UTC [149324] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 13:59:04.721 UTC [149613] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 13:59:04.721 UTC [149613] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 13:59:04.721 UTC [149613] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:00:04.764 UTC [149900] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:00:04.764 UTC [149900] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:00:04.764 UTC [149900] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:01:04.822 UTC [150188] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:01:04.822 UTC [150188] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:01:04.822 UTC [150188] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:02:04.859 UTC [150478] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:02:04.859 UTC [150478] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:02:04.859 UTC [150478] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:03:04.918 UTC [150767] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:03:04.918 UTC [150767] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:03:04.918 UTC [150767] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:04:04.960 UTC [151056] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:04:04.960 UTC [151056] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:04:04.960 UTC [151056] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:05:05.018 UTC [151343] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:05:05.018 UTC [151343] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:05:05.018 UTC [151343] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:06:05.077 UTC [151645] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:06:05.077 UTC [151645] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:06:05.077 UTC [151645] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:07:05.135 UTC [151942] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:07:05.135 UTC [151942] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:07:05.135 UTC [151942] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:08:05.192 UTC [152244] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:08:05.192 UTC [152244] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:08:05.192 UTC [152244] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:09:05.249 UTC [152582] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:09:05.249 UTC [152582] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:09:05.249 UTC [152582] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:10:05.305 UTC [152875] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:10:05.305 UTC [152875] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:10:05.305 UTC [152875] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:11:05.346 UTC [153170] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:11:05.346 UTC [153170] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:11:05.346 UTC [153170] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:12:05.406 UTC [153460] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:12:05.406 UTC [153460] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:12:05.406 UTC [153460] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:13:05.458 UTC [153748] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:13:05.458 UTC [153748] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:13:05.458 UTC [153748] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:14:05.516 UTC [154037] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:14:05.516 UTC [154037] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:14:05.516 UTC [154037] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:15:05.575 UTC [154328] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:15:05.575 UTC [154328] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:15:05.575 UTC [154328] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:16:05.632 UTC [154615] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:16:05.632 UTC [154615] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:16:05.632 UTC [154615] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:17:05.688 UTC [154915] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:17:05.688 UTC [154915] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:17:05.688 UTC [154915] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:18:05.746 UTC [155258] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:18:05.746 UTC [155258] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:18:05.746 UTC [155258] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:18:32.389 UTC [155431] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:18:32.389 UTC [155431] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:18:32.389 UTC [155431] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:19:05.805 UTC [155674] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:19:05.805 UTC [155674] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:19:05.805 UTC [155674] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:20:05.861 UTC [156007] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:20:05.861 UTC [156007] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:20:05.861 UTC [156007] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:21:05.918 UTC [156290] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:21:05.918 UTC [156290] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:21:05.918 UTC [156290] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:22:05.978 UTC [156622] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:22:05.978 UTC [156622] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:22:05.978 UTC [156622] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:23:06.037 UTC [156907] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:23:06.037 UTC [156907] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:23:06.037 UTC [156907] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:24:06.098 UTC [157232] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:24:06.098 UTC [157232] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:24:06.098 UTC [157232] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:25:06.148 UTC [157558] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:25:06.148 UTC [157558] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:25:06.148 UTC [157558] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:26:06.205 UTC [157841] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:26:06.205 UTC [157841] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:26:06.205 UTC [157841] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:27:06.266 UTC [158128] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:27:06.266 UTC [158128] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:27:06.266 UTC [158128] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:28:06.322 UTC [158454] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:28:06.322 UTC [158454] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:28:06.322 UTC [158454] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:29:06.381 UTC [158745] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:29:06.381 UTC [158745] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:29:06.381 UTC [158745] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:30:06.439 UTC [159028] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:30:06.439 UTC [159028] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:30:06.439 UTC [159028] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:31:06.499 UTC [159347] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:31:06.499 UTC [159347] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:31:06.499 UTC [159347] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:32:06.556 UTC [159635] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:32:06.556 UTC [159635] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:32:06.556 UTC [159635] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:33:06.615 UTC [160006] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:33:06.615 UTC [160006] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:33:06.615 UTC [160006] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:34:06.672 UTC [160385] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:34:06.672 UTC [160385] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:34:06.672 UTC [160385] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:35:06.732 UTC [160672] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:35:06.732 UTC [160672] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:35:06.732 UTC [160672] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:36:06.788 UTC [161010] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:36:06.788 UTC [161010] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:36:06.788 UTC [161010] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:37:06.847 UTC [161354] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:37:06.847 UTC [161354] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:37:06.847 UTC [161354] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:38:06.905 UTC [161638] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:38:06.905 UTC [161638] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:38:06.905 UTC [161638] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:39:06.961 UTC [161965] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:39:06.961 UTC [161965] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:39:06.961 UTC [161965] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:40:06.972 UTC [162248] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:40:06.972 UTC [162248] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:40:06.972 UTC [162248] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:41:07.031 UTC [162556] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:41:07.031 UTC [162556] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:41:07.031 UTC [162556] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:42:07.088 UTC [162903] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:42:07.088 UTC [162903] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:42:07.088 UTC [162903] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:43:07.146 UTC [163219] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:43:07.146 UTC [163219] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:43:07.146 UTC [163219] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:44:07.204 UTC [163509] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:44:07.204 UTC [163509] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:44:07.204 UTC [163509] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:45:07.268 UTC [163834] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:45:07.268 UTC [163834] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:45:07.268 UTC [163834] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:46:07.319 UTC [164133] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:46:07.319 UTC [164133] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:46:07.319 UTC [164133] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:47:07.385 UTC [164423] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:47:07.385 UTC [164423] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:47:07.385 UTC [164423] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:48:07.437 UTC [164722] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:48:07.437 UTC [164722] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:48:07.437 UTC [164722] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:49:07.492 UTC [165049] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:49:07.492 UTC [165049] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:49:07.492 UTC [165049] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:50:07.555 UTC [165338] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:50:07.555 UTC [165338] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:50:07.555 UTC [165338] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:51:07.608 UTC [165647] WARNING:  database "bh" has a collation version mismatch
+2025-08-24 14:51:07.608 UTC [165647] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-24 14:51:07.608 UTC [165647] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-24 14:52:01.317 UTC [109204] LOG:  received fast shutdown request
+2025-08-24 14:52:01.320 UTC [109204] LOG:  aborting any active transactions
+2025-08-24 14:52:01.322 UTC [155431] FATAL:  terminating connection due to administrator command
+2025-08-24 14:52:01.325 UTC [109204] LOG:  background worker "logical replication launcher" (PID 109210) exited with exit code 1
+2025-08-24 14:52:01.326 UTC [111049] FATAL:  terminating connection due to administrator command
+2025-08-24 14:52:01.329 UTC [109205] LOG:  shutting down
+2025-08-24 14:52:01.332 UTC [109205] LOG:  checkpoint starting: shutdown immediate
+2025-08-24 14:52:01.352 UTC [109205] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.003 s, total=0.024 s; sync files=1, longest=0.003 s, average=0.003 s; distance=0 kB, estimate=1 kB; lsn=0/1B674560, redo lsn=0/1B674560
+2025-08-24 14:52:01.359 UTC [109204] LOG:  database system is shut down
+2025-08-25 00:28:19.957 UTC [166379] LOG:  starting PostgreSQL 17.4 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 15.1.1 20250425, 64-bit
+2025-08-25 00:28:19.963 UTC [166379] LOG:  listening on IPv6 address "::1", port 5432
+2025-08-25 00:28:19.963 UTC [166379] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2025-08-25 00:28:19.966 UTC [166379] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2025-08-25 00:28:19.983 UTC [166382] LOG:  database system was shut down at 2025-08-24 14:52:01 UTC
+2025-08-25 00:28:19.999 UTC [166379] LOG:  database system is ready to accept connections
+2025-08-25 00:28:43.162 UTC [166709] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:28:43.162 UTC [166709] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:28:43.162 UTC [166709] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:28:43.194 UTC [166710] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:28:43.194 UTC [166710] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:28:43.194 UTC [166710] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:29:20.073 UTC [167003] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:29:20.073 UTC [167003] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:29:20.073 UTC [167003] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:30:20.127 UTC [167300] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:30:20.127 UTC [167300] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:30:20.127 UTC [167300] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:31:20.178 UTC [167591] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:31:20.178 UTC [167591] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:31:20.178 UTC [167591] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:32:20.235 UTC [167911] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:32:20.235 UTC [167911] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:32:20.235 UTC [167911] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:33:20.084 UTC [166380] LOG:  checkpoint starting: time
+2025-08-25 00:33:20.103 UTC [166380] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.006 s, sync=0.002 s, total=0.023 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/1B674668, redo lsn=0/1B674610
+2025-08-25 00:33:20.278 UTC [168198] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:33:20.278 UTC [168198] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:33:20.278 UTC [168198] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:34:20.335 UTC [168484] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:34:20.335 UTC [168484] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:34:20.335 UTC [168484] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:35:20.392 UTC [168821] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:35:20.392 UTC [168821] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:35:20.392 UTC [168821] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:36:20.452 UTC [169109] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:36:20.452 UTC [169109] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:36:20.452 UTC [169109] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:37:20.509 UTC [169403] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:37:20.509 UTC [169403] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:37:20.509 UTC [169403] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:38:20.567 UTC [169725] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:38:20.567 UTC [169725] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:38:20.567 UTC [169725] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:39:20.628 UTC [170070] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:39:20.628 UTC [170070] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:39:20.628 UTC [170070] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:40:20.685 UTC [170356] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:40:20.685 UTC [170356] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:40:20.685 UTC [170356] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:41:20.742 UTC [170683] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:41:20.742 UTC [170683] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:41:20.742 UTC [170683] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:42:20.799 UTC [170967] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:42:20.799 UTC [170967] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:42:20.799 UTC [170967] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:43:20.855 UTC [171253] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:43:20.855 UTC [171253] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:43:20.855 UTC [171253] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:44:20.912 UTC [171590] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:44:20.912 UTC [171590] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:44:20.912 UTC [171590] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:45:20.969 UTC [171879] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:45:20.969 UTC [171879] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:45:20.969 UTC [171879] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:46:21.025 UTC [172162] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:46:21.025 UTC [172162] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:46:21.025 UTC [172162] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:47:21.081 UTC [172476] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:47:21.081 UTC [172476] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:47:21.081 UTC [172476] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:48:21.139 UTC [172800] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:48:21.139 UTC [172800] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:48:21.139 UTC [172800] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:49:21.194 UTC [173109] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:49:21.194 UTC [173109] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:49:21.194 UTC [173109] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:50:21.255 UTC [173407] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:50:21.255 UTC [173407] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:50:21.255 UTC [173407] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:51:21.312 UTC [173748] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:51:21.312 UTC [173748] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:51:21.312 UTC [173748] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:52:21.369 UTC [174102] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:52:21.369 UTC [174102] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:52:21.369 UTC [174102] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:53:21.427 UTC [174390] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:53:21.427 UTC [174390] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:53:21.427 UTC [174390] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:54:21.493 UTC [174680] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:54:21.493 UTC [174680] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:54:21.493 UTC [174680] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:55:21.552 UTC [174981] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:55:21.552 UTC [174981] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:55:21.552 UTC [174981] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:56:21.619 UTC [175309] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:56:21.619 UTC [175309] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:56:21.619 UTC [175309] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:57:21.668 UTC [175645] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:57:21.668 UTC [175645] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:57:21.668 UTC [175645] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:58:21.725 UTC [176022] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:58:21.725 UTC [176022] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:58:21.725 UTC [176022] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 00:59:21.782 UTC [176391] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 00:59:21.782 UTC [176391] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 00:59:21.782 UTC [176391] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:00:21.843 UTC [176726] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:00:21.843 UTC [176726] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:00:21.843 UTC [176726] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:01:21.897 UTC [177073] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:01:21.897 UTC [177073] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:01:21.897 UTC [177073] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:02:21.947 UTC [177468] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:02:21.947 UTC [177468] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:02:21.947 UTC [177468] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:03:22.005 UTC [177859] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:03:22.005 UTC [177859] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:03:22.005 UTC [177859] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:04:22.063 UTC [178221] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:04:22.063 UTC [178221] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:04:22.063 UTC [178221] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:05:22.160 UTC [178702] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:05:22.160 UTC [178702] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:05:22.160 UTC [178702] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:06:22.179 UTC [179014] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:06:22.179 UTC [179014] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:06:22.179 UTC [179014] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:07:22.219 UTC [179306] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:07:22.219 UTC [179306] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:07:22.219 UTC [179306] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:08:22.276 UTC [179646] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:08:22.276 UTC [179646] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:08:22.276 UTC [179646] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:09:22.332 UTC [179947] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:09:22.332 UTC [179947] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:09:22.332 UTC [179947] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:10:22.389 UTC [180239] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:10:22.389 UTC [180239] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:10:22.389 UTC [180239] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:11:22.445 UTC [180527] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:11:22.445 UTC [180527] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:11:22.445 UTC [180527] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:12:22.504 UTC [180854] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:12:22.504 UTC [180854] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:12:22.504 UTC [180854] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:13:22.558 UTC [181188] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:13:22.558 UTC [181188] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:13:22.558 UTC [181188] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:14:22.615 UTC [181585] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:14:22.615 UTC [181585] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:14:22.615 UTC [181585] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:15:22.672 UTC [181984] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:15:22.672 UTC [181984] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:15:22.672 UTC [181984] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:16:22.732 UTC [182319] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:16:22.732 UTC [182319] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:16:22.732 UTC [182319] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:17:22.789 UTC [182617] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:17:22.789 UTC [182617] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:17:22.789 UTC [182617] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:18:22.849 UTC [182936] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:18:22.849 UTC [182936] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:18:22.849 UTC [182936] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:19:22.912 UTC [183262] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:19:22.912 UTC [183262] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:19:22.912 UTC [183262] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:20:22.966 UTC [183710] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:20:22.966 UTC [183710] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:20:22.966 UTC [183710] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:21:23.028 UTC [184096] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:21:23.028 UTC [184096] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:21:23.028 UTC [184096] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:22:23.086 UTC [184383] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:22:23.086 UTC [184383] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:22:23.086 UTC [184383] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:23:23.145 UTC [184811] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:23:23.145 UTC [184811] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:23:23.145 UTC [184811] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:24:23.228 UTC [185230] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:24:23.228 UTC [185230] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:24:23.228 UTC [185230] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:25:23.262 UTC [185675] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:25:23.262 UTC [185675] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:25:23.262 UTC [185675] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:26:23.322 UTC [186016] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:26:23.322 UTC [186016] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:26:23.322 UTC [186016] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:27:23.381 UTC [186329] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:27:23.381 UTC [186329] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:27:23.381 UTC [186329] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:28:23.438 UTC [186619] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:28:23.438 UTC [186619] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:28:23.438 UTC [186619] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:29:23.497 UTC [186943] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:29:23.497 UTC [186943] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:29:23.497 UTC [186943] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:30:23.555 UTC [187238] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:30:23.555 UTC [187238] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:30:23.555 UTC [187238] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:31:23.616 UTC [187550] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:31:23.616 UTC [187550] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:31:23.616 UTC [187550] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:32:23.695 UTC [187853] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:32:23.695 UTC [187853] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:32:23.695 UTC [187853] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:33:23.733 UTC [188143] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:33:23.733 UTC [188143] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:33:23.733 UTC [188143] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:34:23.795 UTC [188468] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:34:23.795 UTC [188468] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:34:23.795 UTC [188468] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:35:23.845 UTC [188760] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:35:23.845 UTC [188760] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:35:23.845 UTC [188760] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:36:23.907 UTC [189204] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:36:23.907 UTC [189204] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:36:23.907 UTC [189204] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:37:21.950 UTC [189550] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:37:21.950 UTC [189550] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:37:21.950 UTC [189550] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:37:23.963 UTC [189582] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:37:23.963 UTC [189582] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:37:23.963 UTC [189582] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:38:24.018 UTC [189891] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:38:24.018 UTC [189891] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:38:24.018 UTC [189891] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:39:24.077 UTC [190176] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:39:24.077 UTC [190176] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:39:24.077 UTC [190176] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:40:24.141 UTC [190500] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:40:24.141 UTC [190500] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:40:24.141 UTC [190500] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:41:24.196 UTC [190805] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:41:24.196 UTC [190805] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:41:24.196 UTC [190805] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:42:24.256 UTC [191134] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:42:24.256 UTC [191134] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:42:24.256 UTC [191134] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:42:43.284 UTC [191257] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:42:43.284 UTC [191257] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:42:43.284 UTC [191257] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:43:24.315 UTC [191548] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:43:24.315 UTC [191548] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:43:24.315 UTC [191548] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:44:24.371 UTC [191896] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:44:24.371 UTC [191896] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:44:24.371 UTC [191896] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:45:24.432 UTC [192188] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:45:24.432 UTC [192188] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:45:24.432 UTC [192188] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:46:24.489 UTC [192478] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:46:24.489 UTC [192478] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:46:24.489 UTC [192478] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:47:24.548 UTC [192768] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:47:24.548 UTC [192768] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:47:24.548 UTC [192768] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:48:24.606 UTC [193102] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:48:24.606 UTC [193102] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:48:24.606 UTC [193102] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:49:24.665 UTC [193438] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:49:24.665 UTC [193438] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:49:24.665 UTC [193438] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:50:24.722 UTC [193727] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:50:24.722 UTC [193727] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:50:24.722 UTC [193727] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:50:56.536 UTC [193925] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:50:56.536 UTC [193925] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:50:56.536 UTC [193925] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:51:24.781 UTC [194105] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:51:24.781 UTC [194105] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:51:24.781 UTC [194105] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:52:24.848 UTC [194443] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:52:24.848 UTC [194443] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:52:24.848 UTC [194443] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:53:24.898 UTC [194729] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:53:24.898 UTC [194729] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:53:24.898 UTC [194729] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:54:24.954 UTC [195024] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:54:24.954 UTC [195024] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:54:24.954 UTC [195024] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:55:25.010 UTC [195348] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:55:25.010 UTC [195348] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:55:25.010 UTC [195348] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:56:25.067 UTC [195657] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:56:25.067 UTC [195657] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:56:25.067 UTC [195657] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:57:25.127 UTC [196027] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:57:25.127 UTC [196027] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:57:25.127 UTC [196027] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:58:25.187 UTC [196347] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:58:25.187 UTC [196347] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:58:25.187 UTC [196347] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 01:59:25.245 UTC [196630] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 01:59:25.245 UTC [196630] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 01:59:25.245 UTC [196630] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:00:25.301 UTC [196914] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:00:25.301 UTC [196914] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:00:25.301 UTC [196914] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:01:25.358 UTC [197242] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:01:25.358 UTC [197242] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:01:25.358 UTC [197242] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:02:25.417 UTC [197578] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:02:25.417 UTC [197578] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:02:25.417 UTC [197578] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:03:25.475 UTC [197885] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:03:25.475 UTC [197885] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:03:25.475 UTC [197885] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:04:25.530 UTC [198219] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:04:25.530 UTC [198219] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:04:25.530 UTC [198219] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:05:25.589 UTC [198539] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:05:25.589 UTC [198539] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:05:25.589 UTC [198539] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:06:25.650 UTC [198920] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:06:25.650 UTC [198920] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:06:25.650 UTC [198920] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:07:25.706 UTC [199371] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:07:25.706 UTC [199371] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:07:25.706 UTC [199371] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:07:57.443 UTC [199578] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:07:57.443 UTC [199578] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:07:57.443 UTC [199578] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:08:25.767 UTC [199823] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:08:25.767 UTC [199823] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:08:25.767 UTC [199823] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:09:25.839 UTC [200181] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:09:25.839 UTC [200181] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:09:25.839 UTC [200181] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:10:25.883 UTC [200504] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:10:25.883 UTC [200504] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:10:25.883 UTC [200504] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:11:25.938 UTC [200790] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:11:25.938 UTC [200790] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:11:25.938 UTC [200790] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:12:25.997 UTC [201085] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:12:25.997 UTC [201085] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:12:25.997 UTC [201085] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:13:26.057 UTC [201400] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:13:26.057 UTC [201400] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:13:26.057 UTC [201400] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:14:26.114 UTC [201683] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:14:26.114 UTC [201683] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:14:26.114 UTC [201683] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:15:26.175 UTC [202008] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:15:26.175 UTC [202008] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:15:26.175 UTC [202008] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:16:26.234 UTC [202384] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:16:26.234 UTC [202384] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:16:26.234 UTC [202384] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:17:26.316 UTC [202714] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:17:26.316 UTC [202714] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:17:26.316 UTC [202714] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:18:26.348 UTC [203047] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:18:26.348 UTC [203047] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:18:26.348 UTC [203047] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:18:52.934 UTC [203249] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:18:52.934 UTC [203249] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:18:52.934 UTC [203249] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:18:52.958 UTC [203250] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:18:52.958 UTC [203250] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:18:52.958 UTC [203250] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:19:19.864 UTC [203640] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:19:19.864 UTC [203640] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:19:19.864 UTC [203640] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:19:19.907 UTC [203641] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:19:19.907 UTC [203641] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:19:19.907 UTC [203641] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:19:26.404 UTC [203704] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:19:26.404 UTC [203704] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:19:26.404 UTC [203704] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:19:35.455 UTC [203863] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:19:35.455 UTC [203863] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:19:35.455 UTC [203863] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:19:35.496 UTC [203864] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:19:35.496 UTC [203864] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:19:35.496 UTC [203864] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:20:00.472 UTC [204055] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:20:00.472 UTC [204055] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:20:00.472 UTC [204055] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:20:00.497 UTC [204058] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:20:00.497 UTC [204058] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:20:00.497 UTC [204058] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:20:12.613 UTC [204205] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:20:12.613 UTC [204205] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:20:12.613 UTC [204205] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:20:12.642 UTC [204207] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:20:12.642 UTC [204207] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:20:12.642 UTC [204207] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:20:18.353 UTC [204299] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:20:18.353 UTC [204299] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:20:18.353 UTC [204299] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:20:18.389 UTC [204307] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:20:18.389 UTC [204307] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:20:18.389 UTC [204307] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:20:26.463 UTC [204383] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:20:26.463 UTC [204383] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:20:26.463 UTC [204383] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.
+2025-08-25 02:21:26.518 UTC [204703] WARNING:  database "bh" has a collation version mismatch
+2025-08-25 02:21:26.518 UTC [204703] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
+2025-08-25 02:21:26.518 UTC [204703] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.

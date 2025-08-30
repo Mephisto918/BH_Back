@@ -66,10 +66,15 @@ export default function PermitInfo({ permitId }: { permitId: number }) {
           </Box>
 
           {/* Right: Details + Actions */}
-          <Box flex="1" borderLeft="1px solid" borderColor="gray.200">
+          <Box
+            flex="1"
+            borderLeft="1px solid"
+            borderColor="gray.200"
+            minHeight={0}
+          >
             <Flex direction="column" height="100%">
               {/* Top: details */}
-              <Box flex="1" p={4} overflowY="auto">
+              <Box flex="1" p={4} overflowY="auto" minHeight={0}>
                 <Text fontWeight="bold">Permit Info</Text>
                 <Text>ID: {permitData?.id}</Text>
                 <Text>Owner: {permitData.ownerFullName}</Text>
@@ -85,6 +90,7 @@ export default function PermitInfo({ permitId }: { permitId: number }) {
                 display="flex"
                 gap={2}
                 justifyContent="flex-end"
+                flexShrink={0}
               >
                 <Button colorScheme="green">Approve</Button>
                 <Button colorScheme="red">Reject</Button>
@@ -102,16 +108,16 @@ const BodyContainer = styled(Flex)`
   width: 100%;
   height: 100%;
   overflow: hidden;
+  min-height: 0; /* <-- add this */
 
-  height: 100%;
   > :nth-of-type(1) {
     flex: 2;
-    /* border: 2px solid yellow; */
+    min-height: 0; /* allow inner scroll */
   }
   > :nth-of-type(2) {
     flex: 1;
+    min-height: 0; /* allow inner scroll */
     overflow-y: auto;
-    /* border: 2px solid yellow; */
   }
 
   .pdf-viewer-container {
@@ -121,23 +127,6 @@ const BodyContainer = styled(Flex)`
       display: none !important;
       scrollbar-width: none !important;
       -ms-overflow-style: none !important;
-    }
-  }
-
-  > :nth-of-type(1) {
-    > :nth-of-type(1) {
-      > :nth-of-type(1) {
-        max-height: auto;
-        min-height: auto;
-      }
-    }
-
-    > :nth-of-type(1) {
-      > :nth-of-type(2) {
-        /* border: 2px solid green; */
-        max-height: auto;
-        min-height: auto;
-      }
     }
   }
 `;

@@ -33,9 +33,10 @@ export class TenantsService {
       skip: userToSkip,
       take: offset,
       where: {
-        ...(username && {
-          username: { contains: username, mode: 'insensitive' },
-        }),
+        ...(username !== undefined &&
+          username.trim() !== '' && {
+            username: { contains: username, mode: 'insensitive' },
+          }),
         isDeleted,
         ...(isActive !== undefined && { isActive }),
         ...(isVerified !== undefined && { isVerified }),

@@ -20,9 +20,12 @@ export default function DashboardMainScreen() {
           <Text fontSize="2xl" fontWeight="bold">
             Welcome to Dashboard
           </Text>
-          <Box p={4} bg={Colors.PrimaryLight[7]} borderRadius="md" w="100%">
-            <Text>This panel fades and scales on load.</Text>
-          </Box>
+          <Box
+            p={4}
+            bg={Colors.PrimaryLight[7]}
+            borderRadius="md"
+            w="100%"
+          ></Box>
         </VStack>
       </Container>
     </BaseWrapper>

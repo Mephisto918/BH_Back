@@ -21,6 +21,7 @@ export default function DataTable<T>({
   emptyTableMessage,
   enableGlobalSearch = false,
   headerButtonSlot,
+  setPageIndex = () => {},
 }: TableProps<T>) {
   const { colorMode } = useColorMode();
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -77,6 +78,7 @@ export default function DataTable<T>({
         value={typedData}
         paginator
         rows={10}
+        onPage={(e) => setPageIndex(e.page ?? 0)}
         dataKey="id"
         filters={filters}
         filterDisplay="row"

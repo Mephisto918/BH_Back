@@ -2,10 +2,11 @@ import { BACKEND_API } from '@/app/config/api';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ApiResponseType } from '../common/types/backend-reponse.type';
 import { Admin } from './admin.types';
+import { ownerEndpoints, tenantEndpoints } from './configs';
 
 const adminApiRoute = `/admins`;
 export const adminApi = createApi({
-  tagTypes: ['Admin'],
+  tagTypes: ['Admin', 'Tenant', 'Owner'],
   reducerPath: 'adminsApi',
   baseQuery: fetchBaseQuery({
     baseUrl: BACKEND_API,
@@ -56,6 +57,8 @@ export const adminApi = createApi({
       //* Optional: invalidates cache for "Admin"
       invalidatesTags: ['Admin'],
     }),
+    ...tenantEndpoints(builder),
+    ...ownerEndpoints(builder),
   }),
 });
 export const {
@@ -64,4 +67,10 @@ export const {
   useCreateMutation,
   usePatchMutation,
   useDeleteMutation,
+  useGetAllTenantsQuery,
+  useCreateTenantMutation,
+  useDeleteTenantMutation,
+  useGetAllOwnersQuery,
+  useCreateOwnerMutation,
+  useDeleteOwnerMutation,
 } = adminApi;

@@ -1,11 +1,19 @@
 import { Type } from 'class-transformer';
-import { IsInt, IsOptional, IsPositive, IsString } from 'class-validator';
+import {
+  IsInt,
+  IsOptional,
+  IsPositive,
+  IsString,
+  Min,
+  IsBoolean,
+} from 'class-validator';
 
 export class FindOwnersDto {
   @IsString()
   @IsOptional()
   username?: string;
 
+  @Min(1)
   @IsInt()
   @IsPositive()
   @Type(() => Number)
@@ -17,4 +25,16 @@ export class FindOwnersDto {
   @Type(() => Number)
   @IsOptional()
   offset?: number;
+
+  @IsOptional()
+  @IsBoolean()
+  isDeleted?: boolean;
+
+  @IsOptional()
+  @IsBoolean()
+  isActive?: boolean;
+
+  @IsOptional()
+  @IsBoolean()
+  isVerified?: boolean;
 }

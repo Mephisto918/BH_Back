@@ -2,21 +2,25 @@ import { Colors } from '@/features/constants';
 import {
   Modal,
   ModalBody,
-  ModalCloseButton,
-  ModalContent,
   ModalOverlay,
-  useBreakpointValue,
+  ModalContent,
+  ModalCloseButton,
   useColorMode,
+  ChakraProps,
 } from '@chakra-ui/react';
 import styled from '@emotion/styled';
-import React from 'react';
+import { SerializedStyles } from '@emotion/react';
+import React, { ReactNode } from 'react';
 
 interface ModalWrapperProps {
   isOpen: boolean;
   onClose: () => void;
   closeOnOverlayClick?: boolean;
   closeOnEsc?: boolean;
-  children: React.ReactNode;
+  showCloseButton?: boolean;
+  cssStyles?: SerializedStyles;
+  chakraStyling?: ChakraProps;
+  children: ReactNode;
 }
 
 export default function ModalWrapper({
@@ -24,15 +28,12 @@ export default function ModalWrapper({
   onClose,
   closeOnOverlayClick,
   closeOnEsc,
+  showCloseButton = false,
+  cssStyles,
+  chakraStyling,
   children,
 }: ModalWrapperProps) {
   const { colorMode } = useColorMode();
-
-  const dynamicHeight = useBreakpointValue({
-    base: '60vh', // mobile
-    md: '70vh', // tablets
-    lg: '85vh', // desktops
-  });
 
   return (
     <Modal
@@ -44,15 +45,14 @@ export default function ModalWrapper({
       closeOnEsc={closeOnEsc}
     >
       <ModalOverlay />
-      {/* <ModalContent> */}
       <FloatingModalContent
         colorMode={colorMode}
-        modalHeight={dynamicHeight}
-        maxH="90vh"
-        minH="60vh"
+        minH="25dvh"
+        cssStyles={cssStyles}
+        sx={chakraStyling}
       >
-        <ModalCloseButton />
-        <ModalBody display="flex" flex="1" p={0}>
+        {showCloseButton && <ModalCloseButton zIndex={99} />}
+        <ModalBody display="flex" flex="1" p={0} minH="0">
           {children}
         </ModalBody>
       </FloatingModalContent>
@@ -60,25 +60,21 @@ export default function ModalWrapper({
   );
 }
 
-const FloatingModalContent = styled(ModalContent, {
-  shouldForwardProp: (prop) => prop !== 'colorMode' && prop !== 'modalHeight',
-})<{ colorMode: string; modalHeight?: string | number }>`
-  height: ${({ modalHeight }) => modalHeight || '85vh'};
-  min-width: 90%;
-  max-width: 90%;
+const FloatingModalContent = styled(ModalContent)<{
+  colorMode: string;
+  cssStyles?: SerializedStyles;
+}>`
+  border: 1px solid yellow;
+  height: auto;
+  max-height: 80vh; /* limit height to viewport */
+  min-width: 30rem;
+  max-width: 30rem;
   border-radius: 1rem;
-  /* overflow: scroll; */
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   background-color: ${({ colorMode }) =>
     colorMode === 'light'
       ? Colors.PrimaryLight[4]
       : Colors.PrimaryLight[8]} !important;
-
-  > :nth-of-type(1) {
-    padding: 1rem;
-    > :nth-of-type(1) {
-    }
-  }
 
   /* ----------------- RESPONSIVE BREAKPOINTS ----------------- */
   @media (max-width: 768px) {
@@ -98,4 +94,6 @@ const FloatingModalContent = styled(ModalContent, {
   @media (min-width: 1200px) {
     max-width: 85%; /* optional wider modal for large screens */
   }
+
+  ${({ cssStyles }) => cssStyles};
 `;

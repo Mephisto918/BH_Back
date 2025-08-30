@@ -29,43 +29,37 @@ export class OwnersService {
     username = '',
     page = 1,
     offset = 15,
-  }: FindOwnersDto): Promise<Owner[]> {
+    isDeleted = false,
+    isActive,
+    isVerified,
+  }: FindOwnersDto): Promise<Partial<Owner>[]> {
     const userToSkip = (page - 1) * offset;
 
-    const prisma = this.prisma;
-    return prisma.owner.findMany({
+    return this.prisma.owner.findMany({
       skip: userToSkip,
       take: offset,
       where: {
-        username: {
-          contains: username,
-          mode: 'insensitive',
-        },
+        ...(username !== undefined &&
+          username.trim() !== '' && {
+            username: { contains: username, mode: 'insensitive' },
+          }),
+        isDeleted,
+        ...(isActive !== undefined && { isActive }),
+        ...(isVerified !== undefined && { isVerified }),
       },
+      orderBy: { username: 'asc' },
       select: {
         id: true,
         username: true,
         firstname: true,
         lastname: true,
         email: true,
-        password: true,
         role: true,
         isActive: true,
         isVerified: true,
         createdAt: true,
         updatedAt: true,
-        age: true,
-        address: true,
-        phone_number: true,
-        isDeleted: true,
-        deletedAt: true,
-        boardingHouses: {
-          select: {
-            id: true,
-          },
-        },
       },
-      orderBy: { username: 'asc' },
     });
   }
 

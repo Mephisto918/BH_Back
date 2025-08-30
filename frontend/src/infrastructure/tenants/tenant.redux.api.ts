@@ -1,7 +1,7 @@
 import { BACKEND_API } from '@/app/config/api';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ApiResponseType } from '../common/types/backend-reponse.type';
-import { GetTenant, Tenant } from './tenant.types';
+import { CreateTenant, GetTenant, Tenant } from './tenant.types';
 
 //* createApi
 //* For accessing the API with built-in abstractions
@@ -37,7 +37,7 @@ export const tenantApi = createApi({
       //* Optional: invalidates cache for "Tenant"
       providesTags: (result, error, id) => [{ type: 'Tenant', id }],
     }),
-    create: builder.mutation<Tenant, Partial<Tenant>>({
+    create: builder.mutation<CreateTenant, Partial<CreateTenant>>({
       query: (data) => {
         const trans = {
           ...data,

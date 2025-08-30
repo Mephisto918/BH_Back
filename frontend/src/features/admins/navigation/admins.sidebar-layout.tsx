@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, Flex } from '@chakra-ui/react';
-import styled from '@emotion/styled';
 import { Outlet } from 'react-router-dom';
 import {
   Drawer,

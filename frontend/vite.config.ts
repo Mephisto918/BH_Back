@@ -3,12 +3,22 @@ import react from '@vitejs/plugin-react';
 import cesium from 'vite-plugin-cesium';
 import path from 'path';
 import dotenv from 'dotenv';
+import svgr from 'vite-plugin-svgr';
 
 dotenv.config({ path: path.resolve(__dirname, '../.env') }); // point to Nest root
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), cesium()],
+  plugins: [
+    react(),
+    // svgr(),
+    svgr({
+      svgrOptions: {
+        icon: true, // optional, scales SVGs like icons
+      },
+    }),
+    cesium(),
+  ],
   build: {
     outDir: 'dist', // default; you can change this if Nest expects another folder
   },
@@ -40,8 +50,8 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      '/api': { target: 'http://192.168.1.7:3000', changeOrigin: true },
-      '/media': { target: 'http://192.168.1.7:3000', changeOrigin: true },
+      '/api': { target: 'http://10.0.4.48:3000', changeOrigin: true },
+      '/media': { target: 'http://10.0.4.48:3000', changeOrigin: true },
     },
   },
 });

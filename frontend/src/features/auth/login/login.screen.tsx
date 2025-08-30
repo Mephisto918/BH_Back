@@ -16,6 +16,7 @@ import {
   Input,
   Stack,
   Image,
+  Box,
 } from '@chakra-ui/react';
 import { useLoginMutation } from '@/infrastructure/auth/auth.redux.api';
 import { useDispatch } from 'react-redux';
@@ -23,6 +24,7 @@ import {
   loginFailure,
   loginSuccess,
 } from '@/infrastructure/auth/auth.redux.slice';
+import AsyncState from '@/features/shared/components/async-state/AsyncState';
 
 export default function LoginScreen() {
   const route = useTypedRootNavigation();
@@ -115,6 +117,43 @@ export default function LoginScreen() {
         alphaParticles={false}
         disableRotation={false}
       />
+      <AsyncState
+        isLoading={isLoginLoading}
+        isError={isLoginError}
+        errorObject={error}
+        errorBody={(err) => {
+          // Narrow types if possible
+          if ('status' in err) {
+            if (err.status >= '500') {
+              return (
+                <Box>
+                  🚨 Server error (500): something went wrong on our side.
+                </Box>
+              );
+            }
+
+            if (err.status >= '400') {
+              return (
+                <Box>
+                  ⚠️ Client error ({err.status}): maybe bad request or
+                  unauthorized.
+                  {/* <pre>{JSON.stringify(err.data, null, 2)}</pre> */}
+                </Box>
+              );
+            }
+          }
+
+          // Fallback for unknown error shapes
+          return (
+            <Box color="gray.500">
+              ❓ Unexpected error
+              <pre>{JSON.stringify(err, null, 2)}</pre>
+            </Box>
+          );
+        }}
+      >
+        <div></div>
+      </AsyncState>
     </Container>
   );
 }

@@ -1,9 +1,21 @@
+import { Colors } from '@/features/constants';
 import AsyncState from '@/features/shared/components/async-state/AsyncState';
 import { useGetOneQuery } from '@/infrastructure/tenants/tenant.redux.api';
-import { Box } from '@chakra-ui/react';
+import { parseIsoDate } from '@/infrastructure/utils/parseISODate.util';
+import {
+  Badge,
+  Box,
+  Divider,
+  Flex,
+  Text,
+  useColorMode,
+} from '@chakra-ui/react';
+import styled from '@emotion/styled';
 import React from 'react';
 
 export default function UserInformation({ id }: { id: number }) {
+  const { colorMode } = useColorMode();
+
   const { data: userData, error, isError, isLoading } = useGetOneQuery(id);
   return (
     <AsyncState
@@ -43,19 +55,65 @@ export default function UserInformation({ id }: { id: number }) {
       }}
     >
       {userData && (
-        <div>
-          Hellow
-          <div>ID: {userData.id}</div>
-          <div>Firstname: {userData.firstname}</div>
-          <div>Lastname: {userData.lastname}</div>
-          <div>Age: {userData.age}</div>
-          <div>Verified: {userData.isVerified ? 'true' : 'false'}</div>
-          <div>Active: {userData.isActive ? 'true' : 'false'}</div>
-          <div>Phone Number: {userData.phone_number}</div>
-          <div>Guardian: {userData.guardian}</div>
-          <div>Account Created At: {userData.createdAt}</div>
-        </div>
+        <Container borderRadius="md" w="100%" colorMode={colorMode}>
+          <Flex justify="space-between" align="center" mb={2}>
+            <Text fontWeight="bold" fontSize="lg">
+              {userData.firstname} {userData.lastname}
+            </Text>
+            <Badge colorScheme={userData.isVerified ? 'green' : 'orange'}>
+              {userData.isVerified ? 'Verified' : 'Not Verified'}
+            </Badge>
+          </Flex>
+
+          <Divider mb={3} />
+
+          <Flex direction="column" gap={2}>
+            <Flex justify="space-between">
+              <Text fontWeight="medium">Username:</Text>
+              <Text>{userData.username}</Text>
+            </Flex>
+
+            <Flex justify="space-between">
+              <Text fontWeight="medium">Email:</Text>
+              <Text>{userData.email}</Text>
+            </Flex>
+
+            <Flex justify="space-between">
+              <Text fontWeight="medium">Phone:</Text>
+              <Text>{userData.phone_number || '-'}</Text>
+            </Flex>
+
+            <Flex justify="space-between">
+              <Text fontWeight="medium">Guardian:</Text>
+              <Text>{userData.guardian || '-'}</Text>
+            </Flex>
+
+            <Flex justify="space-between">
+              <Text fontWeight="medium">Age:</Text>
+              <Text>{userData.age || '-'}</Text>
+            </Flex>
+
+            <Flex justify="space-between">
+              <Text fontWeight="medium">Active:</Text>
+              <Text>{userData.isActive ? 'Yes' : 'No'}</Text>
+            </Flex>
+
+            <Flex justify="space-between">
+              <Text fontWeight="medium">Account Created:</Text>
+              {/* <Text>{new Date(userData.createdAt).toLocaleString()}</Text> */}
+              <Text>{parseIsoDate(userData.createdAt)?.dateOnly}</Text>
+            </Flex>
+          </Flex>
+        </Container>
       )}
     </AsyncState>
   );
 }
+
+const Container = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'colorMode',
+})<{ colorMode: string }>`
+  padding: 1rem;
+  background-color: ${({ colorMode }) =>
+    colorMode === 'dark' ? Colors.PrimaryLight[9] : Colors.PrimaryLight[3]};
+`;

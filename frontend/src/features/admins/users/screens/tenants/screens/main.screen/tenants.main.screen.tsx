@@ -2,24 +2,36 @@ import React from 'react';
 
 import BaseWrapper from '@/features/shared/layouts/wrappers/base-wrapper';
 import { Box, Button, useColorMode, useDisclosure } from '@chakra-ui/react';
-import { GetTenant, Tenant } from '@/infrastructure/tenants/tenant.types';
-import { useGetAllQuery } from '@/infrastructure/tenants/tenant.redux.api';
+import { GetTenant } from '@/infrastructure/tenants/tenant.types';
 import DataTable from '@/features/shared/components/data-table/DataTable';
 import { Colors } from '@/features/constants';
 import styled from '@emotion/styled';
 import AsyncState from '@/features/shared/components/async-state/AsyncState';
 import { tableConfig } from './table.config';
-import ModalWrapper from '@/features/shared/components/modal-wrapper/ModalWrapper';
+import CreateUserForm from './create-user-form';
+import DialogWrapper from '@/features/shared/components/dialog-wrapper/DialogWrapper';
+import { useGetAllTenantsQuery } from '@/infrastructure/admin/admin.redux.api';
 
 export default function TenantsMainScreen() {
   const { colorMode } = useColorMode();
-  const { data, isError, isLoading, error } = useGetAllQuery();
+
+  const [page, setPage] = React.useState<number | undefined>(1);
+  const { data, isError, isLoading, error } = useGetAllTenantsQuery({
+    page,
+  });
+
+  const [successDialogIsOpen, setSuccessDialogIsOpen] = React.useState(false);
 
   const {
-    isOpen: addTenantModalIsOpoen,
+    isOpen: addTenantModalIsOpen,
     onOpen: addTenantModalOnOpen,
     onClose: addTenantModalOnClose,
   } = useDisclosure();
+
+  const handleTenantCreated = () => {
+    addTenantModalOnClose(); // close main form
+    setSuccessDialogIsOpen(true); // open success dialog
+  };
 
   return (
     <PageContainer colorMode={colorMode}>
@@ -63,23 +75,47 @@ export default function TenantsMainScreen() {
           tableConfig={tableConfig}
           emptyTableMessage="No Tenants Found"
           enableGlobalSearch={true}
+          setPageIndex={setPage}
           headerButtonSlot={
             <AddUserButton colorMode={colorMode} onClick={addTenantModalOnOpen}>
               Add Tenant
             </AddUserButton>
           }
         />
-        {addTenantModalIsOpoen && (
-          <ModalWrapper
-            isOpen={addTenantModalIsOpoen}
-            onClose={addTenantModalOnClose}
-            closeOnOverlayClick={false}
-            closeOnEsc={false}
-          >
-            <div>Hello</div>
-          </ModalWrapper>
+        {addTenantModalIsOpen && (
+          <CreateUserForm
+            dialogConfig={{
+              isOpen: addTenantModalIsOpen,
+              onClose: addTenantModalOnClose,
+              closeOnOverlayClick: false,
+              closeOnEsc: false,
+              showCloseButton: true,
+              header: 'Add User',
+              chakraStyling: {
+                w: { base: '90vw', md: '40rem' },
+                maxH: { base: '80vh', md: '80vh' },
+              },
+            }}
+            onSuccess={handleTenantCreated}
+          />
         )}
       </AsyncState>
+      {successDialogIsOpen && (
+        <DialogWrapper
+          isOpen={successDialogIsOpen}
+          onClose={() => setSuccessDialogIsOpen(false)}
+          header="User Created!"
+          footer={
+            <Button onClick={() => setSuccessDialogIsOpen(false)}>Close</Button>
+          }
+          chakraStyling={{
+            w: { base: 'auto', md: 'auto' },
+            maxH: { base: 'auto', md: 'auto' },
+          }}
+        >
+          <div style={{ padding: '1rem' }}>User created successfully!</div>
+        </DialogWrapper>
+      )}
     </PageContainer>
   );
 }

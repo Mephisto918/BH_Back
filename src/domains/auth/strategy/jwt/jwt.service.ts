@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-//* soon for added features
+// TODO: soon for added features
 @Injectable()
 export class JwtService {
   private revokedTokens = new Set<string>();

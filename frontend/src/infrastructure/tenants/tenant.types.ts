@@ -29,13 +29,3 @@ export const GetTenantSchema = TenantSchema.extend({
   updatedAt: z.date(),
 });
 export type GetTenant = z.infer<typeof GetTenantSchema>;
-
-//  username: string;
-//   firstname: string;
-//   lastname: string;
-//   email: string;
-//   password: string;
-//   phone_number: string;
-//   address?: string;
-//   guardian?: string;
-//   age?: number;

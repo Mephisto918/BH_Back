@@ -8,6 +8,7 @@ import { createFilterElement } from '@/features/shared/components/data-table/ser
 import { Button, useDisclosure } from '@chakra-ui/react';
 import ModalWrapper from '@/features/shared/components/modal-wrapper/ModalWrapper';
 import PermitInfo from './PermitInfo';
+import DialogWrapper from '@/features/shared/components/dialog-wrapper/DialogWrapper';
 
 export const tableConfig: TableConfig<PermitMetaData>[] = [
   {
@@ -57,6 +58,14 @@ export const tableConfig: TableConfig<PermitMetaData>[] = [
                 onClose={onClose}
                 closeOnEsc={false}
                 closeOnOverlayClick={false}
+                showCloseButton
+                chakraStyling={{
+                  w: { base: '90dvw', md: '90dvw' },
+                  h: { base: '90dvh', md: '85dvh' },
+                  maxH: { base: '95dvh', md: '90dvh' },
+                  borderColor: 'yellow',
+                  borderWidth: '3px',
+                }}
               >
                 <PermitInfo permitId={rowData.id} />
               </ModalWrapper>

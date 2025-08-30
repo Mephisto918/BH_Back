@@ -77,6 +77,9 @@ export interface TableProps<T> {
   enableGlobalSearch?: boolean;
 
   headerButtonSlot?: JSX.Element;
+
+  /** Controls Pagination */
+  setPageIndex?: (index: number) => void;
 }
 
 /**

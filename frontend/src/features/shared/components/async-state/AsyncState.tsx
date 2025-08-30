@@ -66,7 +66,13 @@ export default function AsyncState<T>({
   children,
 }: AsyncStateProps<T>) {
   const bgOverlay = useColorModeValue('whiteAlpha.700', 'blackAlpha.700');
-  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  React.useEffect(() => {
+    if (isError) {
+      onOpen();
+    }
+  }, [isError, onOpen]);
 
   if (isLoading) {
     return globalOverlay ? (
@@ -115,9 +121,5 @@ export default function AsyncState<T>({
     );
   }
 
-  return (
-    <Box display="flex" flexDirection="column" flex="1" height="100%">
-      {children}
-    </Box>
-  );
+  return children;
 }

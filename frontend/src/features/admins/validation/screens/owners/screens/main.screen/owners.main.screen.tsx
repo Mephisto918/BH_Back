@@ -59,6 +59,8 @@ export default function OwnersMainScreen() {
         <DataTable<PermitMetaData>
           data={data ?? []}
           tableConfig={tableConfig}
+          emptyTableMessage='No permits found.'
+          enableGlobalSearch
         />
       </AsyncState>
     </ResponsiveContainer>

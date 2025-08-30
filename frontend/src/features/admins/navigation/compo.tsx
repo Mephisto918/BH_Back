@@ -1,6 +1,12 @@
 'use client';
 import React, { useState } from 'react';
-import { useColorMode, useDisclosure } from '@chakra-ui/react';
+import {
+  AspectRatio,
+  Heading,
+  Image,
+  useColorMode,
+  useDisclosure,
+} from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   logout,
@@ -42,6 +48,7 @@ import { Link } from '@chakra-ui/react';
 import { Collapse } from '@chakra-ui/react';
 import DialogWrapper from '@/features/shared/components/dialog-wrapper/DialogWrapper';
 import AsyncState from '@/features/shared/components/async-state/AsyncState';
+import logoService, { SvgComponent } from '@/assets/logo/logo.service';
 
 export interface LinkItemProps {
   name: string;
@@ -145,6 +152,7 @@ export const SidebarContent = ({
   linkItems,
   ...rest
 }: SidebarProps) => {
+  const LogoComponent = logoService.getAsset('3:2', 'light', 'svg');
   return (
     <Box
       transition="3s ease"
@@ -156,10 +164,20 @@ export const SidebarContent = ({
       h="full"
       {...rest}
     >
-      <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Logo
-        </Text>
+      <Flex h="20" alignItems="center" mx="8" justifyContent="center">
+        <Box
+          display="flex"
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <AspectRatio ratio={3 / 2} width="80px">
+            <Box>
+              <LogoComponent width={128} height={80} />
+            </Box>
+          </AspectRatio>
+        </Box>
+        {/* <Heading ml={3} fontSize="2xl">BH Hunter</Heading> */}
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       <VStack align="start" spacing={0}>
@@ -354,7 +372,6 @@ export const MobileNav = ({
           closeOnOverlayClick={false}
           closeOnEsc={false}
           header="Logout"
-          dimension={{ width: '25dvw', height: '30dvh' }}
           footer={
             <Flex justify={'space-between'} width={'100%'}>
               <Button onClick={onCloseDialog}>Cancel</Button>

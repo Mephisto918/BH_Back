@@ -21,8 +21,9 @@ export class TenantsController {
   @Get()
   @GetTenantDoc()
   findAll(@Query() findAllTenantsDto: FindTenantsDto) {
-    const results = this.tenantsService.findAll(findAllTenantsDto);
-    return results;
+    const { isDeleted, ...restQuery } = findAllTenantsDto;
+
+    return this.tenantsService.findAll({ ...restQuery, isDeleted: false });
   }
 
   @Get(':id')

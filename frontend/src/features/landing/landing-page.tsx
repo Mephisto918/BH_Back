@@ -1,21 +1,32 @@
 import styled from '@emotion/styled';
-import { Box, Heading, Button } from '@chakra-ui/react';
+import { Box, Heading, Button, AspectRatio, Image } from '@chakra-ui/react';
 import { Colors, Spacing } from '../constants';
 import Hero from './hero';
 import Footer from '../shared/layouts/ui/footer';
 import Techstack from './techstack';
 import { useTypedRootNavigation } from '@/app/navigation/RootNavHook';
+import logoService from '@/assets/logo/logo.service';
 
 export default function LandingPage() {
+  const logo11 = logoService.getAsset('1:1', 'light', 128);
   const navigate = useTypedRootNavigation();
 
   return (
     <Container>
       <Box className="box">
         <nav>
-          <Heading className="heading" as="h1" size="lg">
-            BH Hunter
-          </Heading>
+          <Box
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <AspectRatio ratio={1} width="45px">
+              <Image src={logo11} alt="Logo" objectFit="contain" />
+            </AspectRatio>
+            <Heading ml={3}>BH Hunter</Heading>
+          </Box>
+
           <Box className="box">
             <Button
               className="button"

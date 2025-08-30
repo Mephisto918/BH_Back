@@ -4,6 +4,10 @@ import { UpdateAdminDto } from './dto/update-admin.dto';
 import { IDatabaseService } from 'src/infrastructure/database/database.interface';
 import { FindAdminsDto } from './dto/find-admins.dto';
 import { Admin } from '@prisma/client';
+import { TenantsService } from '../tenants/tenants.service';
+import { CreateTenantDto } from '../tenants/dto/create-tenant.dto';
+import { OwnersService } from '../owners/owners.service';
+import { CreateOwnerDto } from '../owners/dto/create-owner.dto';
 
 /*
  *
@@ -14,6 +18,8 @@ import { Admin } from '@prisma/client';
 export class AdminsService {
   constructor(
     @Inject('IDatabaseService') private readonly database: IDatabaseService,
+    private readonly tenantsService: TenantsService,
+    private readonly ownersService: OwnersService,
   ) {}
 
   private get prisma() {
@@ -78,6 +84,15 @@ export class AdminsService {
     });
   }
 
+  createOwner(id: number | undefined, dto: CreateOwnerDto) {
+    //TODO: Use id here for admin audit
+    return this.ownersService.create(dto);
+  }
+  createTenant(id: number | undefined, dto: CreateTenantDto) {
+    //TODO: Use id here for admin audit
+    return this.tenantsService.create(dto);
+  }
+
   update(id: number, updateAdminDto: UpdateAdminDto) {
     const prisma = this.prisma;
 
@@ -97,6 +112,15 @@ export class AdminsService {
         isDeleted: updateAdminDto.isDeleted,
       },
     });
+  }
+
+  async removeOwner(adminId: number, ownerId: number) {
+    //TODO: Use id here for admin audit
+    return await this.ownersService.remove(ownerId);
+  }
+  async removeTenant(adminId: number, tennatId: number) {
+    //TODO: Use id here for admin audit
+    return await this.tenantsService.remove(tennatId);
   }
 
   async remove(id: number) {

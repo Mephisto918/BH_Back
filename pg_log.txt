@@ -1,9 +1,0 @@
-2025-08-30 02:58:11.019 UTC [439529] LOG:  starting PostgreSQL 17.4 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 15.1.1 20250425, 64-bit
-2025-08-30 02:58:11.020 UTC [439529] LOG:  listening on IPv6 address "::1", port 5432
-2025-08-30 02:58:11.020 UTC [439529] LOG:  listening on IPv4 address "127.0.0.1", port 5432
-2025-08-30 02:58:11.022 UTC [439529] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
-2025-08-30 02:58:11.028 UTC [439532] LOG:  database system was shut down at 2025-08-28 16:11:50 UTC
-2025-08-30 02:58:11.038 UTC [439529] LOG:  database system is ready to accept connections
-2025-08-30 02:59:11.126 UTC [443688] WARNING:  database "bh" has a collation version mismatch
-2025-08-30 02:59:11.126 UTC [443688] DETAIL:  The database was created using collation version 2.41, but the operating system provides version 2.42.
-2025-08-30 02:59:11.126 UTC [443688] HINT:  Rebuild all objects in this database that use the default collation and run ALTER DATABASE bh REFRESH COLLATION VERSION, or build PostgreSQL with the right library version.

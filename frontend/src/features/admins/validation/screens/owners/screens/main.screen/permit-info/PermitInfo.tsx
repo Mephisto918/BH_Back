@@ -1,10 +1,11 @@
 import React from 'react';
-import { Button, Flex, Box, Text } from '@chakra-ui/react';
+import { Flex, Box, Text } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import { PdfViewer } from '@/infrastructure/utils/pdf/PDFViewer.component';
 import { useGetOneQuery } from '@/infrastructure/permits/permits.redux.api';
 import AsyncState from '@/features/shared/components/async-state/AsyncState';
 import { parseIsoDate } from '@/infrastructure/utils/parseISODate.util';
+import { ApproveButton, RejectuButton } from './button-services';
 
 export default function PermitInfo({ permitId }: { permitId: number }) {
   const {
@@ -92,8 +93,8 @@ export default function PermitInfo({ permitId }: { permitId: number }) {
                 justifyContent="flex-end"
                 flexShrink={0}
               >
-                <Button colorScheme="green">Approve</Button>
-                <Button colorScheme="red">Reject</Button>
+                <ApproveButton id={permitData.id} />
+                <RejectuButton id={permitData.id} />
               </Box>
             </Flex>
           </Box>
@@ -108,15 +109,16 @@ const BodyContainer = styled(Flex)`
   width: 100%;
   height: 100%;
   overflow: hidden;
-  min-height: 0; /* <-- add this */
+  min-height: 0;
+  /* border: 3px solid green; */
 
   > :nth-of-type(1) {
     flex: 2;
-    min-height: 0; /* allow inner scroll */
+    min-height: 0;
   }
   > :nth-of-type(2) {
     flex: 1;
-    min-height: 0; /* allow inner scroll */
+    min-height: 0;
     overflow-y: auto;
   }
 

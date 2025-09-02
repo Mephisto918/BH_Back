@@ -3,7 +3,7 @@ import { CreateAdminDto } from './dto/create-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
 import { IDatabaseService } from 'src/infrastructure/database/database.interface';
 import { FindAdminsDto } from './dto/find-admins.dto';
-import { Admin } from '@prisma/client';
+import { Admin, PermitStatus } from '@prisma/client';
 import { TenantsService } from '../tenants/tenants.service';
 import { CreateTenantDto } from '../tenants/dto/create-tenant.dto';
 import { OwnersService } from '../owners/owners.service';
@@ -131,6 +131,18 @@ export class AdminsService {
     return this.prisma.admin.update({
       where: { id },
       data: { isDeleted: true },
+    });
+  }
+
+  async updatePermit(id: number) {
+    const prisma = this.prisma;
+    return prisma.permit.update({
+      where: { id },
+      data: {
+        status: PermitStatus.APPROVED,
+        approvedAt: new Date(),
+        verifiedById: id,
+      },
     });
   }
 }

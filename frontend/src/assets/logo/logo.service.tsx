@@ -38,28 +38,23 @@ import light32_x256 from './3_2/light/light-256x181.png';
 import light32_x512 from './3_2/light/light-512x361.png';
 import light32_x1024 from './3_2/light/light-1024x722.png';
 
-// SVG imports (Vite + SVGR)
-import Light11_svg from './1_1/light/light.svg?component';
-import Dark11_svg from './1_1/dark/dark.svg?component';
-import Light32_svg from './3_2/light/light.svg?component';
-import Dark32_svg from './3_2/dark/dark.svg?component';
+import { Svg11 } from './1_1/index';
+import { Svg32 } from './3_2/index';
 
 type Theme = 'light' | 'dark';
 type Ratio = '1:1' | '3:2';
 type Size = 16 | 24 | 32 | 48 | 64 | 128 | 256 | 512 | 1024;
-type Type = 'png' | 'svg';
 
 export type SvgComponent = React.FunctionComponent<
   React.SVGProps<SVGSVGElement>
 >;
 
 class LogoService {
-  private logos: Record<
-    Ratio,
-    Record<Theme, Record<Size, string>> & { svg: Record<Theme, SvgComponent> }
-  >;
+  private logos: Record<Ratio, Record<Theme, Record<Size, string>>>;
+  private svgs: Record<Ratio, Record<Theme, SvgComponent>>;
 
   constructor() {
+    // PNG paths
     this.logos = {
       '1:1': {
         light: {
@@ -84,7 +79,6 @@ class LogoService {
           512: dark11_x512,
           1024: dark11_x1024,
         },
-        svg: { light: Light11_svg, dark: Dark11_svg },
       },
       '3:2': {
         light: {
@@ -109,21 +103,29 @@ class LogoService {
           512: dark32_x512,
           1024: dark32_x1024,
         },
-        svg: { light: Light32_svg, dark: Dark32_svg },
+      },
+    };
+
+    // SVG components
+    this.svgs = {
+      '1:1': {
+        light: Svg11.light,
+        dark: Svg11.dark,
+      },
+      '3:2': {
+        light: Svg32.light,
+        dark: Svg32.dark,
       },
     };
   }
 
-  public getAsset(
-    ratio: Ratio,
-    theme: Theme,
-    sizeOrType: Size | Type,
-  ): string | SvgComponent {
-    if (sizeOrType === 'svg') {
-      return this.logos[ratio].svg[theme]; // return the component, not JSX
-    }
-    return this.logos[ratio][theme][sizeOrType]; // PNG path
+  public getPng(ratio: Ratio, theme: Theme, size: Size): string {
+    return this.logos[ratio][theme][size]; // Only PNG path
   }
+
+  // public getSvg(ratio: Ratio, theme: Theme): SvgComponent {
+  //   return this.svgs[ratio][theme]; // Return the React SVG component
+  // }
 }
 
 export default new LogoService();

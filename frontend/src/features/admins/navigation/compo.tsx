@@ -48,7 +48,8 @@ import { Link } from '@chakra-ui/react';
 import { Collapse } from '@chakra-ui/react';
 import DialogWrapper from '@/features/shared/components/dialog-wrapper/DialogWrapper';
 import AsyncState from '@/features/shared/components/async-state/AsyncState';
-import logoService, { SvgComponent } from '@/assets/logo/logo.service';
+// import logoService from '@/assets/logo/logo.service';
+import { Svg11 } from '@/assets/logo/1_1';
 
 export interface LinkItemProps {
   name: string;
@@ -152,7 +153,8 @@ export const SidebarContent = ({
   linkItems,
   ...rest
 }: SidebarProps) => {
-  const LogoComponent = logoService.getAsset('3:2', 'light', 'svg');
+  // const LogoComponent = logoService.getSvg('3:2', 'light');
+  // const LogoComponent = Svg11.light;
   return (
     <Box
       transition="3s ease"
@@ -173,7 +175,7 @@ export const SidebarContent = ({
         >
           <AspectRatio ratio={3 / 2} width="80px">
             <Box>
-              <LogoComponent width={128} height={80} />
+              {/* <LogoComponent width={128} height={80} /> */}
             </Box>
           </AspectRatio>
         </Box>

@@ -8,7 +8,7 @@ import { useTypedRootNavigation } from '@/app/navigation/RootNavHook';
 import logoService from '@/assets/logo/logo.service';
 
 export default function LandingPage() {
-  const logo11 = logoService.getAsset('1:1', 'light', 128);
+  const logo11 = logoService.getPng('1:1', 'light', 128);
   const navigate = useTypedRootNavigation();
 
   return (

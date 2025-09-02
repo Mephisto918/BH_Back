@@ -7,8 +7,7 @@ import {
 import { createFilterElement } from '@/features/shared/components/data-table/services';
 import { Button, useDisclosure } from '@chakra-ui/react';
 import ModalWrapper from '@/features/shared/components/modal-wrapper/ModalWrapper';
-import PermitInfo from './PermitInfo';
-import DialogWrapper from '@/features/shared/components/dialog-wrapper/DialogWrapper';
+import PermitInfo from './permit-info/PermitInfo';
 
 export const tableConfig: TableConfig<PermitMetaData>[] = [
   {

@@ -91,4 +91,9 @@ export class AdminsController {
   findOne(@Param('id') id: string) {
     return this.adminsService.findOne(+id);
   }
+
+  @Patch(':id/permits')
+  updatePermit(@Param('id') id: string) {
+    return this.adminsService.updatePermit(+id);
+  }
 }

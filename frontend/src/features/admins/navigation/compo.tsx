@@ -174,9 +174,7 @@ export const SidebarContent = ({
           justifyContent="center"
         >
           <AspectRatio ratio={3 / 2} width="80px">
-            <Box>
-              {/* <LogoComponent width={128} height={80} /> */}
-            </Box>
+            <Box>{/* <LogoComponent width={128} height={80} /> */}</Box>
           </AspectRatio>
         </Box>
         {/* <Heading ml={3} fontSize="2xl">BH Hunter</Heading> */}
@@ -374,6 +372,11 @@ export const MobileNav = ({
           closeOnOverlayClick={false}
           closeOnEsc={false}
           header="Logout"
+          chakraStyling={{
+            w: { base: '90vw', md: '40rem' },
+            maxH: { base: '80vh', md: '60vh' },
+            overflowY: 'auto',
+          }}
           footer={
             <Flex justify={'space-between'} width={'100%'}>
               <Button onClick={onCloseDialog}>Cancel</Button>
@@ -381,7 +384,9 @@ export const MobileNav = ({
             </Flex>
           }
         >
-          <div>Are you sure you want to Logout?</div>
+          <div style={{ padding: '1rem' }}>
+            Are you sure you want to Logout?
+          </div>
         </DialogWrapper>
       </Flex>
     </AsyncState>

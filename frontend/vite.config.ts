@@ -50,8 +50,8 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      '/api': { target: 'http://192.168.254.195:3000', changeOrigin: true },
-      '/media': { target: 'http://192.168.254.195:3000', changeOrigin: true },
+      '/api': { target: 'http://10.122.68.117:3000', changeOrigin: true },
+      '/media': { target: 'http://10.122.68.117:3000', changeOrigin: true },
     },
   },
 });

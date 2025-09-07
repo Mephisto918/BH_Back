@@ -138,63 +138,57 @@ export class BoardingHousesService {
     const prisma = this.prisma;
 
     try {
-      const result = await prisma.boardingHouse.findMany({
-        where: {
-          id,
-        },
+      const house = await prisma.boardingHouse.findUnique({
+        where: { id },
         include: {
           location: true,
           rooms: true,
         },
       });
 
-      const includeRawLocationPostGIST = await Promise.all(
-        result.map(async (house) => {
-          const { rooms, ...houseData } = house;
-          const roomsIdArray = rooms.map((room) => room.id);
-          const roomsWithImages = await Promise.all(
-            roomsIdArray.map(async (roomId) => {
-              const room = await this.roomsService.findOne(house.id, roomId);
-              return room; // or transform further if needed
-            }),
-          );
+      if (!house) {
+        throw new Error(`Boarding house with id ${id} not found`);
+      }
 
-          const fullLocation = await this.locationService.findOne(
-            house.locationId,
-          );
+      // Destructure house and handle rooms separately
+      const { rooms, ...houseData } = house;
 
-          let totalCapacity = 0;
-          let currentCapacity = 0;
-
-          house.rooms.forEach((room) => {
-            totalCapacity += room.maxCapacity;
-            currentCapacity += room.currentCapacity;
-          });
-
-          const images = await this.prisma.image.findMany({
-            where: {
-              entityId: house.id,
-              entityType: 'BOARDING_HOUSE',
-            },
-          });
-
-          return {
-            ...houseData,
-            rooms: roomsWithImages,
-            capacity: {
-              totalCapacity,
-              currentCapacity,
-            },
-            location: fullLocation,
-            // thumbnail,
-            // gallery,
-          };
-        }),
+      // Get rooms with images (via your RoomsService)
+      const roomsWithImages = await Promise.all(
+        rooms.map((room) => this.roomsService.findOne(house.id, room.id)),
       );
 
-      return includeRawLocationPostGIST;
+      // Fetch location (raw from PostGIS service)
+      const fullLocation = await this.locationService.findOne(house.locationId);
+
+      // Compute capacity
+      const totalCapacity = rooms.reduce((acc, r) => acc + r.maxCapacity, 0);
+      const currentCapacity = rooms.reduce(
+        (acc, r) => acc + r.currentCapacity,
+        0,
+      );
+
+      // Fetch images for this house
+      const images = await this.prisma.image.findMany({
+        where: {
+          entityId: house.id,
+          entityType: 'BOARDING_HOUSE',
+        },
+      });
+
+      // Return enriched house object
+      return {
+        ...houseData,
+        rooms: roomsWithImages,
+        capacity: {
+          totalCapacity,
+          currentCapacity,
+        },
+        location: fullLocation,
+        images,
+      };
     } catch (error: any) {
-      throw new Error(`Error finding boarding houses: ${error}`);
+      throw new Error(`Error finding boarding house: ${error.message}`);
     }
   }
 

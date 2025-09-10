@@ -10,9 +10,9 @@
 /public/*
 
 # Logs
-!src/features/logs
 logs
 *.log
+!frontend/src/features/admins/logs/
 npm-debug.log*
 pnpm-debug.log*
 yarn-debug.log*

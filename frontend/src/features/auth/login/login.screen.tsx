@@ -93,6 +93,13 @@ export default function LoginScreen() {
               >
                 Sign in
               </Button>
+              <Button
+                colorScheme={'blue'}
+                variant={'solid'}
+                onClick={() => route('/')}
+              >
+                Back To Home
+              </Button>
             </Stack>
           </Stack>
         </Flex>

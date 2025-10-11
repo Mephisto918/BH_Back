@@ -23,6 +23,7 @@ import { ConfigModule } from './config/config.module';
 import { ConfigService } from './config/config.service';
 import { MaintenanceModule } from './infrastructure/maintenance/maintenance.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { Logger } from './common/logger/logger.service';
 
 @Module({
   imports: [
@@ -53,11 +54,13 @@ import { ScheduleModule } from '@nestjs/schedule';
   ],
   controllers: [AppController],
   providers: [
+    Logger,
     {
       provide: APP_INTERCEPTOR,
       useClass: ResponseInterceptor,
     },
   ],
+  exports: [Logger],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

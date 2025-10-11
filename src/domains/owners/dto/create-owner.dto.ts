@@ -1,17 +1,15 @@
-import { IsEmail, IsString, IsNotEmpty, IsNumber } from 'class-validator';
+import {
+  IsEmail,
+  IsString,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+} from 'class-validator';
 
 export class CreateOwnerDto {
   @IsNotEmpty()
   @IsString()
   username!: string;
-
-  @IsNotEmpty()
-  @IsString()
-  firstname!: string;
-
-  @IsNotEmpty()
-  @IsString()
-  lastname!: string;
 
   @IsNotEmpty()
   @IsEmail()
@@ -21,15 +19,23 @@ export class CreateOwnerDto {
   @IsString()
   password!: string;
 
-  @IsNotEmpty()
+  @IsOptional()
+  @IsString()
+  firstname!: string;
+
+  @IsOptional()
+  @IsString()
+  lastname!: string;
+
+  @IsOptional()
   @IsNumber()
-  age!: number;
+  age?: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  address!: string;
+  address?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  phone_number!: string;
+  phone_number?: string;
 }

@@ -3,22 +3,19 @@ import { CreateOwnerDto } from './dto/create-owner.dto';
 import { UpdateOwnerDto } from './dto/update-owner.dto';
 import { IDatabaseService } from 'src/infrastructure/database/database.interface';
 import { FindOwnersDto } from './dto/find-owners.dto';
-import { FileFormat, MediaType, Owner } from '@prisma/client';
-// import { Multer } from 'multer';
+import { FileFormat, MediaType, Owner, PermitType } from '@prisma/client';
 import { Express } from 'express';
 import { PermitService } from '../../infrastructure/permit/permit.service';
 import { CreatePermitDto } from 'src/infrastructure/permit/dto/create-permit.dto';
-
-/*
- * create a pdf service for certificate handling
- *
- */
+import { UpdatePermitDto } from 'src/infrastructure/permit/dto/update-permit.dto';
+import { Logger } from 'src/common/logger/logger.service';
 
 @Injectable()
 export class OwnersService {
   constructor(
     @Inject('IDatabaseService') private readonly database: IDatabaseService,
     private readonly permitService: PermitService,
+    private readonly logger: Logger,
   ) {}
 
   private get prisma() {
@@ -146,17 +143,105 @@ export class OwnersService {
     }
   }
 
-  async findAllPermits() {
+  async patchPermit(
+    permitId: number,
+    payload: UpdatePermitDto,
+    file: Express.Multer.File,
+  ) {
     const prisma = this.prisma;
-    // return await this.permitService.getPermitMetaData(prisma, id, false);
-    const permits = await prisma.permit.findMany();
 
-    return Promise.all(
-      permits.map((permit) =>
-        this.permitService.getPermitMetaData(prisma, permit.id, false),
-      ),
+    const permitOwnerID = await prisma.permit.findUnique({
+      where: { id: permitId },
+      select: { ownerId: true },
+    });
+
+    if (!permitOwnerID) {
+      throw new NotFoundException(`Permit ${permitId} not found`);
+    }
+
+    return await this.permitService.updatePermit(
+      prisma,
+      permitId,
+      file,
+      {
+        type: 'OWNER',
+        // so it was +permitOwnerID but object cant coerce with number returns NAN bug
+        targetId: permitOwnerID.ownerId,
+        mediaType: MediaType.DOCUMENT,
+      },
+      {
+        expiresAt: payload.expiresAt,
+        type: payload.type,
+      },
+      false,
     );
   }
+
+  async findAllPermits() {
+    const prisma = this.prisma;
+    const permits = await prisma.permit.findMany();
+
+    const results = await Promise.all(
+      permits.map(async (permit) => {
+        try {
+          return await this.permitService.getPermitMetaData(
+            prisma,
+            permit.id,
+            false,
+          );
+        } catch (err) {
+          this.logger.error(err, undefined, {
+            permitId: permit.id,
+            rawUrl: permit.url,
+          });
+          return null; // gracefully skip
+        }
+      }),
+    );
+
+    return results.filter((p) => p !== null);
+  }
+  async getVerificationStatus(ownerId: number) {
+    const requiredPermits = [
+      PermitType.BIR,
+      PermitType.FIRE_CERTIFICATE,
+      PermitType.SANITARY_PERMIT,
+    ];
+
+    const owner = await this.prisma.owner.findUnique({
+      where: { id: ownerId },
+      include: { permits: true },
+    });
+
+    if (!owner) {
+      throw new NotFoundException(`Owner ${ownerId} not found`);
+    }
+
+    const hasDTIorSEC = owner.permits.some(
+      (p) => p.type === PermitType.DTI || p.type === PermitType.SEC,
+    );
+
+    const missingPermits = requiredPermits.filter(
+      (type) => !owner.permits.some((p) => p.type === type),
+    ) as PermitType[];
+
+    if (!hasDTIorSEC) {
+      missingPermits.push(PermitType.DTI, PermitType.SEC);
+    }
+
+    return {
+      verified: missingPermits.length === 0 && hasDTIorSEC,
+      missingPermits, // 👈 machine-readable enums
+      permits: owner.permits.map((p) => ({
+        id: p.id,
+        type: p.type,
+        status: p.status,
+        expiresAt: p.expiresAt,
+        fileFormat: p.fileFormat,
+      })),
+    };
+  }
+
   async findOnePermits(id: number) {
     const prisma = this.prisma;
     const permit = await this.permitService.getPermitMetaData(
@@ -168,12 +253,12 @@ export class OwnersService {
     return permit;
   }
 
-  async removePermit(permitId: number) {
+  async removePermit(ownerId: number, permitId: number) {
     return this.prisma.$transaction(async (tx) => {
       // Get permit to find the filePath/url
-      const permit = await tx.permit.findUnique({ where: { id: permitId } });
+      const permit = await tx.permit.findFirst({ where: { id: permitId } });
       if (!permit) {
-        throw new Error(`Permit ${permitId} not found`);
+        throw new NotFoundException(`Permit ${permitId} not found`);
       }
 
       // Delete permit file + db record atomically as possible

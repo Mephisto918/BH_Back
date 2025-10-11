@@ -62,13 +62,13 @@ enum ResourceType {
 }
 
 enum PermitType {
-  BUSINESS_PERMIT // Base for DTI and SEC
+  BIR
   DTI // sole proprietors, Optional Extension
   SEC // sole corporation/partnerships, Optional Extension
-  // FIRE_CERTIFICATE // Fire Certificate
+  FIRE_CERTIFICATE // Fire Certificate
+  SANITARY_PERMIT
+  // BUSINESS_PERMIT // Base for DTI and SEC
   // MAYORS_PERMIT // Mayor's Permit
-  // DTI // Department of Trade and Industry
-  // BUSINESS_PERMIT // Business Permit
 }
 
 enum PermitStatus {
@@ -100,19 +100,19 @@ datasource db {
 model Tenant {
   id           Int       @id @default(autoincrement())
   username     String    @unique
-  firstname    String
-  lastname     String
-  email        String
+  firstname    String?
+  lastname     String?
+  email        String    @unique
   password     String
   role         UserRole  @default(TENANT) // changed
   isActive     Boolean   @default(true)
   isVerified   Boolean   @default(false)
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
-  age          Int       @default(0)
+  age          Int?      @default(0)
   guardian     String?
-  address      String
-  phone_number String
+  address      String?
+  phone_number String?
   isDeleted    Boolean   @default(false)
   deletedAt    DateTime?
   bookings     Booking[]
@@ -121,8 +121,8 @@ model Tenant {
 model Owner {
   id             Int             @id @default(autoincrement())
   username       String          @unique
-  firstname      String
-  lastname       String
+  firstname      String?
+  lastname       String?
   email          String          @unique
   password       String
   role           UserRole        @default(OWNER)
@@ -130,9 +130,9 @@ model Owner {
   isVerified     Boolean         @default(false)
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
-  age            Int             @default(0)
-  address        String
-  phone_number   String
+  age            Int?            @default(0)
+  address        String?
+  phone_number   String?
   boardingHouses BoardingHouse[]
   isDeleted      Boolean         @default(false)
   deletedAt      DateTime?

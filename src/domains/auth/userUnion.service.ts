@@ -23,4 +23,17 @@ export class UserUnionService {
 
     return null;
   }
+
+  async findUserByUserId(id: number) {
+    const admin = await this.adminService.findUserById(id);
+    if (admin) return { type: 'admin', user: admin };
+
+    const owner = await this.ownerService.findUserById(id);
+    if (owner) return { type: 'owner', user: owner };
+
+    const tenant = await this.tenantService.findUserById(id);
+    if (tenant) return { type: 'tenant', user: tenant };
+
+    return null;
+  }
 }

@@ -67,6 +67,15 @@ export class AdminsService {
     });
   }
 
+  findUserById(userId: number) {
+    const prisma = this.prisma;
+    return prisma.admin.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+  }
+
   create(dto: CreateAdminDto) {
     const prisma = this.prisma;
 

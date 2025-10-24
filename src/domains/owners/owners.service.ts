@@ -101,6 +101,15 @@ export class OwnersService {
     });
   }
 
+  findUserById(userId: number) {
+    const prisma = this.prisma;
+    return prisma.owner.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+  }
+
   create(dto: CreateOwnerDto) {
     return this.prisma.owner.create({
       data: {

@@ -1,8 +1,6 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
-import { FindBookingsDto } from './dto/find-bookings.dto';
-import { CreateBookingDto } from './dto/create-booking.dto';
-import { UpdateBookingDto } from './dto/update-booking.dto';
+import { CreateBookingDto } from './dto/dtos';
 
 export function CreateBookingDoc() {
   return applyDecorators(

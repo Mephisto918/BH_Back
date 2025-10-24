@@ -75,6 +75,15 @@ export class TenantsService {
     });
   }
 
+  findUserById(userId: number) {
+    const prisma = this.prisma;
+    return prisma.tenant.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+  }
+
   create(dto: CreateTenantDto) {
     const prisma = this.prisma;
     return prisma.tenant.create({

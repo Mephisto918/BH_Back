@@ -2,12 +2,13 @@ import {
   IsString,
   IsNumber,
   IsOptional,
-  IsDateString,
+  IsDate,
   IsEnum,
 } from 'class-validator';
 
 import { IsInt } from 'class-validator';
 import { BookingStatus, PaymentStatus, BookingType } from '@prisma/client';
+import { Type } from 'class-transformer';
 
 /**
  * TENANT — Create Booking DTO
@@ -17,11 +18,13 @@ export class CreateBookingDto {
   @IsNumber()
   tenantId!: number;
 
-  @IsDateString()
-  startDate!: string;
+  @Type(() => Date)
+  @IsDate()
+  startDate!: Date; // Change the type to Date
 
-  @IsDateString()
-  endDate!: string;
+  @Type(() => Date)
+  @IsDate()
+  endDate!: Date; // Change the type to Date
 
   @IsOptional()
   @IsString()
@@ -32,16 +35,19 @@ export class CreateBookingDto {
  * Generic filter for GET /bookings
  */
 export class FindAllBookingFilterDto {
+  @Type(() => Number)
   @IsOptional()
-  @IsInt()
+  @IsNumber()
   tenantId?: number;
 
+  @Type(() => Number)
   @IsOptional()
-  @IsInt()
+  @IsNumber()
   roomId?: number;
 
+  @Type(() => Number)
   @IsOptional()
-  @IsInt()
+  @IsNumber()
   boardingHouseId?: number; // optional if you're joining Room → BoardingHouse later
 
   @IsOptional()
@@ -56,20 +62,24 @@ export class FindAllBookingFilterDto {
   @IsEnum(BookingType)
   bookingType?: BookingType;
 
+  @Type(() => Date)
   @IsOptional()
-  @IsDateString()
-  fromCheckIn?: string;
+  @IsDate()
+  fromCheckIn?: Date;
 
+  @Type(() => Date)
   @IsOptional()
-  @IsDateString()
-  toCheckIn?: string;
+  @IsDate()
+  toCheckIn?: Date;
 
+  @Type(() => Number)
   @IsOptional()
-  @IsInt()
+  @IsNumber()
   page?: number = 1;
 
+  @Type(() => Number)
   @IsOptional()
-  @IsInt()
+  @IsNumber()
   limit?: number = 10;
 }
 
@@ -88,13 +98,15 @@ export class PatchTenantBookDto {
   @IsNumber()
   tenantId!: number;
 
+  @Type(() => Date)
   @IsOptional()
-  @IsDateString()
-  newStartDate?: string;
+  @IsDate()
+  newStartDate?: Date;
 
+  @Type(() => Date)
   @IsOptional()
-  @IsDateString()
-  newEndDate?: string;
+  @IsDate()
+  newEndDate?: Date;
 
   @IsOptional()
   @IsString()

@@ -40,9 +40,25 @@ export class BookingsService {
     return this.database.getClient();
   }
 
-  createBooking(roomId: number, booking: CreateBookingDto) {
-    const prisma = this.prisma;
-    return '';
+  async createBooking(roomId: number, booking: CreateBookingDto) {
+    const room = await this.prisma.room.findUnique({
+      where: { id: roomId },
+      select: { boardingHouseId: true },
+    });
+
+    if (!room) throw new Error(`Room ${roomId} not found`);
+
+    return this.prisma.booking.create({
+      data: {
+        room: { connect: { id: roomId } },
+        tenant: { connect: { id: booking.tenantId } },
+        boardingHouse: { connect: { id: room.boardingHouseId } },
+        checkInDate: booking.startDate,
+        checkOutDate: booking.endDate,
+        reference: `BK-${Date.now()}`,
+        dateBooked: new Date(),
+      },
+    });
   }
 
   findAll(filter: FindAllBookingFilterDto): Promise<Booking[]> {
@@ -55,20 +71,41 @@ export class BookingsService {
       page = 1,
       limit = 10,
     } = filter;
-    const toSkip = (page - 1) * limit;
 
-    const prisma = this.prisma;
-    return prisma.booking.findMany({
+    const toSkip = (Number(page) - 1) * Number(limit);
+
+    const where: any = {};
+
+    if (tenantId !== undefined) where.tenantId = +tenantId;
+    if (boardingHouseId !== undefined) where.boardingHouseId = +boardingHouseId;
+    if (status !== undefined) where.status = status;
+    if (fromCheckIn && toCheckIn)
+      where.checkInDate = { gte: fromCheckIn, lte: toCheckIn };
+
+    console.log('where: ', where);
+
+    return this.prisma.booking.findMany({
       skip: toSkip,
-      take: limit,
-      where: {
-        ...(tenantId && { tenantId }),
-        ...(boardingHouseId && { boardingHouseId }),
-        ...(status && { status }),
-        ...(fromCheckIn &&
-          toCheckIn && { checkInDate: { gte: fromCheckIn, lte: toCheckIn } }),
-      },
+      take: Number(limit),
+      where,
       orderBy: { checkInDate: 'asc' },
+      include: {
+        tenant: {
+          select: {
+            id: true,
+            firstname: true,
+            lastname: true,
+            age: true,
+            email: true,
+            phone_number: true,
+          },
+        },
+        room: {
+          select: {
+            roomNumber: true,
+          },
+        },
+      },
     });
   }
 
@@ -76,6 +113,9 @@ export class BookingsService {
     const booking = await this.prisma.booking.findUnique({
       where: {
         id: bookId,
+      },
+      include: {
+        tenant: true,
       },
     });
 
@@ -154,7 +194,7 @@ export class BookingsService {
     return await this.prisma.booking.update({
       where: { id: bookId },
       data: {
-        status: BookingStatus.CONFIRMED,
+        status: BookingStatus.AWAITING_PAYMENT,
         paymentStatus: PaymentStatus.PENDING,
         ownerMessage: message ?? booking.ownerMessage,
         updatedAt: new Date(),
@@ -224,12 +264,12 @@ export class BookingsService {
           type: 'TENANT',
           targetId: +tenantId,
           childId: bookId,
-          mediaType: MediaType.GALLERY,
+          mediaType: MediaType.PAYMENT,
         },
         {
           resourceId: +tenantId,
           resourceType: ResourceType.TENANT,
-          mediaType: MediaType.GALLERY,
+          mediaType: MediaType.PAYMENT,
         },
       );
 

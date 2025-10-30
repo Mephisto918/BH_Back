@@ -19,16 +19,19 @@ import {
   PatchBookingRejectionPayloadDTO,
   CreatePaymentProofDTO,
   PatchVerifyPaymentDto,
+  FindAllBookingFilterDto,
 } from './dto/dtos';
 import { ApiTags } from '@nestjs/swagger';
 import { createMulterConfig } from 'src/infrastructure/shared/utils/multer-config.util';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
+import { CreateBookingDoc } from './bookings.controller.swagger';
 
 @ApiTags('bookings')
 @Controller('bookings')
 export class BookingsController {
   constructor(private readonly bookingsService: BookingsService) {}
 
+  @CreateBookingDoc()
   // TENANT: create a booking for a room
   @Post(':roomId')
   createBooking(
@@ -41,7 +44,7 @@ export class BookingsController {
 
   // ADMIN or OWNER: view all bookings (with optional filters)
   @Get()
-  findAll(@Query() filter: any) {
+  findAll(@Query() filter: FindAllBookingFilterDto) {
     return this.bookingsService.findAll(filter);
   }
 
@@ -85,7 +88,6 @@ export class BookingsController {
   createPaymentProof(
     @Param('id') id: string,
     @Body() payload: Record<string, string>,
-    // @Body() dto: CreatePaymentProofDTO,
     @UploadedFiles() files: Express.Multer.File[],
   ) {
     const fileMap = files.reduce(

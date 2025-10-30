@@ -147,7 +147,8 @@ export class BoardingHousesService {
       });
 
       if (!house) {
-        throw new Error(`Boarding house with id ${id} not found`);
+        throw new NotFoundException(`Boarding house with id ${id} not found`);
+        // throw new Error();
       }
 
       // Destructure house and handle rooms separately
@@ -176,6 +177,14 @@ export class BoardingHousesService {
         },
       });
 
+      const { gallery, thumbnail } = await this.imageService.getImageMetaData(
+        images,
+        (url, isPublic) => this.imageService.getMediaPath(url, isPublic),
+        ResourceType.BOARDING_HOUSE,
+        house.id,
+        [MediaType.GALLERY, MediaType.THUMBNAIL],
+      );
+
       // Return enriched house object
       return {
         ...houseData,
@@ -185,10 +194,11 @@ export class BoardingHousesService {
           currentCapacity,
         },
         location: fullLocation,
-        images,
+        thumbnail,
+        gallery,
       };
     } catch (error: any) {
-      throw new Error(`Error finding boarding house: ${error.message}`);
+      throw new NotFoundException(`Boarding house with id ${id} not found`);
     }
   }
 
@@ -209,7 +219,6 @@ export class BoardingHousesService {
           name: boardinghouseData.name,
           address: boardinghouseData.address,
           description: boardinghouseData.description,
-          // TODO: must check for cleaner code, availabilityStatus can have enums if applicable
           availabilityStatus: boardinghouseData.availabilityStatus,
           amenities: boardinghouseData.amenities ?? undefined,
           location: { connect: { id: returnedLocationId } },
@@ -275,45 +284,11 @@ export class BoardingHousesService {
         );
       }
 
-      // if (images.banner) {
-      //   await this.imageService.processUploadInTransaction(
-      //     tx,
-      //     images.banner,
-      //     ResourceType.BOARDING_HOUSE,
-      //     createBoardingHouse.id,
-      //     MediaType.BANNER,
-      //   );
-      // }
-
       return {
         ...createBoardingHouse,
         location: await this.locationService.findOne(returnedLocationId),
       };
     });
-  }
-
-  async galleryCreate(id: number, images: FileMap) {
-    const prisma = this.prisma;
-    return await this.imageService.uploadImages(
-      prisma,
-      images.gallery,
-      {
-        type: 'BOARDING_HOUSE',
-        targetId: id,
-        mediaType: MediaType.GALLERY,
-      },
-      {
-        resourceId: id,
-        resourceType: ResourceType.BOARDING_HOUSE,
-        mediaType: MediaType.GALLERY,
-      },
-    );
-    // return await this.imageService.processUpload(
-    //   images.gallery,
-    //   ResourceType.BOARDING_HOUSE,
-    //   id,
-    //   MediaType.GALLERY,
-    // );
   }
 
   update(id: number, updateBoardingHouseDto: UpdateBoardingHouseDto) {
@@ -360,5 +335,25 @@ export class BoardingHousesService {
 
       return { success: true };
     });
+  }
+
+  async galleryCreate(id: number, images: FileMap) {
+    const prisma = this.prisma;
+    //   return await this.imageService.uploadImages(
+    //     prisma,
+    //     images.gallery,
+    //     {
+    //       type: 'BOARDING_HOUSE',
+    //       targetId: id,
+    //       mediaType: MediaType.GALLERY,
+    //     },
+    //     {
+    //       resourceId: id,
+    //       resourceType: ResourceType.BOARDING_HOUSE,
+    //       mediaType: MediaType.GALLERY,
+    //     },
+    //   );
+    // }
+    return 'not finished route'; //!
   }
 }

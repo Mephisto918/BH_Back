@@ -1,4 +1,9 @@
-import { Injectable, Inject, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  Inject,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { CreateOwnerDto } from './dto/create-owner.dto';
 import { UpdateOwnerDto } from './dto/update-owner.dto';
 import { IDatabaseService } from 'src/infrastructure/database/database.interface';
@@ -110,7 +115,15 @@ export class OwnersService {
     });
   }
 
-  create(dto: CreateOwnerDto) {
+  async create(dto: CreateOwnerDto) {
+    const existing = await this.prisma.owner.findUnique({
+      where: { email: dto.email },
+    });
+
+    if (existing) {
+      throw new BadRequestException('Email is already in use');
+    }
+
     return this.prisma.owner.create({
       data: {
         username: dto.username,

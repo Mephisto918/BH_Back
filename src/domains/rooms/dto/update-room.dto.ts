@@ -8,12 +8,15 @@ import {
   IsString,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { RoomTypeEnum } from '../types';
 
 export class UpdateRoomDto {
   @IsString()
   @IsOptional()
   roomNumber?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  description!: string;
 
   @IsInt()
   @IsOptional()
@@ -26,11 +29,6 @@ export class UpdateRoomDto {
 
   @IsOptional()
   tags?: Record<string, any>;
-
-  @IsOptional()
-  @IsEnum(RoomTypeEnum)
-  @Type(() => String)
-  roomType?: RoomTypeEnum;
 
   @IsBoolean()
   availabilityStatus?: boolean;

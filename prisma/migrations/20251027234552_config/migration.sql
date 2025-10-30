@@ -20,9 +20,6 @@ CREATE TYPE "public"."BookingType" AS ENUM ('RESERVATION', 'INSTANT', 'HOLD', 'L
 CREATE TYPE "public"."CurrencyType" AS ENUM ('PHP', 'USD', 'EUR', 'JPY');
 
 -- CreateEnum
-CREATE TYPE "public"."RoomType" AS ENUM ('SOLO', 'DUO', 'TRIO', 'SQUAD', 'FAMILY');
-
--- CreateEnum
 CREATE TYPE "public"."UserRole" AS ENUM ('TENANT', 'OWNER', 'ADMIN');
 
 -- CreateEnum
@@ -141,6 +138,7 @@ CREATE TABLE "public"."Booking" (
     "reference" TEXT NOT NULL,
     "tenantId" INTEGER NOT NULL,
     "roomId" INTEGER NOT NULL,
+    "boardingHouseId" INTEGER NOT NULL,
     "bookingType" "public"."BookingType" NOT NULL DEFAULT 'RESERVATION',
     "dateBooked" TIMESTAMP(3) NOT NULL,
     "checkInDate" TIMESTAMP(3) NOT NULL,
@@ -166,11 +164,11 @@ CREATE TABLE "public"."Room" (
     "id" SERIAL NOT NULL,
     "boardingHouseId" INTEGER NOT NULL,
     "roomNumber" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
     "maxCapacity" INTEGER NOT NULL DEFAULT 1,
     "currentCapacity" INTEGER NOT NULL DEFAULT 0,
     "price" DECIMAL(10,2) NOT NULL,
     "tags" JSONB,
-    "roomType" "public"."RoomType" NOT NULL DEFAULT 'SOLO',
     "availabilityStatus" BOOLEAN NOT NULL DEFAULT true,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -278,6 +276,9 @@ ALTER TABLE "public"."Booking" ADD CONSTRAINT "Booking_tenantId_fkey" FOREIGN KE
 
 -- AddForeignKey
 ALTER TABLE "public"."Booking" ADD CONSTRAINT "Booking_roomId_fkey" FOREIGN KEY ("roomId") REFERENCES "public"."Room"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."Booking" ADD CONSTRAINT "Booking_boardingHouseId_fkey" FOREIGN KEY ("boardingHouseId") REFERENCES "public"."BoardingHouse"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."Room" ADD CONSTRAINT "Room_boardingHouseId_fkey" FOREIGN KEY ("boardingHouseId") REFERENCES "public"."BoardingHouse"("id") ON DELETE CASCADE ON UPDATE CASCADE;

@@ -45,12 +45,12 @@ export class BoardingHousesController {
   @CreateBoardingHouseDoc()
   @UseInterceptors(AnyFilesInterceptor(createMulterConfig('image')))
   create(
-    @Body()
-    payload: Record<string, string>,
-    @UploadedFiles()
-    files: Express.Multer.File[],
+    @Body() payload: Record<string, string>,
+    @UploadedFiles() files: Express.Multer.File[],
   ) {
-    // group files manually by fieldname
+    console.log('payload:', payload);
+    console.log('files:', files);
+    // 1️⃣ Group all files by fieldname
     const fileMap = files.reduce(
       (acc, file) => {
         acc[file.fieldname] = acc[file.fieldname] || [];
@@ -60,7 +60,7 @@ export class BoardingHousesController {
       {} as Record<string, Express.Multer.File[]>,
     );
 
-    // 1. Construct typed CreateBoardingHouseDto
+    // 2️⃣ Parse the text-based payload data
     const parsedRooms = JSON.parse(
       payload.rooms ?? '[]',
     ) as CreateBoardingHouseDto['rooms'];
@@ -83,19 +83,33 @@ export class BoardingHousesController {
       rooms: parsedRooms ?? [],
     };
 
-    // 2. Merge dynamic roomGalleryX files back into rooms[]
+    // 3️⃣ Attach room galleries & thumbnails before sending to service
+    const allFileKeys = Object.keys(fileMap);
+
     createBoardingHouseDto.rooms = (createBoardingHouseDto.rooms ?? []).map(
       (room, index) => {
-        const key = `roomGallery${index}`;
-        const gallery = fileMap[key] ?? [];
+        // ✅ 1. Collect all roomGallery files for this room index
+        const galleryFiles = allFileKeys
+          .filter((key) => key.startsWith(`roomGallery${index}_`))
+          .map((key) => fileMap[key])
+          .flat();
+
+        // ✅ 2. Collect roomThumbnail files for this room index
+        const thumbnailFiles = allFileKeys
+          .filter((key) => key.startsWith(`roomThumbnail${index}_`))
+          .map((key) => fileMap[key])
+          .flat();
+
+        // ✅ 3. Return the updated room with gallery & thumbnail
         return {
           ...room,
-          gallery,
+          gallery: galleryFiles,
+          thumbnail: thumbnailFiles,
         };
       },
     );
 
-    // 3. Extract standard image fields
+    // 4️⃣ Extract the standard boarding house image fields
     const imageFiles = {
       thumbnail: fileMap.thumbnail ?? [],
       gallery: fileMap.gallery ?? [],
@@ -103,6 +117,7 @@ export class BoardingHousesController {
       banner: fileMap.banner ?? [],
     };
 
+    // 5️⃣ Call the service — now each room already has its gallery
     return this.boardingHousesService.create(
       createBoardingHouseDto,
       createBoardingHouseDto.location,

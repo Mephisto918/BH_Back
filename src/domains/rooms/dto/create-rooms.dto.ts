@@ -9,7 +9,6 @@ import {
   IsString,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { RoomTypeEnum } from '../types/rooms.type';
 
 export class CreateRoomsDto {
   @IsInt()
@@ -20,6 +19,10 @@ export class CreateRoomsDto {
   @IsString()
   @IsNotEmpty()
   roomNumber!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  description!: string;
 
   @IsInt()
   @IsNotEmpty()
@@ -39,11 +42,6 @@ export class CreateRoomsDto {
   @IsArray()
   @IsString({ each: true })
   tags?: Array<string>;
-
-  @IsOptional()
-  @IsEnum(RoomTypeEnum)
-  @Type(() => String)
-  roomType?: RoomTypeEnum;
 
   @IsBoolean()
   @IsOptional()

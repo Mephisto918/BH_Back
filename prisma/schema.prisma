@@ -20,6 +20,7 @@ enum MediaType {
   BANNER
   FLOORPLAN
   DOCUMENT
+  PAYMENT
   QR
   MAP
   ROOM
@@ -63,14 +64,6 @@ enum CurrencyType {
   USD // U.S dollar
   EUR // euro
   JPY //japanese
-}
-
-enum RoomType {
-  SOLO
-  DUO
-  TRIO
-  SQUAD
-  FAMILY
 }
 
 enum UserRole {
@@ -201,6 +194,7 @@ model BoardingHouse {
   isDeleted          Boolean   @default(false)
   deletedAt          DateTime?
   rooms              Room[]
+  Booking            Booking[]
 }
 
 model Location {
@@ -214,22 +208,6 @@ model Location {
   deletedAt     DateTime?
 }
 
-// model Booking {
-//   id           Int           @id @default(autoincrement())
-//   tenantId     Int
-//   tenant       Tenant        @relation(fields: [tenantId], references: [id], onDelete: Restrict)
-//   roomId       Int
-//   room         Room          @relation(fields: [roomId], references: [id])
-//   dateBooked   DateTime
-//   checkInDate  DateTime
-//   checkOutDate DateTime
-//   status       BookingStatus @default(PENDING)
-//   createdAt    DateTime      @default(now())
-//   updatedAt    DateTime      @updatedAt
-//   isDeleted    Boolean       @default(false)
-//   deletedAt    DateTime?
-// }
-
 model Booking {
   id              Int           @id @default(autoincrement())
   reference       String        @unique // e.g. BK-20251023-XXXX
@@ -237,6 +215,8 @@ model Booking {
   tenant          Tenant        @relation(fields: [tenantId], references: [id], onDelete: Restrict)
   roomId          Int
   room            Room          @relation(fields: [roomId], references: [id])
+  boardingHouseId Int
+  boardingHouse   BoardingHouse @relation(fields: [boardingHouseId], references: [id])
   bookingType     BookingType   @default(RESERVATION)
   dateBooked      DateTime
   checkInDate     DateTime
@@ -260,11 +240,11 @@ model Room {
   boardingHouseId     Int
   boardingHouse       BoardingHouse         @relation(fields: [boardingHouseId], references: [id], onDelete: Cascade)
   roomNumber          String
+  description         String
   maxCapacity         Int                   @default(1)
   currentCapacity     Int                   @default(0)
   price               Decimal               @db.Decimal(10, 2)
   tags                Json?
-  roomType            RoomType              @default(SOLO)
   availabilityStatus  Boolean               @default(true)
   createdAt           DateTime              @default(now())
   updatedAt           DateTime              @updatedAt
@@ -349,8 +329,6 @@ model AuditLog {
  * SET "amenities" = '[]'::jsonb
  * WHERE "amenities" IS NULL;
  * UPDATE "BoardingHouse"
- * SET "properties" = '{}'::jsonb
- * WHERE "properties" IS NULL;
  * UPDATE "Room"
  * SET "features" = '{}'::jsonb
  * WHERE "features" IS NULL;
@@ -365,7 +343,6 @@ model AuditLog {
  * WHERE "user" IS NULL;
  * -- ⚡ Add GIN indexes for JSONB fields
  * CREATE INDEX gin_idx_boardinghouse_amenities ON "BoardingHouse" USING GIN ("amenities");
- * CREATE INDEX gin_idx_boardinghouse_properties ON "BoardingHouse" USING GIN ("properties");
  * CREATE INDEX gin_idx_room_features ON "Room" USING GIN ("features");
  * CREATE INDEX gin_idx_room_tags ON "Room" USING GIN ("tags");
  * CREATE INDEX gin_idx_auditlog_meta ON "AuditLog" USING GIN ("meta");
@@ -378,10 +355,6 @@ model AuditLog {
 // UPDATE "BoardingHouse"
 // SET "amenities" = '[]'::jsonb
 // WHERE "amenities" IS NULL;
-
-// UPDATE "BoardingHouse"
-// SET "properties" = '{}'::jsonb
-// WHERE "properties" IS NULL;
 
 //* do this to activate PostGis every after pushing rest
 // CREATE EXTENSION postgis;

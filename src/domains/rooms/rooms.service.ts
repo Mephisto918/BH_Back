@@ -28,7 +28,7 @@ export class RoomsService {
     tx: DBClient = this.prisma,
   ): Promise<void> {
     for (const room of rooms) {
-      const { gallery, ...roomData } = room;
+      const { gallery, thumbnail, ...roomData } = room;
 
       // Create the room first to get its ID
       const createdRoom = await tx.room.create({
@@ -53,6 +53,24 @@ export class RoomsService {
             resourceId: createdRoom.id,
             resourceType: ResourceType.ROOM,
             mediaType: MediaType.GALLERY,
+          },
+        );
+      }
+
+      if (thumbnail?.length) {
+        await this.imageService.uploadImagesTransact(
+          tx,
+          thumbnail,
+          {
+            type: 'BOARDING_HOUSE_ROOMS',
+            targetId: boardingHouseId,
+            mediaType: MediaType.THUMBNAIL,
+            childId: createdRoom.id,
+          },
+          {
+            resourceId: createdRoom.id,
+            resourceType: ResourceType.ROOM,
+            mediaType: MediaType.THUMBNAIL,
           },
         );
       }
@@ -127,6 +145,14 @@ export class RoomsService {
       [MediaType.GALLERY],
     );
 
+    const { thumbnail } = await this.imageService.getImageMetaData(
+      images,
+      (url, isPublic) => this.imageService.getMediaPath(url, isPublic),
+      ResourceType.ROOM,
+      bhId,
+      [MediaType.THUMBNAIL],
+    );
+
     if (!room) {
       throw new NotFoundException(
         'Room not found or does not belong to this boarding house.',
@@ -135,7 +161,7 @@ export class RoomsService {
 
     return {
       ...room,
-      // thumbnail,
+      thumbnail,
       gallery,
     };
   }

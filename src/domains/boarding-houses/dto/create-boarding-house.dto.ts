@@ -10,6 +10,7 @@ import { LocationDto } from 'src/infrastructure/location/dto/location.dto';
 import { IsDefined } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
 import { CreateRoomsDto } from '../../rooms/dto/create-rooms.dto';
+import { CreateRoomsWithGallery } from 'src/domains/rooms/types';
 
 export class CreateBoardingHouseDto {
   @IsInt()
@@ -47,7 +48,7 @@ export class CreateBoardingHouseDto {
   @IsOptional()
   @ValidateNested()
   @Type(() => CreateRoomsDto)
-  rooms?: CreateRoomsDto[];
+  rooms?: CreateRoomsWithGallery[];
 }
 
 // TODO: make this into a utility

@@ -4,7 +4,7 @@ function App() {
   return (
     <>
       <div>
-        <p>Yawa animal dasasdasdko</p>
+        <p> dasasdasdko</p>
       </div>
     </>
   );

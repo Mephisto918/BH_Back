@@ -5,7 +5,6 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
   Query,
   UseInterceptors,
   UploadedFiles,
@@ -13,7 +12,6 @@ import {
 import { BookingsService } from './bookings.service';
 import {
   CreateBookingDto,
-  FindOneBookingDto,
   PatchTenantBookDto,
   PatchApprovePayloadDTO,
   PatchBookingRejectionPayloadDTO,
@@ -53,6 +51,10 @@ export class BookingsController {
   findOne(@Param('id') id: string) {
     return this.bookingsService.findOne(+id);
   }
+  @Get(':id/payment-proof')
+  findPaymentProof(@Param('id') id: string) {
+    return this.bookingsService.findPaymentProof(+id);
+  }
 
   // TENANT: update or cancel booking (generic)
   @Patch(':id')
@@ -90,6 +92,7 @@ export class BookingsController {
     @Body() payload: Record<string, string>,
     @UploadedFiles() files: Express.Multer.File[],
   ) {
+    console.log(id, payload, files);
     const fileMap = files.reduce(
       (acc, file) => {
         acc[file.fieldname] = acc[file.fieldname] || [];

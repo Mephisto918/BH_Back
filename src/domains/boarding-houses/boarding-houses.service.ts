@@ -337,8 +337,7 @@ export class BoardingHousesService {
     });
   }
 
-  async galleryCreate(id: number, images: FileMap) {
-    const prisma = this.prisma;
+  galleryCreate(id: number, images: FileMap) {
     //   return await this.imageService.uploadImages(
     //     prisma,
     //     images.gallery,

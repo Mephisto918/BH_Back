@@ -32,6 +32,7 @@ export class ImageService extends BaseFileUploadService {
       MediaType.GALLERY,
       MediaType.PFP,
       MediaType.ROOM,
+      MediaType.PAYMENT,
     ]);
 
     if (!validMediaTypes.has(meta.mediaType)) {

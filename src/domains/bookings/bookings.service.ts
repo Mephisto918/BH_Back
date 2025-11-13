@@ -6,16 +6,10 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { IDatabaseService } from 'src/infrastructure/database/database.interface';
-import {
-  Booking,
-  BookingStatus,
-  MediaType,
-  PaymentStatus,
-} from '@prisma/client';
+import { Booking, BookingStatus, MediaType } from '@prisma/client';
 
 import {
   CreateBookingDto,
-  FindOneBookingDto,
   PatchTenantBookDto,
   PatchApprovePayloadDTO,
   PatchBookingRejectionPayloadDTO,
@@ -119,7 +113,33 @@ export class BookingsService {
       },
     });
 
-    return booking;
+    if (!booking) throw new NotFoundException('Booking not found');
+
+    const { tenant, ...bookingWithoutTenant } = booking;
+
+    return {
+      tenant,
+      ...bookingWithoutTenant,
+    };
+  }
+
+  async findPaymentProof(imagId: number) {
+    if (!imagId) throw new BadRequestException('Missing booking id');
+
+    const bookingReceipt = await this.prisma.image.findUnique({
+      where: { id: imagId },
+    });
+
+    if (!bookingReceipt) throw new NotFoundException('Booking not found');
+
+    const { url: rawDBPaymentUrl, ...bookingReceiptData } = bookingReceipt;
+
+    const url = await this.imageService.getMediaPath(rawDBPaymentUrl, false);
+
+    return {
+      url,
+      ...bookingReceiptData,
+    };
   }
 
   // TENANT: update or cancel booking (generic)
@@ -135,9 +155,9 @@ export class BookingsService {
 
     // 2️⃣ Disallow operations on finished/rejected/cancelled bookings
     const blockedStatuses = new Set<BookingStatus>([
-      BookingStatus.CANCELLED,
-      BookingStatus.COMPLETED,
-      BookingStatus.REJECTED,
+      BookingStatus.CANCELLED_BOOKING,
+      BookingStatus.COMPLETED_BOOKING,
+      BookingStatus.REJECTED_BOOKING,
     ]);
 
     if (blockedStatuses.has(booking.status)) {
@@ -151,8 +171,7 @@ export class BookingsService {
       return await this.prisma.booking.update({
         where: { id: bookId },
         data: {
-          status: BookingStatus.CANCELLED,
-          paymentStatus: PaymentStatus.NONE,
+          status: 'CANCELLED_BOOKING',
           tenantMessage: cancelReason,
           updatedAt: new Date(),
         },
@@ -161,10 +180,9 @@ export class BookingsService {
 
     // 4️⃣ If new dates exist → update them (assuming your booking model supports it)
     if (newStartDate || newEndDate) {
-      // Optional validation: prevent changing dates after confirmation
-      if (booking.status !== BookingStatus.PENDING) {
+      if (booking.status !== BookingStatus.PENDING_REQUEST) {
         throw new BadRequestException(
-          'You can only change dates for pending bookings',
+          'You can only change dates for pending requests',
         );
       }
 
@@ -186,16 +204,15 @@ export class BookingsService {
     const { ownerId, message } = payload;
     const booking = await this.validateBookingAccess(bookId, ownerId, 'OWNER');
 
-    if (booking.status !== BookingStatus.PENDING) {
+    if (booking.status !== BookingStatus.PENDING_REQUEST) {
       throw new BadRequestException(
-        'Only pending bookings can be approved by the owner',
+        'Only pending requests can be approved by the owner',
       );
     }
     return await this.prisma.booking.update({
       where: { id: bookId },
       data: {
-        status: BookingStatus.AWAITING_PAYMENT,
-        paymentStatus: PaymentStatus.PENDING,
+        status: BookingStatus.AWAITING_PAYMENT, // ✅ waiting for proof
         ownerMessage: message ?? booking.ownerMessage,
         updatedAt: new Date(),
       },
@@ -211,25 +228,19 @@ export class BookingsService {
 
     // Ensure it can still be rejected
     const blockedStatuses = new Set<BookingStatus>([
-      BookingStatus.CANCELLED,
-      BookingStatus.COMPLETED,
-      BookingStatus.REJECTED,
+      BookingStatus.CANCELLED_BOOKING,
+      BookingStatus.COMPLETED_BOOKING,
+      BookingStatus.REJECTED_BOOKING,
     ]);
 
     if (blockedStatuses.has(booking.status)) {
       throw new BadRequestException('This booking cannot be rejected');
     }
 
-    // Update booking and payment status
-    booking.status = BookingStatus.REJECTED;
-    booking.paymentStatus = PaymentStatus.REJECTED;
-    booking.ownerMessage = reason;
-
     return await this.prisma.booking.update({
       where: { id: bookId },
       data: {
-        status: BookingStatus.REJECTED,
-        paymentStatus: PaymentStatus.REJECTED,
+        status: 'REJECTED_BOOKING',
         ownerMessage: reason,
         updatedAt: new Date(),
       },
@@ -242,6 +253,7 @@ export class BookingsService {
     files: Express.Multer.File[],
   ) {
     const { tenantId, note } = payload;
+    console.log('file send:', files);
 
     // 1️ Verify the booking exists and belongs to the tenant
     const booking = await this.validateBookingAccess(
@@ -251,7 +263,7 @@ export class BookingsService {
     );
 
     // 2️ Verify booking status is valid for uploading payment proof
-    if (booking.status !== BookingStatus.CONFIRMED) {
+    if (booking.status !== BookingStatus.AWAITING_PAYMENT) {
       throw new BadRequestException('This booking is not awaiting payment');
     }
 
@@ -271,45 +283,43 @@ export class BookingsService {
           resourceType: ResourceType.TENANT,
           mediaType: MediaType.PAYMENT,
         },
+        {
+          isPublic: false,
+        },
       );
 
-      // 4️ Get the first image URL (if you store the main proof URL)
-      const proofImage = await this.prisma.image.findUnique({
-        where: { id: uploadedImageIds[0] },
-      });
-
-      // 5️ Update the booking with payment proof info
-      const updatedBooking = await this.prisma.booking.update({
+      return await tx.booking.update({
         where: { id: booking.id },
         data: {
-          paymentProofUrl: proofImage?.url ?? null,
-          paymentStatus: 'PENDING',
+          paymentProofId: uploadedImageIds[0] ?? null,
           tenantMessage: note ?? null,
-          status: 'AWAITING_PAYMENT', // or another transitional state
+          status: 'PAYMENT_APPROVAL', // ✅ now waiting for owner to verify
+          updatedAt: new Date(),
         },
       });
-
-      return updatedBooking;
     });
   }
 
   async verifyPayment(bookId: number, payload: PatchVerifyPaymentDto) {
     const { ownerId, newStatus, remarks } = payload;
 
-    // 2 Compute new payment + booking status
     const booking = await this.validateBookingAccess(bookId, ownerId, 'OWNER');
 
-    // 3️ Compute new payment + booking status
-    const paymentStatus =
-      newStatus !== undefined
-        ? this.checkPaymentStatus(newStatus)
-        : booking.paymentStatus;
+    if (!booking) {
+      throw new NotFoundException('Booking not found');
+    }
 
-    // 4️ Update booking record
+    if (booking.status !== 'PAYMENT_APPROVAL') {
+      throw new BadRequestException('This booking is not awaiting payment');
+    }
+
+    if (newStatus !== 'COMPLETED_BOOKING' && newStatus !== 'REJECTED_BOOKING') {
+      throw new BadRequestException('Invalid status');
+    }
+
     const updated = await this.prisma.booking.update({
       where: { id: bookId },
       data: {
-        paymentStatus,
         status: newStatus ?? booking.status,
         ownerMessage: remarks ?? booking.ownerMessage,
         updatedAt: new Date(),
@@ -358,10 +368,11 @@ export class BookingsService {
     const updated = await this.prisma.booking.update({
       where: { id: bookId },
       data: {
-        status: 'CANCELLED',
+        status: 'CANCELLED_BOOKING',
         ownerMessage: role === 'OWNER' ? payload.reason : booking.ownerMessage,
         tenantMessage:
           role === 'TENANT' ? payload.reason : booking.tenantMessage,
+        updatedAt: new Date(),
       },
     });
 
@@ -417,17 +428,71 @@ export class BookingsService {
 
     return booking; // ✅ return it so the caller can use the data directly
   }
-
-  checkPaymentStatus(newStatus?: BookingStatus): PaymentStatus {
-    let paymentStatus: PaymentStatus;
-    switch (newStatus) {
-      case BookingStatus.CONFIRMED:
-      case BookingStatus.PAYMENT_VERIFIED:
-        return (paymentStatus = PaymentStatus.VERIFIED);
-      case BookingStatus.REJECTED:
-        return (paymentStatus = PaymentStatus.REJECTED);
-      default:
-        return (paymentStatus = PaymentStatus.NONE);
-    }
-  }
 }
+// PENDING_REQUEST
+// AWAITING_PAYMENT
+// PAYMENT_APPROVAL
+// CANCELLED_BOOKING
+// REJECTED_BOOKING
+// COMPLETED_BOOKING
+
+/*
+
+is this `  async createPaymentProof(
+    bookId: number,
+    payload: CreatePaymentProofDTO,
+    files: Express.Multer.File[],
+  ) {
+    const { tenantId, note } = payload;
+    console.log('file send:', files);
+
+    // 1️ Verify the booking exists and belongs to the tenant
+    const booking = await this.validateBookingAccess(
+      bookId,
+      tenantId,
+      'TENANT',
+    );
+
+    // 2️ Verify booking status is valid for uploading payment proof
+    if (booking.status !== BookingStatus.AWAITING_PAYMENT) {
+      throw new BadRequestException('This booking is not awaiting payment');
+    }
+
+    // 3️ Upload the image(s)
+    return this.prisma.$transaction(async (tx) => {
+      const uploadedImageIds = await this.imageService.uploadImagesTransact(
+        tx,
+        files,
+        {
+          type: 'TENANT',
+          targetId: +tenantId,
+          childId: bookId,
+          mediaType: MediaType.PAYMENT,
+        },
+        {
+          resourceId: +tenantId,
+          resourceType: ResourceType.TENANT,
+          mediaType: MediaType.PAYMENT,
+        },
+        {
+          isPublic: false,
+        },
+      );
+
+      const proofImage = await this.prisma.image.findUnique({
+        where: { id: uploadedImageIds[0] },
+      });
+
+      return await tx.booking.update({
+        where: { id: booking.id },
+        data: {
+          paymentProofUrl: proofImage?.url ?? null,
+          tenantMessage: note ?? null,
+          status: 'PAYMENT_APPROVAL', // ✅ now waiting for owner to verify
+          updatedAt: new Date(),
+        },
+      });
+    });
+  }` atomic enough you think? like the boarding house that i made?
+
+*/

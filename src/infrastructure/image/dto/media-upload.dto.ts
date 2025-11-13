@@ -4,14 +4,23 @@ import { ResourceType, MediaType } from '@prisma/client';
 
 export class MediaUploadDto {
   @ApiProperty({
-    enum: ['tenants', 'owners', 'admins', 'boardingHouses', 'rooms'],
+    enum: [
+      'tenants',
+      'owners',
+      'admins',
+      'boardingHouses',
+      'rooms',
+      'bookings',
+    ],
   })
   resourceType!: ResourceType;
 
   @ApiProperty({ type: Number })
   resourceId!: number;
 
-  @ApiProperty({ enum: ['THUMBNAIL', 'MAIN', 'GALLERY', 'PFP', 'ROOM'] })
+  @ApiProperty({
+    enum: ['THUMBNAIL', 'MAIN', 'GALLERY', 'PFP', 'ROOM', 'BOOKINGS'],
+  })
   mediaType!: MediaType;
 
   @ApiProperty({ type: 'string', format: 'binary' })
@@ -23,14 +32,16 @@ export class MediaUploadDto {
 
 export class MediaUploadsDto {
   @ApiProperty({
-    enum: ['tenants', 'owners', 'admins', 'boardingHouses', 'rooms'],
+    enum: ['tenants', 'owners', 'admins', 'boardingHouses', 'rooms', 'booking'],
   })
   resourceType!: ResourceType;
 
   @ApiProperty({ type: Number })
   resourceId!: number;
 
-  @ApiProperty({ enum: ['THUMBNAIL', 'MAIN', 'GALLERY', 'PFP', 'ROOM'] })
+  @ApiProperty({
+    enum: ['THUMBNAIL', 'MAIN', 'GALLERY', 'PFP', 'ROOM', 'BOOKINGS'],
+  })
   mediaType!: MediaType;
 
   @ApiProperty({ type: 'string', format: 'binary', isArray: true })

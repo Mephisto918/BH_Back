@@ -9,6 +9,7 @@ import {
   Query,
   UseInterceptors,
   UploadedFiles,
+  BadRequestException,
 } from '@nestjs/common';
 import { BoardingHousesService } from './boarding-houses.service';
 import { CreateBoardingHouseDto } from './dto/create-boarding-house.dto';
@@ -53,6 +54,12 @@ export class BoardingHousesController {
     // 1️⃣ Group all files by fieldname
     const fileMap = files.reduce(
       (acc, file) => {
+        if (!file.buffer || file.size === 0) {
+          throw new BadRequestException(
+            `Empty file received: ${file.originalname}`,
+          );
+        }
+
         acc[file.fieldname] = acc[file.fieldname] || [];
         acc[file.fieldname].push(file);
         return acc;

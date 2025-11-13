@@ -117,11 +117,14 @@ export class OwnersService {
 
   async create(dto: CreateOwnerDto) {
     const existing = await this.prisma.owner.findUnique({
-      where: { email: dto.email },
+      where: { email: dto.email, username: dto.username },
     });
 
-    if (existing) {
-      throw new BadRequestException('Email is already in use');
+    if (existing?.email) {
+      return new BadRequestException('Email is already in use');
+    }
+    if (existing?.username) {
+      return new BadRequestException('Username is already in use');
     }
 
     return this.prisma.owner.create({

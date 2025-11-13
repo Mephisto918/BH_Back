@@ -6,8 +6,7 @@ import {
   IsEnum,
 } from 'class-validator';
 
-import { IsInt } from 'class-validator';
-import { BookingStatus, PaymentStatus, BookingType } from '@prisma/client';
+import { BookingStatus, BookingType } from '@prisma/client';
 import { Type } from 'class-transformer';
 
 /**
@@ -53,10 +52,6 @@ export class FindAllBookingFilterDto {
   @IsOptional()
   @IsEnum(BookingStatus)
   status?: BookingStatus;
-
-  @IsOptional()
-  @IsEnum(PaymentStatus)
-  paymentStatus?: PaymentStatus;
 
   @IsOptional()
   @IsEnum(BookingType)

@@ -34,21 +34,12 @@ enum ImageQuality {
 }
 
 enum BookingStatus {
-  PENDING //🟡 Tenant requested booking
+  PENDING_REQUEST //🟡 Tenant requested booking
   AWAITING_PAYMENT //🟠 Owner approved, waiting for tenant to upload proof
-  PAYMENT_VERIFIED
-  CONFIRMED //🟢 Owner confirmed after proof of payment
-  CANCELLED //🔴
-  COMPLETED //⚫
-  REJECTED
-}
-
-enum PaymentStatus {
-  NONE
-  PENDING // tenant uploaded proof
-  REJECTED
-  VERIFIED
-  FAILED
+  PAYMENT_APPROVAL //🟠
+  CANCELLED_BOOKING //🔴
+  REJECTED_BOOKING //🔴
+  COMPLETED_BOOKING //🟢
 }
 
 enum BookingType {
@@ -221,9 +212,8 @@ model Booking {
   dateBooked      DateTime
   checkInDate     DateTime
   checkOutDate    DateTime
-  status          BookingStatus @default(PENDING)
-  paymentStatus   PaymentStatus @default(NONE)
-  paymentProofUrl String? // uploaded receipt / image URL
+  status          BookingStatus @default(PENDING_REQUEST)
+  paymentProofId  Int? // uploaded receipt / image URL
   totalAmount     Decimal?      @db.Decimal(10, 2)
   currency        String?       @default("PHP")
   ownerMessage    String?

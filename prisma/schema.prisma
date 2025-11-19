@@ -177,7 +177,7 @@ model BoardingHouse {
   address            String?
   description        String?
   amenities          Json?
-  availabilityStatus Boolean   @default(true)
+  availabilityStatus Boolean   @default(false)
   locationId         Int       @unique
   location           Location  @relation(fields: [locationId], references: [id], name: "BoardingHouseToLocation")
   createdAt          DateTime  @default(now())

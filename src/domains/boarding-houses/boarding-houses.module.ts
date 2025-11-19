@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { BoardingHousesService } from './boarding-houses.service';
 import { BoardingHousesController } from './boarding-houses.controller';
-import { LocationModule } from 'src/infrastructure/location/location.module';
-import { LocationService } from 'src/infrastructure/location/location.service';
+import { LocationModule } from 'src/domains/location/location.module';
+import { LocationService } from 'src/domains/location/location.service';
 import { RoomsService } from '../rooms/rooms.service';
 import { ImageModule } from 'src/infrastructure/image/image.module';
 

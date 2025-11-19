@@ -1,4 +1,10 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { IDatabaseService } from 'src/infrastructure/database/database.interface';
 
 import { CreateTenantDto } from './dto/create-tenant.dto';
@@ -84,23 +90,54 @@ export class TenantsService {
     });
   }
 
-  create(dto: CreateTenantDto) {
+  async create(dto: CreateTenantDto) {
     const prisma = this.prisma;
-    return prisma.tenant.create({
-      data: {
-        username: dto.username,
-        firstname: dto.firstname,
-        lastname: dto.lastname,
-        email: dto.email,
-        password: dto.password,
-        age: dto.age,
-        guardian: dto.guardian,
-        address: dto.address,
-        phone_number: dto.phone_number,
-      },
-    });
-  }
 
+    try {
+      // 1. Check if email or username already exists
+      const existingTenant = await prisma.tenant.findFirst({
+        where: {
+          OR: [{ email: dto.email }, { username: dto.username }],
+        },
+      });
+
+      if (existingTenant) {
+        throw new ConflictException('Email or username already exists');
+      }
+
+      // 2. Hash the password
+      // const hashedPassword = await bcrypt.hash(dto.password, 10);
+
+      // 3. Create the tenant
+      const tenant = await prisma.tenant.create({
+        data: {
+          username: dto.username,
+          firstname: dto.firstname,
+          lastname: dto.lastname,
+          email: dto.email,
+          password: dto.password,
+          age: dto.age,
+          guardian: dto.guardian,
+          address: dto.address,
+          phone_number: dto.phone_number,
+        },
+      });
+
+      // 4. Return safe data (exclude password)
+      const { password, ...safeTenant } = tenant;
+      return {
+        status: 'success',
+        message: 'Tenant created successfully',
+        data: safeTenant,
+      };
+    } catch (error) {
+      console.error('Tenant creation error:', error);
+      if (error instanceof ConflictException) {
+        throw error;
+      }
+      throw new InternalServerErrorException('Failed to create tenant');
+    }
+  }
   // upload({ resourceType, resourceId, mediaType, file }: MediaUploadDto) {
   //   const result = this.imageService.processUpload(
   //     file,

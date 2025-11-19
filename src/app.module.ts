@@ -16,7 +16,7 @@ import { DocumentModule } from './infrastructure/document/document.module';
 import { LoggingMiddleware } from './forNowMiddleware';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { BookingsModule } from './domains/bookings/bookings.module';
-import { LocationModule } from './infrastructure/location/location.module';
+import { LocationModule } from './domains/location/location.module';
 import { RoomsModule } from './domains/rooms/rooms.module';
 import { SharedModule } from './infrastructure/shared/shared.module';
 import { ConfigModule } from './config/config.module';
@@ -24,6 +24,7 @@ import { ConfigService } from './config/config.service';
 import { MaintenanceModule } from './infrastructure/maintenance/maintenance.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { Logger } from './common/logger/logger.service';
+import { MapsModule } from './domains/maps/maps.module';
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { Logger } from './common/logger/logger.service';
     LocationModule,
     RoomsModule,
     SharedModule,
+    MapsModule,
   ],
   controllers: [AppController],
   providers: [

@@ -6,7 +6,7 @@ import {
   ValidateNested,
   IsOptional,
 } from 'class-validator';
-import { LocationDto } from 'src/infrastructure/location/dto/location.dto';
+import { LocationDto } from 'src/domains/location/dto/location.dto';
 import { IsDefined } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
 import { CreateRoomsDto } from '../../rooms/dto/create-rooms.dto';
@@ -31,7 +31,7 @@ export class CreateBoardingHouseDto {
   description!: string;
 
   @IsNotEmpty()
-  amenities?: Array<string>;
+  amenities!: Array<string>;
 
   @IsBoolean()
   @IsNotEmpty()

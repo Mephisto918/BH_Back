@@ -6,8 +6,8 @@ import { IDatabaseService } from 'src/infrastructure/database/database.interface
 // TODO: clean this later
 import { BoardingHouse, MediaType, Prisma } from '@prisma/client';
 import { ResourceType } from 'src/infrastructure/file-upload/types/resources-types';
-import { LocationService } from 'src/infrastructure/location/location.service';
-import { LocationDto } from 'src/infrastructure/location/dto/location.dto';
+import { LocationService } from 'src/domains/location/location.service';
+import { LocationDto } from 'src/domains/location/dto/location.dto';
 import { FindBoardingHouseDto } from './dto/find-boarding-house.dto';
 import { RoomsService } from '../rooms/rooms.service';
 import { ImageService } from 'src/infrastructure/image/image.service';
@@ -92,6 +92,9 @@ export class BoardingHousesService {
 
           let totalCapacity = 0;
           let currentCapacity = 0;
+          const prices = house.rooms.map((room) => room.price.toNumber());
+          const lowestPrice = Math.min(...prices);
+          const highestPrice = Math.max(...prices);
 
           house.rooms.forEach((room) => {
             totalCapacity += room.maxCapacity;
@@ -120,6 +123,10 @@ export class BoardingHousesService {
             capacity: {
               totalCapacity,
               currentCapacity,
+            },
+            priceRange: {
+              highestPrice,
+              lowestPrice,
             },
             location: fullLocation,
             thumbnail,
@@ -291,22 +298,39 @@ export class BoardingHousesService {
     });
   }
 
-  update(id: number, updateBoardingHouseDto: UpdateBoardingHouseDto) {
-    const prisma = this.prisma;
-    return prisma.boardingHouse.update({
-      where: {
-        id: id,
-      },
-      data: {
-        name: updateBoardingHouseDto.name,
-        address: updateBoardingHouseDto.address,
-        description: updateBoardingHouseDto.description,
-        availabilityStatus: updateBoardingHouseDto.availabilityStatus,
-        // TODO: must check for cleaner code
-        amenities: updateBoardingHouseDto.amenities ?? undefined,
-        // TODO: must check for cleaner code
-      },
-    });
+  async update(id: number, updateBoardingHouseDto: UpdateBoardingHouseDto) {
+    try {
+      const updated = await this.prisma.boardingHouse.update({
+        where: { id },
+        data: {
+          ...(updateBoardingHouseDto.name && {
+            name: updateBoardingHouseDto.name,
+          }),
+          ...(updateBoardingHouseDto.address && {
+            address: updateBoardingHouseDto.address,
+          }),
+          ...(updateBoardingHouseDto.description && {
+            description: updateBoardingHouseDto.description,
+          }),
+          ...(updateBoardingHouseDto.availabilityStatus && {
+            availabilityStatus: updateBoardingHouseDto.availabilityStatus,
+          }),
+          ...(updateBoardingHouseDto.amenities && {
+            amenities: updateBoardingHouseDto.amenities,
+          }),
+        },
+      });
+
+      return updated;
+    } catch (error) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === 'P2025'
+      ) {
+        throw new NotFoundException(`Boarding house with ID ${id} not found.`);
+      }
+      throw error;
+    }
   }
 
   async remove(id: number) {

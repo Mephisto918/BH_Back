@@ -4,7 +4,12 @@ import { UpdateBoardingHouseDto } from './dto/update-boarding-house.dto';
 import { IDatabaseService } from 'src/infrastructure/database/database.interface';
 
 // TODO: clean this later
-import { BoardingHouse, MediaType, Prisma } from '@prisma/client';
+import {
+  BoardingHouse,
+  MediaType,
+  OccupancyType,
+  Prisma,
+} from '@prisma/client';
 import { ResourceType } from 'src/infrastructure/file-upload/types/resources-types';
 import { LocationService } from 'src/domains/location/location.service';
 import { LocationDto } from 'src/domains/location/dto/location.dto';
@@ -227,6 +232,7 @@ export class BoardingHousesService {
           address: boardinghouseData.address,
           description: boardinghouseData.description,
           availabilityStatus: boardinghouseData.availabilityStatus,
+          occupancyType: boardinghouseData.occupancyType,
           amenities: boardinghouseData.amenities ?? undefined,
           location: { connect: { id: returnedLocationId } },
         },

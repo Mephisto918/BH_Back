@@ -10,9 +10,9 @@ import { IDatabaseService } from 'src/infrastructure/database/database.interface
 import { FindOwnersDto } from './dto/find-owners.dto';
 import { FileFormat, MediaType, Owner, PermitType } from '@prisma/client';
 import { Express } from 'express';
-import { PermitService } from '../../infrastructure/permit/permit.service';
-import { CreatePermitDto } from 'src/infrastructure/permit/dto/create-permit.dto';
-import { UpdatePermitDto } from 'src/infrastructure/permit/dto/update-permit.dto';
+import { PermitService } from '../permit/permit.service';
+import { CreatePermitDto } from 'src/domains/permit/dto/create-permit.dto';
+import { UpdatePermitDto } from 'src/domains/permit/dto/update-permit.dto';
 import { Logger } from 'src/common/logger/logger.service';
 
 @Injectable()

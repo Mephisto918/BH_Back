@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { OwnersService } from './owners.service';
 import { OwnersController } from './owners.controller';
-import { PermitModule } from 'src/infrastructure/permit/permit.module';
-import { PermitService } from 'src/infrastructure/permit/permit.service';
+import { PermitModule } from 'src/domains/permit/permit.module';
+import { PermitService } from 'src/domains/permit/permit.service';
 import { DocumentModule } from 'src/infrastructure/document/document.module';
 import { DocumentService } from 'src/infrastructure/document/document.service';
 import { MediaPathBuilderUtil } from 'src/infrastructure/shared/utils/media-path-builder.util';

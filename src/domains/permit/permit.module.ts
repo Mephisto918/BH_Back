@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { PermitService } from './permit.service';
-import { DocumentModule } from '../document/document.module';
-import { DocumentService } from '../document/document.service';
-import { MediaPathBuilderUtil } from '../shared/utils/media-path-builder.util';
-import { FileOpsUtils } from '../shared/utils/file-ops.utls';
+import { DocumentModule } from '../../infrastructure/document/document.module';
+import { DocumentService } from '../../infrastructure/document/document.service';
+import { MediaPathBuilderUtil } from '../../infrastructure/shared/utils/media-path-builder.util';
+import { FileOpsUtils } from '../../infrastructure/shared/utils/file-ops.utls';
 import { Logger } from 'src/common/logger/logger.service';
 
 @Module({

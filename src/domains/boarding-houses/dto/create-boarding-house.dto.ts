@@ -5,12 +5,14 @@ import {
   IsString,
   ValidateNested,
   IsOptional,
+  IsEnum,
 } from 'class-validator';
 import { LocationDto } from 'src/domains/location/dto/location.dto';
 import { IsDefined } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
 import { CreateRoomsDto } from '../../rooms/dto/create-rooms.dto';
 import { CreateRoomsWithGallery } from 'src/domains/rooms/types';
+import { OccupancyType } from '@prisma/client';
 
 export class CreateBoardingHouseDto {
   @IsInt()
@@ -37,6 +39,9 @@ export class CreateBoardingHouseDto {
   @IsNotEmpty()
   @Transform(({ value }) => value === 'true' || value === true)
   availabilityStatus: boolean = false;
+
+  @IsEnum(OccupancyType)
+  occupancyType!: OccupancyType;
 
   @Transform(({ value }) => safeParseObject<LocationDto>(value) ?? {})
   @IsDefined()

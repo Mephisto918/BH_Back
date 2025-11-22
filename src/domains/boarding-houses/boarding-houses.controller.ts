@@ -21,6 +21,7 @@ import {
 import { FindBoardingHouseDto } from './dto/find-boarding-house.dto';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
 import { createMulterConfig } from 'src/infrastructure/shared/utils/multer-config.util';
+import { OccupancyType } from '@prisma/client';
 // import type { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
 
 @Controller('boarding-houses')
@@ -86,6 +87,9 @@ export class BoardingHousesController {
       address: payload.address,
       description: payload.description ?? '',
       amenities: parsedAmenities,
+      occupancyType: payload.occupancyType
+        ? OccupancyType[payload.occupancyType as keyof typeof OccupancyType]
+        : OccupancyType.MIXED,
       location: parsedLocation,
       rooms: parsedRooms ?? [],
     };

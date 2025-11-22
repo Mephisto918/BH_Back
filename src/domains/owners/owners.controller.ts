@@ -18,8 +18,8 @@ import { CreateOwnerDoc, GetOwnerDoc, UpdateOwnerDoc } from './owners.swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { createMulterConfig } from 'src/infrastructure/shared/utils/multer-config.util';
 import { UploadedFile } from '@nestjs/common';
-import { CreatePermitDto } from 'src/infrastructure/permit/dto/create-permit.dto';
-import { UpdatePermitDto } from 'src/infrastructure/permit/dto/update-permit.dto';
+import { CreatePermitDto } from 'src/domains/permit/dto/create-permit.dto';
+import { UpdatePermitDto } from 'src/domains/permit/dto/update-permit.dto';
 
 @Controller('owners')
 export class OwnersController {

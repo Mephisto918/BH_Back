@@ -8,7 +8,7 @@ import { OwnersService } from '../owners/owners.service';
 import { AdminsService } from '../admins/admins.service';
 import { FileOpsUtils } from 'src/infrastructure/shared/utils/file-ops.utls';
 import { MediaPathBuilderUtil } from 'src/infrastructure/shared/utils/media-path-builder.util';
-import { PermitService } from 'src/infrastructure/permit/permit.service';
+import { PermitService } from 'src/domains/permit/permit.service';
 import { Logger } from 'src/common/logger/logger.service';
 import { DocumentService } from 'src/infrastructure/document/document.service';
 

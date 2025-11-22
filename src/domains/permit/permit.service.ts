@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { DocumentService } from '../document/document.service';
-import { DBClient } from '../image/types/types';
+import { DocumentService } from '../../infrastructure/document/document.service';
+import { DBClient } from '../../infrastructure/image/types/types';
 import {
   MediaPathBuilderUtil,
   ResourceTarget,
-} from '../shared/utils/media-path-builder.util';
-import { FileOpsUtils } from '../shared/utils/file-ops.utls';
+} from '../../infrastructure/shared/utils/media-path-builder.util';
+import { FileOpsUtils } from '../../infrastructure/shared/utils/file-ops.utls';
 import { CreatePermitDto } from './dto/create-permit.dto';
 import { Logger } from 'src/common/logger/logger.service';
 

@@ -9,6 +9,7 @@ import {
   IsString,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+import { RoomFurnishingEnumSchema, RoomType } from '@prisma/client';
 
 export class CreateRoomsDto {
   @IsInt()
@@ -38,6 +39,12 @@ export class CreateRoomsDto {
   @IsNotEmpty()
   price!: number;
 
+  @IsEnum(RoomType)
+  roomType!: RoomType;
+
+  @IsEnum(RoomFurnishingEnumSchema)
+  furnishingType!: RoomFurnishingEnumSchema;
+
   @IsOptional()
   @IsArray()
   @IsString({ each: true })
@@ -47,21 +54,3 @@ export class CreateRoomsDto {
   @IsOptional()
   availabilityStatus?: boolean = true;
 }
-
-/*
-id                  Int
-boardingHouseId     Int
-boardingHouse       BoardingHouse
-roomNumber          String
-capacity            Int
-price               Decimal
-tags                Json
-roomType            RoomType
-availabilityStatus  Boolean
-bookings            Booking
-createdAt           DateTime
-updatedAt           DateTime
-isDeleted           Boolean
-deletedAt           DateTime
-roomAvailabilityLog RoomAvailabilityLog
- */

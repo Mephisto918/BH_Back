@@ -8,12 +8,12 @@ import { OwnersService } from '../owners/owners.service';
 import { AdminsService } from '../admins/admins.service';
 import { FileOpsUtils } from 'src/infrastructure/shared/utils/file-ops.utls';
 import { MediaPathBuilderUtil } from 'src/infrastructure/shared/utils/media-path-builder.util';
-import { PermitService } from 'src/domains/permit/permit.service';
+import { VerifcationService } from 'src/domains/verifications/verification.service';
 import { Logger } from 'src/common/logger/logger.service';
 import { DocumentService } from 'src/infrastructure/document/document.service';
 
 @Module({
-  controllers: [BookingsController ],
+  controllers: [BookingsController],
   providers: [
     BookingsService,
     UserUnionService,
@@ -23,7 +23,7 @@ import { DocumentService } from 'src/infrastructure/document/document.service';
     AdminsService,
     FileOpsUtils,
     MediaPathBuilderUtil,
-    PermitService,
+    VerifcationService,
     Logger,
     {
       provide: 'BASE_DIR',

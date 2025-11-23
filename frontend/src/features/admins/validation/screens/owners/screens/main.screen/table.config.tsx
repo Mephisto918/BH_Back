@@ -1,8 +1,8 @@
 import { TableConfig } from '../../../../../../shared/components/data-table/types';
 import {
   PermitMetaData,
-  PermitStatus,
-  PermitType,
+  VerificationStatus,
+  VerificationType,
 } from '../../../../../../../infrastructure/permits/permits.types';
 import { createFilterElement } from '@/features/shared/components/data-table/services';
 import { Button, useDisclosure } from '@chakra-ui/react';
@@ -17,19 +17,19 @@ export const tableConfig: TableConfig<PermitMetaData>[] = [
   },
   {
     columnName: 'Permit Type',
-    field: 'type',
+    field: 'verificationType',
     filterType: 'dropdown',
-    filterElement: createFilterElement<PermitType>(
+    filterElement: createFilterElement<VerificationType>(
       'dropdown',
-      ['BUSINESS_PERMIT', 'DTI', 'SEC', 'FIRE_CERTIFICATE'],
+      ['DTI', 'SEC', 'FIRE_CERTIFICATE'],
       'Search by type',
     ),
   },
   {
     columnName: 'Status',
-    field: 'status',
+    field: 'verificationStatus',
     filterType: 'dropdown',
-    filterElement: createFilterElement<PermitStatus>(
+    filterElement: createFilterElement<VerificationStatus>(
       'dropdown',
       ['APPROVED', 'PENDING', 'REJECTED', 'EXPIRED'],
       'Search by status',

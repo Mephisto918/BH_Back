@@ -355,13 +355,13 @@ export class BoardingHousesService {
   async removeGallery(id: number) {
     return this.prisma.$transaction(async (tx) => {
       // Get permit to find the filePath/url
-      const permit = await tx.permit.findUnique({ where: { id: id } });
-      if (!permit) {
-        throw new Error(`Permit ${id} not found`);
-      }
+      // const permit = await tx.permit.findUnique({ where: { id: id } });
+      // if (!permit) {
+      //   throw new Error(`Permit ${id} not found`);
+      // }
 
       // Delete permit file + db record atomically as possible
-      await this.imageService.deletePermit(tx, id, permit.url, false);
+      // await this.imageService.deletePermit(tx, id, permit.url, false);
 
       return { success: true };
     });

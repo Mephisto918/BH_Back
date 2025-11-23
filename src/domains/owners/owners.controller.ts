@@ -18,8 +18,8 @@ import { CreateOwnerDoc, GetOwnerDoc, UpdateOwnerDoc } from './owners.swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { createMulterConfig } from 'src/infrastructure/shared/utils/multer-config.util';
 import { UploadedFile } from '@nestjs/common';
-import { CreatePermitDto } from 'src/domains/permit/dto/create-permit.dto';
-import { UpdatePermitDto } from 'src/domains/permit/dto/update-permit.dto';
+import { CreateVerifcationDto } from 'src/domains/verifications/dto/create-verifcation.dto';
+import { UpdateVerifcationDto } from 'src/domains/verifications/dto/update-verifcation.dto';
 
 @Controller('owners')
 export class OwnersController {
@@ -43,15 +43,15 @@ export class OwnersController {
   @UseInterceptors(FileInterceptor('file', createMulterConfig('pdf')))
   createPermit(
     // @Body() payload: { id: number; type: PermitType; expiresAt: string },
-    @Body() payload: CreatePermitDto,
+    @Body() payload: CreateVerifcationDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    return this.ownersService.createPermit(payload, file);
+    return this.ownersService.createVerificationDocument(payload, file);
   }
 
   @Get('permits')
   findAllPermits() {
-    return this.ownersService.findAllPermits();
+    return this.ownersService.findAllVerificationDocument();
   }
 
   //* put static routes first, parameterized routes later
@@ -63,7 +63,7 @@ export class OwnersController {
 
   @Get(':id/permits')
   findOnePermits(@Param('id', ParseIntPipe) id: string) {
-    return this.ownersService.findOnePermits(+id);
+    return this.ownersService.findOneVerificationDocument(+id);
   }
   @Get(':id/permit-verification-status')
   findPermitStatus(@Param('id', ParseIntPipe) id: string) {
@@ -74,17 +74,21 @@ export class OwnersController {
     @Param('ownerId', ParseIntPipe) ownerId: number,
     @Param('permitId', ParseIntPipe) permitId: number,
   ) {
-    return this.ownersService.removePermit(+ownerId, +permitId);
+    return this.ownersService.removeVerificationDocument(+ownerId, +permitId);
   }
 
   @Patch('permits/:permitId')
   @UseInterceptors(FileInterceptor('file', createMulterConfig('pdf')))
   patchPermit(
     @Param('permitId', ParseIntPipe) permitId: number,
-    @Body() payload: UpdatePermitDto,
+    @Body() payload: UpdateVerifcationDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    return this.ownersService.patchPermit(+permitId, payload, file);
+    return this.ownersService.patchVerificationDocument(
+      +permitId,
+      payload,
+      file,
+    );
   }
 
   @Patch(':id')

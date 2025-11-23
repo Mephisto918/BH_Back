@@ -3,7 +3,7 @@ import { CreateAdminDto } from './dto/create-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
 import { IDatabaseService } from 'src/infrastructure/database/database.interface';
 import { FindAdminsDto } from './dto/find-admins.dto';
-import { Admin, PermitStatus } from '@prisma/client';
+import { Admin, VerificationStatus } from '@prisma/client';
 import { TenantsService } from '../tenants/tenants.service';
 import { CreateTenantDto } from '../tenants/dto/create-tenant.dto';
 import { OwnersService } from '../owners/owners.service';
@@ -145,10 +145,10 @@ export class AdminsService {
 
   async updatePermit(id: number) {
     const prisma = this.prisma;
-    return prisma.permit.update({
+    return prisma.verificationDocument.update({
       where: { id },
       data: {
-        status: PermitStatus.APPROVED,
+        verificationStatus: VerificationStatus.APPROVED,
         approvedAt: new Date(),
         verifiedById: id,
       },

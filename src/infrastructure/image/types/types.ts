@@ -13,5 +13,5 @@ export type ImageMetaData = {
 
 export type PrismaDelegateMap = {
   IMAGE: Prisma.ImageDelegate;
-  PDF: Prisma.PermitDelegate;
+  PDF: Prisma.VerificationDocumentDelegate;
 };

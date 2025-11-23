@@ -3,7 +3,7 @@ import { BaseFileUploadService } from '../file-upload/file-upload.service';
 import { FileOpsUtils } from '../shared/utils/file-ops.utls';
 import { MediaPathBuilderUtil } from '../shared/utils/media-path-builder.util';
 import { ConfigService } from '../../config/config.service';
-import { Image, MediaType, Permit } from '@prisma/client';
+import { Image, MediaType, VerificationDocument } from '@prisma/client';
 import { UploadMeta } from '../file-upload/types/payloads';
 import { DBClient } from '../image/types/types';
 
@@ -27,7 +27,7 @@ export class DocumentService extends BaseFileUploadService {
     prisma: DBClient,
     relPath: string,
     meta: UploadMeta,
-    payload: Partial<Image> | Partial<Permit>,
+    payload: Partial<Image> | Partial<VerificationDocument>,
   ): Promise<{ id: number }> {
     //@ts-expect-error asdas sadas
     return { id: 0 };

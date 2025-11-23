@@ -1,17 +1,19 @@
 import { IsOptional, IsString, IsDateString, IsEnum } from 'class-validator';
 
-import { FileFormat, PermitType } from '@prisma/client';
+import { FileFormat, VerificationType } from '@prisma/client';
 import { Transform } from 'class-transformer';
 
-export class UpdatePermitDto {
+export class UpdateVerifcationDto {
   @IsOptional()
   @IsEnum(FileFormat)
   fileFormat?: FileFormat;
 
   @IsOptional()
-  @IsEnum(PermitType)
-  @Transform(({ value }) => (value as string).replace(/"/g, '') as PermitType)
-  type?: PermitType;
+  @IsEnum(VerificationType)
+  @Transform(
+    ({ value }) => (value as string).replace(/"/g, '') as VerificationType,
+  )
+  type?: VerificationType;
 
   @IsOptional()
   @IsString()

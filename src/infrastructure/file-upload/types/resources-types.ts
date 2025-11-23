@@ -1,8 +1,8 @@
-import { Image, Permit } from '@prisma/client';
+import { Image, VerificationDocument } from '@prisma/client';
 
 export type ResourceMediaTypeMap = {
   IMAGE: Image;
-  PDF: Permit;
+  PDF: VerificationDocument;
 };
 
 export type ResourceMediaType = keyof ResourceMediaTypeMap;

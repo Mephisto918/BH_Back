@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Image, Permit } from '@prisma/client';
+import { Image, VerificationDocument } from '@prisma/client';
 import { DBClient } from '../image/types/types';
 import { FileOpsUtils } from '../shared/utils/file-ops.utls';
 import { UploadMeta } from './types/payloads';
@@ -20,14 +20,14 @@ export abstract class BaseFileUploadService {
     prisma: DBClient,
     relPath: string,
     meta: UploadMeta,
-    payload: Partial<Image> | Partial<Permit>, //TODO needs further abstraction
+    payload: Partial<Image> | Partial<VerificationDocument>, //TODO needs further abstraction
   ): Promise<{ id: number }>;
 
   protected async uploadFile(
     prisma: DBClient,
     meta: UploadMeta,
     file: Express.Multer.File,
-    payload: Partial<Image> | Partial<Permit>, //TODO needs further abstraction
+    payload: Partial<Image> | Partial<VerificationDocument>, //TODO needs further abstraction
     paths: { relPath: string; absPath: string },
   ): Promise<number> {
     await this.validateMeta(meta);

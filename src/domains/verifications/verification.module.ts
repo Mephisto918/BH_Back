@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { PermitService } from './permit.service';
+import { VerifcationService } from './verification.service';
 import { DocumentModule } from '../../infrastructure/document/document.module';
 import { DocumentService } from '../../infrastructure/document/document.service';
 import { MediaPathBuilderUtil } from '../../infrastructure/shared/utils/media-path-builder.util';
@@ -9,7 +9,7 @@ import { Logger } from 'src/common/logger/logger.service';
 @Module({
   imports: [DocumentModule],
   providers: [
-    PermitService,
+    VerifcationService,
     Logger,
     DocumentService,
     MediaPathBuilderUtil,
@@ -20,4 +20,4 @@ import { Logger } from 'src/common/logger/logger.service';
     },
   ],
 })
-export class PermitModule {}
+export class VerifcationModule {}

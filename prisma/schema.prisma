@@ -284,25 +284,27 @@ model RoomAvailabilityLog {
 
 model VerificationDocument {
   id                 Int                @id @default(autoincrement())
-  ownerId            Int
+  userType           UserRole // TENANT or OWNER
+  userId             Int // points to either Tenant.id or Owner.id
   fileFormat         FileFormat         @default(PDF)
   verificationType   VerificationType
   url                String
   expiresAt          DateTime
   verificationStatus VerificationStatus @default(PENDING)
-  verifiedById       Int? // FK to Admin who verified
+  verifiedById       Int?
   verifiedBy         Admin?             @relation(fields: [verifiedById], references: [id])
   verifiedAt         DateTime?
   rejectionReason    String?
   approvedAt         DateTime?
-  owner              Owner              @relation(fields: [ownerId], references: [id])
-  isDeleted          Boolean            @default(false)
-  deletedAt          DateTime?
   uploadedAt         DateTime           @default(now())
   createdAt          DateTime           @default(now())
   updatedAt          DateTime           @updatedAt
+  isDeleted          Boolean            @default(false)
+  deletedAt          DateTime?
   tenant             Tenant?            @relation(fields: [tenantId], references: [id])
   tenantId           Int?
+  owner              Owner?             @relation(fields: [ownerId], references: [id])
+  ownerId            Int?
 }
 
 model Image {

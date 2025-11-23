@@ -3,23 +3,28 @@ import {
   Inject,
   NotFoundException,
   BadRequestException,
+  InternalServerErrorException,
+  HttpException,
+  ConflictException,
 } from '@nestjs/common';
 import { CreateOwnerDto } from './dto/create-owner.dto';
 import { UpdateOwnerDto } from './dto/update-owner.dto';
 import { IDatabaseService } from 'src/infrastructure/database/database.interface';
 import { FindOwnersDto } from './dto/find-owners.dto';
-import { FileFormat, MediaType, Owner, PermitType } from '@prisma/client';
-import { Express } from 'express';
-import { PermitService } from '../permit/permit.service';
-import { CreatePermitDto } from 'src/domains/permit/dto/create-permit.dto';
-import { UpdatePermitDto } from 'src/domains/permit/dto/update-permit.dto';
+import { MediaType, Owner, UserRole, VerificationType } from '@prisma/client';
+import { VerifcationService } from '../verifications/verification.service';
+import { CreateVerifcationDto } from 'src/domains/verifications/dto/create-verifcation.dto';
+import { UpdateVerifcationDto } from 'src/domains/verifications/dto/update-verifcation.dto';
 import { Logger } from 'src/common/logger/logger.service';
+import { VerificationInputSchema } from '../verifications/schemas/verification-document.schema';
+import { isPrismaErrorCode } from 'src/infrastructure/shared/utils/prisma.exceptions';
+import { hasNullOrUndefinedDeep } from 'src/infrastructure/shared/utils/payload-validation.utils';
 
 @Injectable()
 export class OwnersService {
   constructor(
     @Inject('IDatabaseService') private readonly database: IDatabaseService,
-    private readonly permitService: PermitService,
+    private readonly verificationService: VerifcationService,
     private readonly logger: Logger,
   ) {}
 
@@ -141,57 +146,105 @@ export class OwnersService {
     });
   }
 
-  async createPermit(payload: CreatePermitDto, file: Express.Multer.File) {
+  async createVerificationDocument(
+    payload: CreateVerifcationDto,
+    file: Express.Multer.File,
+  ) {
+    if (hasNullOrUndefinedDeep(payload)) {
+      throw new BadRequestException(
+        'Payload contains undefined or null values',
+      );
+    }
+
+    const { userId, expiresAt, type, fileFormat } = payload;
+    if (!userId) {
+      throw new BadRequestException(
+        'Either ownerId or tenantId must be provided',
+      );
+    }
+
+    // 🔹 Quick check: does the owner exist?
+    const ownerExists = await this.prisma.owner.findUnique({
+      where: { id: userId },
+    });
+
+    if (!ownerExists) {
+      throw new BadRequestException(`Owner with id ${userId} does not exist`);
+    }
+
+    // 3️⃣ Transaction + creation
     try {
       const id = await this.prisma.$transaction(async (tx) => {
-        return await this.permitService.create(
+        return await this.verificationService.create(
           tx,
           file,
+          UserRole.OWNER,
           {
             type: 'OWNER',
-            targetId: payload.ownerId,
+            targetId: userId,
             mediaType: MediaType.DOCUMENT,
           },
           {
-            ownerId: payload.ownerId,
-            expiresAt: payload.expiresAt,
-            type: payload.type,
-            fileFormat: FileFormat.PDF,
+            userId,
+            type: type,
+            expiresAt: expiresAt.toString(),
+            fileFormat: fileFormat,
           },
           false,
         );
       });
+
+      if (!id) {
+        throw new InternalServerErrorException(
+          'Failed to create verification document',
+        );
+      }
+
       return id;
-    } catch (error: any) {
-      console.log('error', error); // TODO fix that shiii
-      throw error;
+    } catch (error: unknown) {
+      console.error('Verification document creation failed:', error);
+
+      if (isPrismaErrorCode(error, 'P2002')) {
+        throw new ConflictException('Verification document already exists');
+      }
+
+      throw new InternalServerErrorException('An unexpected error occurred');
     }
   }
 
-  async patchPermit(
-    permitId: number,
-    payload: UpdatePermitDto,
+  async patchVerificationDocument(
+    verificationDocumentId: number,
+    payload: UpdateVerifcationDto,
     file: Express.Multer.File,
   ) {
     const prisma = this.prisma;
 
-    const permitOwnerID = await prisma.permit.findUnique({
-      where: { id: permitId },
-      select: { ownerId: true },
-    });
+    const verificationDocumentOwnerID =
+      await prisma.verificationDocument.findUnique({
+        where: { id: verificationDocumentId },
+        select: { ownerId: true },
+      });
 
-    if (!permitOwnerID) {
-      throw new NotFoundException(`Permit ${permitId} not found`);
+    if (!verificationDocumentOwnerID) {
+      throw new NotFoundException(
+        `Verification Document ${verificationDocumentId} not found`,
+      );
     }
 
-    return await this.permitService.updatePermit(
+    if (!verificationDocumentOwnerID.ownerId) {
+      throw new NotFoundException(
+        `Verification Document ${verificationDocumentId} not found`,
+      );
+    }
+
+    return await this.verificationService.updateVerificationDocument(
       prisma,
-      permitId,
+      verificationDocumentId,
       file,
       {
         type: 'OWNER',
-        // so it was +permitOwnerID but object cant coerce with number returns NAN bug
-        targetId: permitOwnerID.ownerId,
+        // so it was +verificationDocumentOwnerID but object cant coerce with number returns NAN bug
+        targetId: verificationDocumentOwnerID.ownerId,
         mediaType: MediaType.DOCUMENT,
       },
       {
@@ -202,92 +255,214 @@ export class OwnersService {
     );
   }
 
-  async findAllPermits() {
+  async findAllVerificationDocument() {
     const prisma = this.prisma;
-    const permits = await prisma.permit.findMany();
+
+    const verificationDocuments = await prisma.verificationDocument.findMany({
+      where: { userType: 'OWNER' },
+      // don't include owner because ownerId is null
+    });
 
     const results = await Promise.all(
-      permits.map(async (permit) => {
+      verificationDocuments.map(async (verificationDocument) => {
         try {
-          return await this.permitService.getPermitMetaData(
-            prisma,
-            permit.id,
-            false,
-          );
+          const { userId } = verificationDocument;
+
+          if (!userId) return null;
+
+          // fetch the owner using userId
+          const ownerData = await prisma.owner.findUnique({
+            where: { id: userId }, // TypeScript will complain if userId could be null
+          });
+
+          if (!ownerData) return null; // gracefully skip if owner doesn't exist
+
+          const verificationDocumentData =
+            await this.verificationService.getVerificationDocumentMetaData(
+              prisma,
+              verificationDocument.id,
+              false,
+            );
+
+          const { tenantId, ownerId, owner, ...safeData } =
+            verificationDocumentData;
+
+          return {
+            ...safeData,
+            owner: {
+              id: ownerData.id,
+              firstname: ownerData.firstname,
+              lastname: ownerData.lastname,
+              email: ownerData.email,
+              // add any fields you want to expose
+            },
+          };
         } catch (err) {
           this.logger.error(err, undefined, {
-            permitId: permit.id,
-            rawUrl: permit.url,
+            verificationDocumentId: verificationDocument.id,
+            rawUrl: verificationDocument.url,
           });
-          return null; // gracefully skip
+          return null; // skip gracefully
         }
       }),
     );
 
     return results.filter((p) => p !== null);
   }
+
   async getVerificationStatus(ownerId: number) {
-    const requiredPermits = [
-      PermitType.BIR,
-      PermitType.FIRE_CERTIFICATE,
-      PermitType.SANITARY_PERMIT,
+    const requiredVerificationDocuments = [
+      VerificationType.BIR,
+      VerificationType.FIRE_CERTIFICATE,
+      VerificationType.SANITARY_PERMIT,
     ];
 
     const owner = await this.prisma.owner.findUnique({
       where: { id: ownerId },
-      include: { permits: true },
+      include: { verificationDocuments: true },
     });
 
     if (!owner) {
       throw new NotFoundException(`Owner ${ownerId} not found`);
     }
 
-    const hasDTIorSEC = owner.permits.some(
-      (p) => p.type === PermitType.DTI || p.type === PermitType.SEC,
+    const hasDTIorSEC = owner.verificationDocuments.some(
+      (p) =>
+        p.verificationType === VerificationType.DTI ||
+        p.verificationType === VerificationType.SEC,
     );
 
-    const missingPermits = requiredPermits.filter(
-      (type) => !owner.permits.some((p) => p.type === type),
-    ) as PermitType[];
+    const missingVerificationDOcuments = requiredVerificationDocuments.filter(
+      (type) =>
+        !owner.verificationDocuments.some((p) => p.verificationType === type),
+    ) as VerificationType[];
 
     if (!hasDTIorSEC) {
-      missingPermits.push(PermitType.DTI, PermitType.SEC);
+      missingVerificationDOcuments.push(
+        VerificationType.DTI,
+        VerificationType.SEC,
+      );
     }
 
     return {
-      verified: missingPermits.length === 0 && hasDTIorSEC,
-      missingPermits, // 👈 machine-readable enums
-      permits: owner.permits.map((p) => ({
+      verified: missingVerificationDOcuments.length === 0 && hasDTIorSEC,
+      missingVerificationDOcuments, // 👈 machine-readable enums
+      verificationDocuments: owner.verificationDocuments.map((p) => ({
         id: p.id,
-        type: p.type,
-        status: p.status,
+        verificationType: p.verificationType,
+        verificationStatus: p.verificationStatus,
         expiresAt: p.expiresAt,
         fileFormat: p.fileFormat,
       })),
     };
   }
 
-  async findOnePermits(id: number) {
+  async findOneVerificationDocument(id: number) {
+    if (!id || isNaN(id)) {
+      throw new BadRequestException('Invalid document ID.');
+    }
+
     const prisma = this.prisma;
-    const permit = await this.permitService.getPermitMetaData(
-      prisma,
-      id,
-      false,
-    );
 
-    return permit;
-  }
+    try {
+      // 1️⃣ Fetch the verification document
+      const verificationDocument = await prisma.verificationDocument.findUnique(
+        {
+          where: { id },
+        },
+      );
 
-  async removePermit(ownerId: number, permitId: number) {
-    return this.prisma.$transaction(async (tx) => {
-      // Get permit to find the filePath/url
-      const permit = await tx.permit.findFirst({ where: { id: permitId } });
-      if (!permit) {
-        throw new NotFoundException(`Permit ${permitId} not found`);
+      if (!verificationDocument) {
+        throw new NotFoundException('Verification document not found.');
       }
 
-      // Delete permit file + db record atomically as possible
-      await this.permitService.deletePermit(tx, permitId, permit.url, false);
+      const { userId } = verificationDocument;
+      console.log('verificationDocument: ', verificationDocument);
+      console.log('userId: ', userId);
+
+      if (!userId) {
+        throw new NotFoundException(
+          'Verification document does not have an associated owner.',
+        );
+      }
+
+      // 2️⃣ Fetch the owner using userId
+      const ownerData = await prisma.owner.findUnique({
+        where: { id: userId },
+      });
+      console.log('ownerData: ', ownerData);
+
+      if (!ownerData) {
+        throw new NotFoundException(
+          `Owner with ID ${userId} not found for this document.`,
+        );
+      }
+
+      // 3️⃣ Fetch the verification document metadata
+      const verificationDocumentData =
+        await this.verificationService.getVerificationDocumentMetaData(
+          prisma,
+          verificationDocument.id,
+          false,
+        );
+
+      const { tenantId, ownerId, owner, ...safeData } =
+        verificationDocumentData;
+
+      return {
+        ...safeData,
+        owner: {
+          id: ownerData.id,
+          firstname: ownerData.firstname,
+          lastname: ownerData.lastname,
+          email: ownerData.email,
+          // any other fields you want to expose
+        },
+      };
+    } catch (err) {
+      // Prisma known errors
+      if (typeof err === 'object' && err !== null && 'code' in err) {
+        const prismaErr = err as { code: string };
+
+        if (prismaErr.code === 'P2025') {
+          throw new NotFoundException('Owner or document not found.');
+        }
+      }
+
+      // Re-throw HTTP exceptions directly
+      if (err instanceof HttpException) {
+        throw err;
+      }
+
+      // Fallback
+      throw new InternalServerErrorException(
+        'Failed to fetch verification document.',
+      );
+    }
+  }
+
+  async removeVerificationDocument(
+    ownerId: number,
+    verificationDocumentId: number,
+  ) {
+    return this.prisma.$transaction(async (tx) => {
+      // Get Verification Document to find the filePath/url
+      const verificationDocuments = await tx.verificationDocument.findFirst({
+        where: { id: verificationDocumentId },
+      });
+      if (!verificationDocuments) {
+        throw new NotFoundException(
+          `Verification Document ${verificationDocumentId} not found`,
+        );
+      }
+
+      // Delete verificaiton document file + db record atomically as possible
+      await this.verificationService.deleteVerificationDocument(
+        tx,
+        verificationDocumentId,
+        verificationDocuments.url,
+        false,
+      );
 
       return { success: true };
     });

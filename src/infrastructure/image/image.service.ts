@@ -258,7 +258,7 @@ export class ImageService extends BaseFileUploadService {
     );
   }
 
-  async deletePermit(
+  async deleteVerificationDocument(
     tx: DBClient,
     id: number,
     filePath: string,
@@ -268,7 +268,7 @@ export class ImageService extends BaseFileUploadService {
       filePath,
       isPublic,
     );
-    console.log('delete Permit absPath:', absPath);
+    console.log('delete VerificationDocument absPath:', absPath);
 
     try {
       await this.fileOpsUtils.deleteFileStrict(absPath);
@@ -279,6 +279,6 @@ export class ImageService extends BaseFileUploadService {
       throw err; // or just continue if you want
     }
 
-    await tx.permit.delete({ where: { id } });
+    await tx.verificationDocument.delete({ where: { id } });
   }
 }

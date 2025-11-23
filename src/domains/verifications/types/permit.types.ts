@@ -1,13 +1,17 @@
-import { FileFormat, PermitStatus, PermitType } from '@prisma/client';
+import {
+  FileFormat,
+  VerificationStatus,
+  VerificationType,
+} from '@prisma/client';
 
-export interface PermitMetaData {
+export interface VerificationDocumentMetaData {
   id: number;
   ownerId: number;
   fileFormat: FileFormat;
-  type: PermitType;
+  type: VerificationStatus;
   url: string;
   expiresAt: string;
-  status: PermitStatus;
+  status: VerificationType;
   verifiedById?: number | null; // nullable
   verifiedAt?: string | null;
   approvedAt?: string | null;

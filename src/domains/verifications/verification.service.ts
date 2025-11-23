@@ -6,11 +6,12 @@ import {
   ResourceTarget,
 } from '../../infrastructure/shared/utils/media-path-builder.util';
 import { FileOpsUtils } from '../../infrastructure/shared/utils/file-ops.utls';
-import { CreatePermitDto } from './dto/create-permit.dto';
+import { CreateVerifcationDto } from './dto/create-verifcation.dto';
 import { Logger } from 'src/common/logger/logger.service';
+import { UserRole } from '@prisma/client';
 
 @Injectable()
-export class PermitService {
+export class VerifcationService {
   constructor(
     private readonly documentService: DocumentService,
     private readonly mediaPathBuilderUtil: MediaPathBuilderUtil,
@@ -21,8 +22,9 @@ export class PermitService {
   async create(
     prisma: DBClient,
     file: Express.Multer.File,
+    targetRole: UserRole,
     target: ResourceTarget,
-    payload: CreatePermitDto,
+    payload: CreateVerifcationDto,
     isPublic?: boolean,
   ): Promise<number> {
     const { relPath, absPath } = this.mediaPathBuilderUtil.buildStoragePath(
@@ -35,11 +37,12 @@ export class PermitService {
     const fullAbsPath = `${absPath}/${filename}`;
 
     //* Start DB insert first inside the current transaction
-    const record = await prisma.permit.create({
+    const record = await prisma.verificationDocument.create({
       data: {
-        ownerId: +payload.ownerId,
+        userId: +payload.userId,
         url: fullRelPath,
-        type: payload.type,
+        userType: targetRole,
+        verificationType: payload.type,
         fileFormat: payload.fileFormat,
         expiresAt: payload.expiresAt,
       },
@@ -53,7 +56,7 @@ export class PermitService {
       });
     } catch (error) {
       //* File write failed - delete the DB record manually to avoid orphan
-      await prisma.permit.delete({ where: { id: record.id } });
+      await prisma.verificationDocument.delete({ where: { id: record.id } });
 
       //* Re-throw the error so transaction fails as well
       throw error;
@@ -62,21 +65,25 @@ export class PermitService {
     return record.id;
   }
 
-  //TODO update Permits
-  async updatePermit(
+  //TODO update VerificationDocument
+  async updateVerificationDocument(
     tx: DBClient,
-    permitId: number,
+    verificationDocumentId: number,
     file: Express.Multer.File | undefined,
     target: ResourceTarget,
-    payload: Partial<CreatePermitDto>, // reuse your DTO, make fields optional
+    payload: Partial<CreateVerifcationDto>, // reuse your DTO, make fields optional
     isPublic?: boolean,
   ) {
-    const permit = await tx.permit.findUnique({ where: { id: permitId } });
-    if (!permit) {
-      throw new NotFoundException(`Permit ${permitId} not found`);
+    const verificationDocument = await tx.verificationDocument.findUnique({
+      where: { id: verificationDocumentId },
+    });
+    if (!verificationDocument) {
+      throw new NotFoundException(
+        `Verification Document ${verificationDocumentId} not found`,
+      );
     }
 
-    let updatedUrl = permit.url;
+    let updatedUrl = verificationDocument.url;
 
     if (file) {
       // Step 1: Build storage path for new file
@@ -95,20 +102,23 @@ export class PermitService {
 
       try {
         const oldAbsPath = this.mediaPathBuilderUtil.getAbsolutePath(
-          permit.url,
+          verificationDocument.url,
           isPublic ?? true,
         );
         await this.fileOpsUtils.deleteFileStrict(oldAbsPath);
       } catch (err) {
-        console.warn(`Failed to delete old file for permit ${permitId}:`, err);
+        console.warn(
+          `Failed to delete old file for Verification Document ${verificationDocumentId}:`,
+          err,
+        );
       }
 
       updatedUrl = fullRelPath;
     }
 
     // Step 5: Update DB record
-    return tx.permit.update({
-      where: { id: permitId },
+    return tx.verificationDocument.update({
+      where: { id: verificationDocumentId },
       data: {
         ...payload,
         url: updatedUrl,
@@ -116,8 +126,11 @@ export class PermitService {
     });
   }
 
-  async getAllPermitMetaData(prisma: DBClient, IsPublic: boolean) {
-    const permits = await prisma.permit.findMany({
+  async getAllVerificationDocumentMetaData(
+    prisma: DBClient,
+    IsPublic: boolean,
+  ) {
+    const verificationDocuments = await prisma.verificationDocument.findMany({
       include: {
         owner: {
           select: {
@@ -128,11 +141,17 @@ export class PermitService {
       },
     });
 
-    return Promise.all(permits.map((p) => this.formatUrl(p.url, IsPublic)));
+    return Promise.all(
+      verificationDocuments.map((p) => this.formatUrl(p.url, IsPublic)),
+    );
   }
 
-  async getPermitMetaData(prisma: DBClient, id: number, IsPublic: boolean) {
-    const permit = await prisma.permit.findUnique({
+  async getVerificationDocumentMetaData(
+    prisma: DBClient,
+    id: number,
+    IsPublic: boolean,
+  ) {
+    const verificationDocument = await prisma.verificationDocument.findUnique({
       where: { id },
       include: {
         owner: {
@@ -144,16 +163,19 @@ export class PermitService {
       },
     });
 
-    if (!permit) {
-      throw new NotFoundException(`Permit ${id} not found`);
+    if (!verificationDocument) {
+      throw new NotFoundException(`Verification Document ${id} not found`);
     }
 
     let formattedUrl: string | null = null;
 
     try {
-      formattedUrl = await this.formatUrl(permit.url, IsPublic);
+      formattedUrl = await this.formatUrl(verificationDocument.url, IsPublic);
     } catch (err) {
-      this.logger.error(err, undefined, { permitId: id, rawUrl: permit.url });
+      this.logger.error(err, undefined, {
+        verificationDocumentId: id,
+        rawUrl: verificationDocument.url,
+      });
 
       // ❓ Decision point:
       // 1. If missing URL is critical → throw a 500
@@ -163,10 +185,10 @@ export class PermitService {
       formattedUrl = null;
     }
 
-    return { ...permit, url: formattedUrl };
+    return { ...verificationDocument, url: formattedUrl };
   }
 
-  async deletePermit(
+  async deleteVerificationDocument(
     tx: DBClient,
     id: number,
     filePath: string,
@@ -176,7 +198,7 @@ export class PermitService {
       filePath,
       isPublic,
     );
-    console.log('delete Permit absPath:', absPath);
+    console.log('delete VerificationDocument absPath:', absPath);
 
     try {
       await this.fileOpsUtils.deleteFileStrict(absPath);
@@ -187,21 +209,21 @@ export class PermitService {
       throw err; // or just continue if you want
     }
 
-    await tx.permit.delete({ where: { id } });
+    await tx.verificationDocument.delete({ where: { id } });
   }
 
   private async formatUrl(
-    permitUrl: string,
+    verificationDocumentUrl: string,
     IsPublic: boolean,
   ): Promise<string | null> {
     const transformedUrl = await this.fileOpsUtils.getMediaPath(
-      permitUrl,
+      verificationDocumentUrl,
       IsPublic,
     );
 
     if (!transformedUrl) {
       this.logger.warn('Skipping pdf due to null transformedUrl', {
-        rawUrl: permitUrl,
+        rawUrl: verificationDocumentUrl,
       });
       return null; // 👈 no throw
     }

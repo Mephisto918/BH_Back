@@ -1,6 +1,10 @@
 import { BACKEND_API } from '@/app/config/api';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { EntityType, PermitMetaData } from './permits.types';
+import {
+  EntityType,
+  PermitMetaData,
+  VerificationStatus,
+} from './permits.types';
 import { ApiResponseType } from '../common/types/backend-reponse.type';
 
 const permitApiRoute = `permits`;
@@ -48,13 +52,33 @@ export const permitsApi = createApi({
       },
       providesTags: (result, error, { id }) => [{ type: 'Permit', id }],
     }),
+    patchVerificationDocument: builder.mutation<
+      ApiResponseType<PermitMetaData>,
+      {
+        permitId: number;
+        data: { adminId: number; newVerificationStatus: VerificationStatus };
+      }
+    >({
+      query: ({ permitId, data }) => ({
+        url: `admins/${permitId}/permits`,
+        method: 'PATCH',
+        body: data,
+      }),
+
+      // Invalidate the same tag used by "getOne"
+      invalidatesTags: (result, error, { permitId }) => [
+        { type: 'Permit', id: permitId },
+      ],
+    }),
+
+    // deletePermit: builder.mutation<
   }),
 });
 
 export const {
   useGetAllQuery,
   useGetOneQuery,
+  usePatchVerificationDocumentMutation,
   // useCreateMutation,
-  // usePatchMutation,
   // useDeleteMutation,
 } = permitsApi;

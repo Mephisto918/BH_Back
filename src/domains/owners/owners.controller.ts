@@ -42,7 +42,6 @@ export class OwnersController {
   @Post('permits')
   @UseInterceptors(FileInterceptor('file', createMulterConfig('pdf')))
   createPermit(
-    // @Body() payload: { id: number; type: PermitType; expiresAt: string },
     @Body() payload: CreateVerifcationDto,
     @UploadedFile() file: Express.Multer.File,
   ) {

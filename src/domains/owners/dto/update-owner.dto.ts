@@ -1,6 +1,7 @@
 import { PartialType } from '@nestjs/swagger';
 import { CreateOwnerDto } from './create-owner.dto';
-import { IsBoolean, IsOptional } from 'class-validator';
+import { IsBoolean, IsDate, IsOptional } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class UpdateOwnerDto extends PartialType(CreateOwnerDto) {
   @IsOptional()
@@ -14,4 +15,13 @@ export class UpdateOwnerDto extends PartialType(CreateOwnerDto) {
   @IsOptional()
   @IsBoolean()
   isVerified?: boolean;
+
+  @IsOptional()
+  @IsBoolean()
+  hasAcceptedLegitimacyConsent?: boolean;
+
+  @IsOptional()
+  @Type(() => Date)
+  @IsDate()
+  consentAcceptedAt?: Date;
 }

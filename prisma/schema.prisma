@@ -75,9 +75,8 @@ enum RoomType {
   STUDIO
   SINGLE
   DOUBLE
-  BEDSPACER
-  DORM
-  FULLHOUSE
+  BED_SPACER
+  APARTMENT
 }
 
 enum RoomFurnishingEnumSchema {

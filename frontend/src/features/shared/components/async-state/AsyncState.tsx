@@ -9,7 +9,6 @@ import {
   ModalContent,
   ModalHeader,
   ModalBody,
-  Box,
   useDisclosure,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
@@ -107,11 +106,20 @@ export default function AsyncState<T>({
 
   if (isError) {
     return (
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} isCentered size="lg">
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent
+          maxH="80vh" // allow the modal to grow
+          overflow="hidden" // prevent content escaping
+        >
           <ModalHeader>Error</ModalHeader>
-          <ModalBody>
+
+          <ModalBody
+            overflowY="auto" // scroll when content is long
+            whiteSpace="pre-wrap"
+            wordBreak="break-word"
+            maxH="calc(80vh - 4rem)" // (header + padding)
+          >
             {errorObject && errorBody
               ? errorBody(errorObject, isOpen, onClose)
               : 'Something went wrong.'}

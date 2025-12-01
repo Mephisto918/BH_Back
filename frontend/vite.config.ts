@@ -4,8 +4,22 @@ import cesium from 'vite-plugin-cesium';
 import path from 'path';
 import dotenv from 'dotenv';
 import svgr from 'vite-plugin-svgr';
+import os from 'os';
 
 dotenv.config({ path: path.resolve(__dirname, '../.env') }); // point to Nest root
+
+function getLocalIP() {
+  const interfaces = os.networkInterfaces();
+  for (const name of Object.keys(interfaces)) {
+    for (const iface of interfaces[name]!) {
+      if (iface.family === 'IPv4' && !iface.internal) {
+        return iface.address;
+      }
+    }
+  }
+  return 'localhost';
+}
+const LOCAL_IP = getLocalIP();
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -48,10 +62,17 @@ export default defineConfig({
   //   },
   // },
   server: {
+    host: true,
     port: 5173,
     proxy: {
-      '/api': { target: 'http://10.122.68.117:3000', changeOrigin: true },
-      '/media': { target: 'http://10.122.68.117:3000', changeOrigin: true },
+      '/api': {
+        target: `http://${LOCAL_IP}:3000`,
+        changeOrigin: true,
+      },
+      '/media': {
+        target: `http://${LOCAL_IP}:3000`,
+        changeOrigin: true,
+      },
     },
   },
 });

@@ -1,4 +1,10 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
 import { IDatabaseService } from 'src/infrastructure/database/database.interface';
@@ -143,15 +149,50 @@ export class AdminsService {
     });
   }
 
-  async updatePermit(id: number) {
+  async updatePermit(
+    id: number,
+    payload: {
+      adminId: number;
+      newVerificationStatus: VerificationStatus;
+    },
+  ) {
     const prisma = this.prisma;
-    return prisma.verificationDocument.update({
+
+    if (!id || isNaN(id)) {
+      throw new BadRequestException('Invalid permit ID');
+    }
+
+    if (!payload || !payload.adminId || isNaN(payload.adminId)) {
+      throw new BadRequestException('Invalid admin ID');
+    }
+
+    // --- check permit exists ---
+    const existingPermit = await prisma.verificationDocument.findUnique({
+      where: { id },
+    });
+
+    if (!existingPermit) {
+      throw new NotFoundException(`Permit with ID ${id} not found`);
+    }
+
+    // --- allow update only when pending ---
+    if (existingPermit.verificationStatus !== VerificationStatus.PENDING) {
+      throw new ConflictException(
+        `This permit can no longer be updated because it is already ${existingPermit.verificationStatus}.`,
+      );
+    }
+
+    const result = await prisma.verificationDocument.update({
       where: { id },
       data: {
-        verificationStatus: VerificationStatus.APPROVED,
+        verificationStatus: payload.newVerificationStatus,
         approvedAt: new Date(),
-        verifiedById: id,
+        verifiedById: payload.adminId,
       },
     });
+
+    return {
+      permitStatus: result.verificationStatus,
+    };
   }
 }

@@ -4,7 +4,7 @@ import { PrismaService } from 'src/infrastructure/database/prisma.service';
 import { UpdateRoomDto } from './dto/update-room.dto';
 import { ImageService } from 'src/infrastructure/image/image.service';
 // import { ImageService } from 'src/infrastructure/image/image.service';
-import { MediaType, Prisma } from '@prisma/client';
+import { MediaType } from '@prisma/client';
 import { CreateRoomsWithGallery } from './types';
 import { ResourceType } from 'src/infrastructure/file-upload/types/resources-types';
 import { DBClient } from 'src/infrastructure/image/types/types';
@@ -28,12 +28,13 @@ export class RoomsService {
     tx: DBClient = this.prisma,
   ): Promise<void> {
     for (const room of rooms) {
-      const { gallery, thumbnail, ...roomData } = room;
+      const { gallery, thumbnail, roomType, ...roomData } = room;
 
       // Create the room first to get its ID
       const createdRoom = await tx.room.create({
         data: {
           ...roomData,
+          roomType: roomType,
           boardingHouseId,
         },
       });

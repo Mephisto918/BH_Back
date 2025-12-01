@@ -93,6 +93,8 @@ export class OwnersService {
         phone_number: true,
         isDeleted: true,
         deletedAt: true,
+        consentAcceptedAt: true,
+        hasAcceptedLegitimacyConsent: true,
         boardingHouses: {
           select: {
             id: true,
@@ -312,42 +314,33 @@ export class OwnersService {
 
   async getVerificationStatus(ownerId: number) {
     const requiredVerificationDocuments = [
+      VerificationType.DTI,
       VerificationType.BIR,
       VerificationType.FIRE_CERTIFICATE,
       VerificationType.SANITARY_PERMIT,
+      VerificationType.SEC,
     ];
 
-    const owner = await this.prisma.owner.findUnique({
-      where: { id: ownerId },
-      include: { verificationDocuments: true },
+    const owner = await this.prisma.verificationDocument.findMany({
+      where: {
+        userId: ownerId,
+        userType: 'OWNER',
+      },
     });
 
-    if (!owner) {
-      throw new NotFoundException(`Owner ${ownerId} not found`);
-    }
-
-    const hasDTIorSEC = owner.verificationDocuments.some(
-      (p) =>
-        p.verificationType === VerificationType.DTI ||
-        p.verificationType === VerificationType.SEC,
-    );
-
-    const missingVerificationDOcuments = requiredVerificationDocuments.filter(
-      (type) =>
-        !owner.verificationDocuments.some((p) => p.verificationType === type),
+    const missingVerificationDocuments = requiredVerificationDocuments.filter(
+      (type) => !owner.some((p) => p.verificationType === type),
     ) as VerificationType[];
 
-    if (!hasDTIorSEC) {
-      missingVerificationDOcuments.push(
-        VerificationType.DTI,
-        VerificationType.SEC,
-      );
-    }
+    const verified =
+      owner.length > 0 && // must have at least one document
+      missingVerificationDocuments.length === 0 && // no missing documents
+      owner.every((doc) => doc.verificationStatus === 'APPROVED');
 
     return {
-      verified: missingVerificationDOcuments.length === 0 && hasDTIorSEC,
-      missingVerificationDOcuments, // 👈 machine-readable enums
-      verificationDocuments: owner.verificationDocuments.map((p) => ({
+      verified,
+      missingVerificationDocuments, // 👈 machine-readable enums
+      verificationDocuments: owner.map((p) => ({
         id: p.id,
         verificationType: p.verificationType,
         verificationStatus: p.verificationStatus,
@@ -468,9 +461,9 @@ export class OwnersService {
     });
   }
 
-  update(id: number, updateOwnerDto: UpdateOwnerDto) {
+  async update(id: number, updateOwnerDto: UpdateOwnerDto) {
     const prisma = this.prisma;
-    return prisma.owner.update({
+    return await prisma.owner.update({
       where: {
         id: id,
       },
@@ -479,6 +472,9 @@ export class OwnersService {
         firstname: updateOwnerDto.firstname,
         lastname: updateOwnerDto.lastname,
         email: updateOwnerDto.email,
+        consentAcceptedAt: updateOwnerDto.consentAcceptedAt,
+        hasAcceptedLegitimacyConsent:
+          updateOwnerDto.hasAcceptedLegitimacyConsent,
         // TODO: why uncommenting the password returns an error?
         // password: updateOwnerDto.password,
         age: updateOwnerDto.age,

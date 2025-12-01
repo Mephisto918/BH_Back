@@ -19,6 +19,7 @@ import { FindTenantsDto } from '../tenants/dto/find-tenants.dto';
 import { OwnersService } from '../owners/owners.service';
 import { FindOwnersDto } from '../owners/dto/find-owners.dto';
 import { CreateOwnerDto } from '../owners/dto/create-owner.dto';
+import { VerificationStatus } from '@prisma/client';
 
 @Controller('admins')
 export class AdminsController {
@@ -93,7 +94,11 @@ export class AdminsController {
   }
 
   @Patch(':id/permits')
-  updatePermit(@Param('id') id: string) {
-    return this.adminsService.updatePermit(+id);
+  updatePermit(
+    @Param('id') permitId: string,
+    @Body()
+    payload: { adminId: number; newVerificationStatus: VerificationStatus },
+  ) {
+    return this.adminsService.updatePermit(+permitId, payload);
   }
 }
